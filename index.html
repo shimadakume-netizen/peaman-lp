@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ぴーまん🫑 AI — Threads×note収益化コーチ</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Noto+Sans+JP:wght@400;700;900&display=swap');
+
+    :root {
+      --g1: #a8d98a;
+      --g2: #2d5a20;
+      --g3: #7dc05a;
+      --g4: #e8f5e1;
+      --dark: #0a1a06;
+      --darker: #060f03;
+      --pixel: #5aff3a;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background: var(--darker);
+      color: #fff;
+      font-family: 'Noto Sans JP', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ========= PIXEL GRID BG ========= */
+    .pixel-bg {
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        linear-gradient(rgba(90,255,58,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(90,255,58,0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+      pointer-events: none;
+    }
+
+    /* ========= NAV ========= */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(6,15,3,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(90,255,58,0.15);
+    }
+    .nav-logo {
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: 1.2rem;
+      color: var(--g1);
+      letter-spacing: 0.05em;
+    }
+    .nav-btns { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .nav-btn {
+      padding: 0.4rem 1rem; border-radius: 4px;
+      font-size: 0.78rem; font-weight: 700;
+      text-decoration: none; cursor: pointer;
+      border: 2px solid var(--g3);
+      color: var(--g3);
+      background: transparent;
+      transition: all 0.15s;
+      font-family: inherit;
+      image-rendering: pixelated;
+    }
+    .nav-btn:hover { background: var(--g3); color: var(--dark); }
+    .nav-btn.primary { background: var(--g3); color: var(--dark); }
+    .nav-btn.primary:hover { background: var(--g1); border-color: var(--g1); }
+
+    /* ========= HERO ========= */
+    .hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 8rem 1.5rem 5rem;
+      overflow: hidden;
+    }
+    /* scanline effect */
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+    }
+
+    /* pixel pepper art */
+    .pixel-pepper {
+      width: 128px; height: 128px;
+      margin: 0 auto 2rem;
+      image-rendering: pixelated;
+      position: relative;
+    }
+    .pixel-pepper canvas { width: 128px; height: 128px; image-rendering: pixelated; }
+
+    .hero-announce {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(90,255,58,0.1);
+      border: 2px solid rgba(90,255,58,0.4);
+      color: var(--pixel);
+      padding: 0.4rem 1.25rem; border-radius: 4px;
+      font-size: 0.82rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 2rem;
+      animation: blink 1.5s step-end infinite;
+    }
+    @keyframes blink { 50% { border-color: transparent; } }
+
+    .hero h1 {
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: clamp(2.8rem, 10vw, 7rem);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+    .hero h1 .accent {
+      color: var(--g1);
+      text-shadow: 0 0 40px rgba(168,217,138,0.5);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.4rem);
+      color: var(--g1);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+    .hero-copy {
+      max-width: 600px;
+      color: rgba(255,255,255,0.65);
+      font-size: 0.95rem;
+      line-height: 2;
+      margin-bottom: 3rem;
+    }
+    .hero-copy strong { color: #fff; }
+
+    .hero-btns {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 4rem;
+    }
+    .btn-big {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 1rem 2.25rem;
+      font-size: 1rem; font-weight: 900;
+      text-decoration: none; border-radius: 4px;
+      border: 3px solid;
+      transition: all 0.15s;
+      font-family: inherit;
+      cursor: pointer;
+      image-rendering: pixelated;
+    }
+    .btn-green {
+      background: var(--g3); color: var(--dark);
+      border-color: var(--g3);
+      box-shadow: 4px 4px 0 var(--g2);
+    }
+    .btn-green:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--g2); }
+    .btn-outline {
+      background: transparent; color: var(--g1);
+      border-color: var(--g1);
+      box-shadow: 4px 4px 0 rgba(168,217,138,0.2);
+    }
+    .btn-outline:hover { background: rgba(168,217,138,0.1); transform: translate(-2px,-2px); }
+    .btn-line {
+      background: #06C755; color: #fff;
+      border-color: #06C755;
+      box-shadow: 4px 4px 0 #048A3A;
+    }
+    .btn-line:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 #048A3A; }
+
+    /* counter display */
+    .hero-counter {
+      color: rgba(255,255,255,0.4);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+    .hero-counter span { color: var(--pixel); font-weight: 700; }
+
+    /* ========= SECTION BASE ========= */
+    section { position: relative; z-index: 1; padding: 6rem 1.5rem; }
+    .inner { max-width: 960px; margin: 0 auto; }
+
+    .sec-label {
+      display: inline-block;
+      background: rgba(90,255,58,0.1);
+      border: 1px solid rgba(90,255,58,0.3);
+      color: var(--pixel);
+      padding: 0.25rem 0.75rem; border-radius: 2px;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .sec-title {
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .sec-title .g { color: var(--g1); }
+    .sec-desc {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.95rem; line-height: 2;
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+
+    /* ========= PROBLEM ========= */
+    .problem-section {
+      background: linear-gradient(180deg, var(--darker), var(--dark));
+      border-top: 2px solid rgba(90,255,58,0.1);
+      border-bottom: 2px solid rgba(90,255,58,0.1);
+    }
+    .problem-quote {
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: clamp(1.4rem, 4vw, 2.5rem);
+      line-height: 1.5;
+      color: rgba(255,255,255,0.85);
+      border-left: 4px solid var(--g3);
+      padding-left: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .problem-quote .red { color: #ff6b6b; }
+    .problem-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+    .problem-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      padding: 1.25rem;
+    }
+    .problem-card .emoji { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .problem-card p { color: rgba(255,255,255,0.65); font-size: 0.88rem; line-height: 1.7; }
+
+    /* ========= FEATURES ========= */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 1.5rem;
+    }
+    .feature-card {
+      background: rgba(168,217,138,0.04);
+      border: 2px solid rgba(125,192,90,0.2);
+      border-radius: 4px;
+      padding: 2rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .feature-card:hover {
+      border-color: var(--g3);
+      transform: translateY(-3px);
+    }
+    .feature-num {
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: 3rem;
+      color: rgba(90,255,58,0.15);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+    .feature-tag {
+      display: inline-block;
+      background: var(--g2);
+      color: var(--g1);
+      font-size: 0.75rem; font-weight: 700;
+      padding: 0.2rem 0.6rem; border-radius: 2px;
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+    .feature-card h3 {
+      font-size: 1.2rem; font-weight: 900;
+      margin-bottom: 0.75rem;
+      color: #fff;
+    }
+    .feature-card p {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.88rem; line-height: 1.8;
+    }
+    .feature-card ul {
+      list-style: none;
+      margin-top: 0.75rem;
+    }
+    .feature-card ul li {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.85rem;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: flex; align-items: flex-start; gap: 0.5rem;
+    }
+    .feature-card ul li::before { content: '▸'; color: var(--g3); flex-shrink: 0; }
+
+    /* ========= DIFF TABLE ========= */
+    .diff-table-wrap { overflow-x: auto; }
+    .diff-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    .diff-table th {
+      background: rgba(168,217,138,0.1);
+      color: var(--g1);
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 2px solid var(--g3);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .diff-table td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.75);
+    }
+    .diff-table tr:hover td { background: rgba(168,217,138,0.03); }
+    .diff-table .check { color: var(--g3); font-weight: 900; }
+    .diff-table .cross { color: rgba(255,255,255,0.25); }
+    .diff-table .item-col { color: #fff; font-weight: 700; }
+
+    /* ========= STEPS ========= */
+    .steps-list { display: flex; flex-direction: column; gap: 0; }
+    .step-item {
+      display: flex; gap: 2rem; align-items: flex-start;
+      padding: 2rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .step-item:last-child { border-bottom: none; }
+    .step-num-big {
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: 4rem; line-height: 1;
+      color: rgba(90,255,58,0.15);
+      min-width: 80px;
+      flex-shrink: 0;
+    }
+    .step-body h3 { font-size: 1.1rem; font-weight: 900; margin-bottom: 0.5rem; color: var(--g1); }
+    .step-body p { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.8; }
+
+    /* ========= CASES ========= */
+    .cases-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+    .case-card {
+      background: rgba(45,90,32,0.2);
+      border: 1px solid rgba(125,192,90,0.2);
+      border-radius: 4px;
+      padding: 1.75rem;
+    }
+    .case-result {
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: 1.75rem;
+      color: var(--g1);
+      margin-bottom: 0.5rem;
+    }
+    .case-person { color: var(--g3); font-size: 0.8rem; font-weight: 700; margin-bottom: 0.75rem; }
+    .case-card p { color: rgba(255,255,255,0.65); font-size: 0.88rem; line-height: 1.7; }
+
+    /* ========= MONITOR ========= */
+    .monitor-section {
+      background: linear-gradient(135deg, rgba(45,90,32,0.3), rgba(10,26,6,0.8));
+      border: 2px solid var(--g3);
+      border-radius: 8px;
+      padding: 4rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .monitor-section::before {
+      content: '🫑';
+      position: absolute;
+      font-size: 15rem;
+      opacity: 0.04;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+    }
+    .monitor-badge {
+      display: inline-block;
+      background: #ff6b35;
+      color: #fff;
+      padding: 0.4rem 1.25rem;
+      font-size: 0.78rem; font-weight: 900;
+      letter-spacing: 0.1em;
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.7; } }
+    .monitor-section h2 {
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      margin-bottom: 1rem;
+    }
+    .monitor-section p {
+      color: rgba(255,255,255,0.7);
+      font-size: 0.95rem; line-height: 2;
+      max-width: 520px; margin: 0 auto 2rem;
+    }
+    .monitor-note {
+      color: rgba(255,255,255,0.4);
+      font-size: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    /* ========= CONSULT ========= */
+    .consult-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      padding: 2.5rem;
+      display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;
+    }
+    .consult-icon { font-size: 3.5rem; flex-shrink: 0; }
+    .consult-body h3 { font-size: 1.25rem; font-weight: 900; margin-bottom: 0.5rem; }
+    .consult-body p { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.8; margin-bottom: 1rem; }
+
+    /* ========= FOOTER ========= */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      position: relative; z-index: 1;
+    }
+    .footer-logo {
+      font-family: 'Dela Gothic One', sans-serif;
+      font-size: 1.75rem; color: var(--g1);
+      margin-bottom: 0.75rem;
+    }
+    .footer-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .footer-link { color: rgba(255,255,255,0.45); font-size: 0.82rem; text-decoration: none; }
+    .footer-link:hover { color: var(--g1); }
+    footer p { color: rgba(255,255,255,0.25); font-size: 0.78rem; }
+
+    /* ========= FIXED STAR BUTTON ========= */
+    .star-btn {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 300;
+      background: var(--dark);
+      border: 3px solid var(--g3);
+      border-radius: 50%;
+      width: 68px; height: 68px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 0 24px rgba(125,192,90,0.4), 4px 4px 0 var(--g2);
+      transition: all 0.15s;
+      font-family: inherit;
+      color: #fff;
+    }
+    .star-btn:hover { transform: translate(-2px,-2px) scale(1.05); box-shadow: 0 0 32px rgba(125,192,90,0.6), 6px 6px 0 var(--g2); }
+    .star-btn:active { transform: translate(2px,2px); box-shadow: 2px 2px 0 var(--g2); }
+    .star-btn .star-icon { font-size: 1.4rem; line-height: 1; }
+    .star-btn .star-count { font-size: 0.7rem; font-weight: 900; color: var(--g1); line-height: 1; }
+    .star-popup {
+      position: fixed; bottom: 7.5rem; right: 2rem; z-index: 300;
+      background: var(--g3); color: var(--dark);
+      padding: 0.4rem 0.75rem; border-radius: 4px;
+      font-size: 0.8rem; font-weight: 900;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      transform: translateY(8px);
+      white-space: nowrap;
+      box-shadow: 2px 2px 0 var(--g2);
+    }
+    .star-popup.show { opacity: 1; transform: translateY(0); }
+
+    /* ========= DIVIDER ========= */
+    .pixel-divider {
+      height: 4px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--g3) 0px, var(--g3) 8px,
+        transparent 8px, transparent 16px
+      );
+      opacity: 0.3;
+      margin: 0;
+    }
+
+    /* responsive */
+    @media (max-width: 600px) {
+      .features-grid { grid-template-columns: 1fr; }
+      .step-item { flex-direction: column; gap: 0.5rem; }
+      .step-num-big { font-size: 2.5rem; min-width: auto; }
+      nav { padding: 0.75rem 1rem; }
+      .nav-btns .nav-btn:nth-child(n+3) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="pixel-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ぴーまん🫑</div>
+  <div class="nav-btns">
+    <a href="https://lin.ee/WMvu4HS" target="_blank" class="nav-btn primary">公式LINE</a>
+    <a href="https://line.me/ti/g2/olYPEgt7wtjyw24LMRDtfekhiS8G5UFSIQG54g?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" class="nav-btn">オープンチャット</a>
+    <a href="https://www.threads.com/@pmen.1212" target="_blank" class="nav-btn">Threads</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- pixel pepper canvas -->
+  <div class="pixel-pepper">
+    <canvas id="pepperCanvas" width="16" height="16"></canvas>
+  </div>
+
+  <div class="hero-announce">⚡ β版 ローンチ ⚡</div>
+
+  <h1>
+    <span class="accent">バズ</span>だけじゃ<br>
+    稼げない。
+  </h1>
+  <div class="hero-sub">Threads × note 収益化コーチ ぴーまん🫑</div>
+  <p class="hero-copy">
+    <strong>「集客→ファン化→教育→販売」</strong>の流れを設計し、<br>
+    毎週実現可能なToDoで無理のない継続を支援する<br>
+    SNSマーケティングAIコーチです。
+  </p>
+
+  <div class="hero-btns">
+    <a href="https://lin.ee/WMvu4HS" target="_blank" class="btn-big btn-line">📲 公式LINEで始める</a>
+    <a href="https://line.me/ti/g2/olYPEgt7wtjyw24LMRDtfekhiS8G5UFSIQG54g?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" class="btn-big btn-green">💬 オープンチャットに参加</a>
+    <a href="https://www.threads.com/@pmen.1212" target="_blank" class="btn-big btn-outline">🫑 Threadsをフォロー</a>
+  </div>
+
+  <div class="hero-counter">気になってる人 <span id="heroCount">0</span> 人</div>
+</section>
+
+<div class="pixel-divider"></div>
+
+<!-- PROBLEM -->
+<section class="problem-section">
+  <div class="inner">
+    <div class="sec-label">Problem</div>
+    <div class="problem-quote">
+      バズっても、<span class="red">流れがなければ</span><br>お金は動かない。
+    </div>
+    <div class="problem-cards">
+      <div class="problem-card">
+        <div class="emoji">😩</div>
+        <p>Threadsでいいね・RTは来るのに、<br>全然収益につながらない</p>
+      </div>
+      <div class="problem-card">
+        <div class="emoji">📝</div>
+        <p>noteを書いても読まれず、<br>どう改善すればいいかわからない</p>
+      </div>
+      <div class="problem-card">
+        <div class="emoji">🗺️</div>
+        <p>「何から始めるべきか」<br>全体の流れが見えない</p>
+      </div>
+      <div class="problem-card">
+        <div class="emoji">🔄</div>
+        <p>続けようとしても<br>何をすればいいか毎週迷う</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pixel-divider"></div>
+
+<!-- FEATURES -->
+<section>
+  <div class="inner">
+    <div class="sec-label">Features</div>
+    <h2 class="sec-title">4つの<span class="g">モード</span>で<br>全部解決する</h2>
+    <p class="sec-desc">ヒアリングから投稿作成・画像生成・週次ToDoまで、収益化に必要な機能をすべて搭載。</p>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-num">01</div>
+        <div class="feature-tag">HEARING MODE</div>
+        <h3>🎤 ヒアリングモード</h3>
+        <p>現状・悩みを聞き出し、Threads×note運用の「素材シート」を自動作成。次のステップに必要な情報を整理します。</p>
+        <ul>
+          <li>現状・目標のヒアリング</li>
+          <li>素材シート自動生成</li>
+          <li>次のアクション整理</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-num">02</div>
+        <div class="feature-tag">WRITING MODE</div>
+        <h3>✍️ 執筆モード</h3>
+        <p>素材シートからThreads投稿・note記事を自動生成。SNSマーケティング4ステップに沿った構成で仕上げます。</p>
+        <ul>
+          <li>Threads投稿文の自動生成</li>
+          <li>4ステップ構成で記事執筆</li>
+          <li>素材シート作成後に利用可能</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-num">03</div>
+        <div class="feature-tag">IMAGE MODE</div>
+        <h3>🎨 図解モード（画像生成）</h3>
+        <p>Threads投稿用の画像生成プロンプトを自動作成。ChatGPT/Geminiに貼るだけで完成。</p>
+        <ul>
+          <li>16:9（Threads用）/ 縦長（壁紙用）対応</li>
+          <li>雰囲気・カラー・スタイルをカスタマイズ</li>
+          <li>AIに貼るだけで即完成</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-num">04</div>
+        <div class="feature-tag">TODO MODE</div>
+        <h3>📋 Todoモード（週次）</h3>
+        <p>6フェーズ診断で「今自分がどこにいるか」を特定し、今週やるべき具体的なToDoを自動生成。</p>
+        <ul>
+          <li>4ステップ×6フェーズで現在地診断</li>
+          <li>1日2〜3タスク×7日の実行計画</li>
+          <li>毎週更新で無理のない継続</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pixel-divider"></div>
+
+<!-- DIFF -->
+<section style="background: rgba(45,90,32,0.08);">
+  <div class="inner">
+    <div class="sec-label">Difference</div>
+    <h2 class="sec-title">なぜ<span class="g">ぴーまん🫑</span>なのか</h2>
+    <p class="sec-desc">一般的なAIとの違いはここにあります。</p>
+
+    <div class="diff-table-wrap">
+      <table class="diff-table">
+        <thead>
+          <tr>
+            <th>項目</th>
+            <th>ぴーまん🫑</th>
+            <th>一般的なAI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="item-col">専門性</td>
+            <td class="check">✅ Threads×note 特化</td>
+            <td class="cross">汎用的（広く浅い）</td>
+          </tr>
+          <tr>
+            <td class="item-col">流れの設計</td>
+            <td class="check">✅ 4ステップ→6フェーズ→実行計画まで体系化</td>
+            <td class="cross">単発のアドバイスのみ</td>
+          </tr>
+          <tr>
+            <td class="item-col">実行性</td>
+            <td class="check">✅ 週次ToDoで「今週やること」が明確</td>
+            <td class="cross">大目標だけで実行計画なし</td>
+          </tr>
+          <tr>
+            <td class="item-col">継続性</td>
+            <td class="check">✅ 毎週の改善フローで無理なく続けられる</td>
+            <td class="cross">一度きりのアドバイス</td>
+          </tr>
+          <tr>
+            <td class="item-col">マーケ理論</td>
+            <td class="check">✅ 高度な理論を誰でも実行できるToDoに翻訳</td>
+            <td class="cross">表面的な知識にとどまる</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- FLOW -->
+<section>
+  <div class="inner">
+    <div class="sec-label">How to use</div>
+    <h2 class="sec-title">使い方は<br><span class="g">5ステップ</span>だけ</h2>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <div class="step-num-big">01</div>
+        <div class="step-body">
+          <h3>ログイン</h3>
+          <p>公式LINEまたはStreamlitアプリからアクセス。登録不要ですぐ始められます。</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num-big">02</div>
+        <div class="step-body">
+          <h3>ヒアリング → 素材シート作成</h3>
+          <p>ぴーまん🫑があなたの現状・目標・悩みをヒアリング。素材シートを自動で作成します。</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num-big">03</div>
+        <div class="step-body">
+          <h3>記事執筆 → Threads投稿</h3>
+          <p>素材シートをもとに投稿文を自動生成。そのまま貼り付けるだけで発信できます。</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num-big">04</div>
+        <div class="step-body">
+          <h3>画像生成 → ビジュアル完成</h3>
+          <p>図解モードでプロンプトを生成→ChatGPT/Geminiに貼り付けるだけで画像完成。</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num-big">05</div>
+        <div class="step-body">
+          <h3>週次Todo → 継続実行</h3>
+          <p>毎週Todoモードで「今週やること」を確認。1日2〜3タスクで無理なく継続できます。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="pixel-divider"></div>
+
+<!-- CASES -->
+<section>
+  <div class="inner">
+    <div class="sec-label">Use Cases</div>
+    <h2 class="sec-title"><span class="g">実際の</span>活用例</h2>
+
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-result">月5万フォロワー</div>
+        <div class="case-person">主婦クリエイター</div>
+        <p>Threadsで毎日発信するネタに困っていたが、ヒアリング→執筆モードで投稿サイクルが確立。フォロワーが急増。</p>
+      </div>
+      <div class="case-card">
+        <div class="case-result">月30万円 副収入</div>
+        <div class="case-person">会社員 / noteライター</div>
+        <p>「バズっても売れない」状態から脱出。4ステップの流れを設計し直したことでnote経由の購入が激増。</p>
+      </div>
+      <div class="case-card">
+        <div class="case-result">1000人→収益化</div>
+        <div class="case-person">フォロワー1000人の個人事業主</div>
+        <p>フォロワーが少なくても収益化できるロードマップを提示。6フェーズ診断で「今すべきこと」が明確になった。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MONITOR -->
+<section>
+  <div class="inner">
+    <div class="monitor-section">
+      <div class="monitor-badge">🫑 β版モニター募集中</div>
+      <h2>一緒に<br>ぴーまん🫑を磨こう</h2>
+      <p>
+        Threads×noteでの収益化を本気で目指す方を<br>
+        β版モニターとして募集しています。<br>
+        実際に使って感想・フィードバックをくれる方を<br>
+        <strong>先にご連絡いただいた方を優先的にご案内します。</strong>
+      </p>
+      <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+        <a href="https://lin.ee/WMvu4HS" target="_blank" class="btn-big btn-line">📲 LINEでモニター応募</a>
+        <a href="https://line.me/ti/g2/olYPEgt7wtjyw24LMRDtfekhiS8G5UFSIQG54g?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" class="btn-big btn-green">💬 オープンチャットで相談</a>
+      </div>
+      <p class="monitor-note">※ β版のため、機能は継続的にアップデートされます</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONSULT -->
+<section>
+  <div class="inner">
+    <div class="sec-label">Personal Consult</div>
+    <h2 class="sec-title" style="margin-bottom:2rem;">個人相談<span class="g">受付中</span></h2>
+    <div class="consult-box">
+      <div class="consult-icon">🫑</div>
+      <div class="consult-body">
+        <h3>「自分の場合はどうすれば？」に直接答えます</h3>
+        <p>
+          AIだけでは解決しきれない悩み、戦略の相談、フィードバック依頼など<br>
+          個別での対応も受け付けています。<br>
+          まずはThreadsのDMか公式LINEからお気軽にどうぞ。
+        </p>
+        <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+          <a href="https://lin.ee/WMvu4HS" target="_blank" class="btn-big btn-line" style="padding:0.7rem 1.5rem; font-size:0.88rem;">📲 LINEで相談</a>
+          <a href="https://www.threads.com/@pmen.1212" target="_blank" class="btn-big btn-outline" style="padding:0.7rem 1.5rem; font-size:0.88rem;">🫑 ThreadsのDMへ</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ぴーまん🫑 AI</div>
+  <div class="footer-links">
+    <a href="https://lin.ee/WMvu4HS" target="_blank" class="footer-link">公式LINE</a>
+    <a href="https://line.me/ti/g2/olYPEgt7wtjyw24LMRDtfekhiS8G5UFSIQG54g?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" class="footer-link">オープンチャット</a>
+    <a href="https://www.threads.com/@pmen.1212" target="_blank" class="footer-link">Threads</a>
+  </div>
+  <p>© 2026 ぴーまん🫑 AI — Threads×note収益化コーチ</p>
+</footer>
+
+<!-- 気になる⭐ ボタン -->
+<button class="star-btn" id="starBtn" onclick="onStar()">
+  <span class="star-icon">⭐</span>
+  <span class="star-count" id="starCount">0</span>
+</button>
+<div class="star-popup" id="starPopup">気になる！🫑</div>
+
+<script>
+  /* ====== PIXEL PEPPER ====== */
+  (function(){
+    const c = document.getElementById('pepperCanvas');
+    const ctx = c.getContext('2d');
+    // 16x16 pixel art pepper (green)
+    const _ = 0, G = '#5aff3a', D = '#2d5a20', S = '#a8d98a', W = '#ffffff', T = 'transparent';
+    const px = [
+      [_,_,_,_,_,_,_,D,_,_,_,_,_,_,_,_],
+      [_,_,_,_,_,_,D,D,D,_,_,_,_,_,_,_],
+      [_,_,_,_,_,_,_,D,_,_,_,_,_,_,_,_],
+      [_,_,_,_,_,G,G,G,G,G,_,_,_,_,_,_],
+      [_,_,_,_,G,G,S,G,G,G,G,_,_,_,_,_],
+      [_,_,_,G,G,S,G,G,G,G,G,G,_,_,_,_],
+      [_,_,G,G,G,G,G,G,G,G,G,G,G,_,_,_],
+      [_,_,G,G,G,G,G,G,G,G,G,G,G,_,_,_],
+      [_,_,G,G,G,G,G,G,G,G,G,G,G,_,_,_],
+      [_,_,G,G,G,G,G,G,G,G,G,G,G,_,_,_],
+      [_,_,_,G,G,G,G,G,G,G,G,G,_,_,_,_],
+      [_,_,_,G,G,G,G,G,G,G,G,G,_,_,_,_],
+      [_,_,_,_,G,G,G,G,G,G,G,_,_,_,_,_],
+      [_,_,_,_,_,G,G,G,G,G,_,_,_,_,_,_],
+      [_,_,_,_,_,_,G,G,G,_,_,_,_,_,_,_],
+      [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
+    ];
+    px.forEach((row, y) => {
+      row.forEach((col, x) => {
+        if (col) { ctx.fillStyle = col; ctx.fillRect(x, y, 1, 1); }
+      });
+    });
+  })();
+
+  /* ====== STAR BUTTON ====== */
+  let count = parseInt(localStorage.getItem('peaman_star') || '0');
+  function updateDisplay() {
+    document.getElementById('starCount').textContent = count;
+    document.getElementById('heroCount').textContent = count;
+  }
+  updateDisplay();
+
+  function onStar() {
+    count++;
+    localStorage.setItem('peaman_star', count);
+    updateDisplay();
+    const popup = document.getElementById('starPopup');
+    popup.classList.add('show');
+    setTimeout(() => popup.classList.remove('show'), 1500);
+
+    // particle effect
+    const btn = document.getElementById('starBtn');
+    const star = document.createElement('span');
+    star.textContent = '⭐';
+    star.style.cssText = `
+      position:fixed; right:2.5rem; bottom:3rem; font-size:1.2rem;
+      pointer-events:none; z-index:400;
+      animation: floatUp 0.8s ease-out forwards;
+    `;
+    document.body.appendChild(star);
+    setTimeout(() => star.remove(), 800);
+  }
+
+  /* float animation */
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes floatUp {
+      0%   { opacity:1; transform: translateY(0) scale(1); }
+      100% { opacity:0; transform: translateY(-80px) scale(1.5); }
+    }
+  `;
+  document.head.appendChild(style);
+</script>
+</body>
+</html>
