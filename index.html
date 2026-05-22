@@ -90,14 +90,19 @@
       pointer-events: none;
     }
 
-    /* pixel pepper art */
-    .pixel-pepper {
-      width: 128px; height: 128px;
+    /* pepper emoji */
+    .hero-pepper {
+      font-size: 6rem;
       margin: 0 auto 2rem;
-      image-rendering: pixelated;
-      position: relative;
+      display: block;
+      text-align: center;
+      filter: drop-shadow(0 0 24px rgba(90,255,58,0.6));
+      animation: floatPepper 3s ease-in-out infinite;
     }
-    .pixel-pepper canvas { width: 128px; height: 128px; image-rendering: pixelated; }
+    @keyframes floatPepper {
+      0%,100% { transform: translateY(0) rotate(-5deg); }
+      50%      { transform: translateY(-12px) rotate(5deg); }
+    }
 
     .hero-announce {
       display: inline-flex; align-items: center; gap: 0.5rem;
@@ -113,10 +118,11 @@
     @keyframes blink { 50% { border-color: transparent; } }
 
     .hero h1 {
-      font-family: 'Dela Gothic One', sans-serif;
-      font-size: clamp(2.8rem, 10vw, 7rem);
-      line-height: 1.0;
-      letter-spacing: -0.02em;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 7vw, 5rem);
+      line-height: 1.2;
+      letter-spacing: 0.02em;
       margin-bottom: 0.5rem;
       color: #fff;
     }
@@ -506,18 +512,15 @@
 
 <!-- HERO -->
 <section class="hero">
-  <!-- pixel pepper canvas -->
-  <div class="pixel-pepper">
-    <canvas id="pepperCanvas" width="16" height="16"></canvas>
-  </div>
+  <div class="hero-announce">⚡ 重大発表 ⚡</div>
 
-  <div class="hero-announce">⚡ β版 ローンチ ⚡</div>
+  <span class="hero-pepper">🫑</span>
 
   <h1>
-    <span class="accent">バズ</span>だけじゃ<br>
-    稼げない。
+    <span class="accent">ぴーまん🫑 AI</span><br>
+    公開
   </h1>
-  <div class="hero-sub">Threads × note 収益化コーチ ぴーまん🫑</div>
+  <div class="hero-sub">Threads × note 収益化コーチ、ついにリリース</div>
   <p class="hero-copy">
     <strong>「集客→ファン化→教育→販売」</strong>の流れを設計し、<br>
     毎週実現可能なToDoで無理のない継続を支援する<br>
@@ -630,7 +633,7 @@
 <section style="background: rgba(45,90,32,0.08);">
   <div class="inner">
     <div class="sec-label">Difference</div>
-    <h2 class="sec-title">なぜ<span class="g">ぴーまん🫑</span>なのか</h2>
+    <h2 class="sec-title">なぜ<span class="g">ぴーまん🫑 AI</span>なのか</h2>
     <p class="sec-desc">一般的なAIとの違いはここにあります。</p>
 
     <div class="diff-table-wrap">
@@ -674,47 +677,33 @@
   </div>
 </section>
 
-<!-- FLOW -->
+<!-- FUTURE -->
 <section>
   <div class="inner">
-    <div class="sec-label">How to use</div>
-    <h2 class="sec-title">使い方は<br><span class="g">5ステップ</span>だけ</h2>
+    <div class="sec-label">Coming Soon</div>
+    <h2 class="sec-title">ぴーまん🫑は<br><span class="g">まだ進化する</span></h2>
+    <p class="sec-desc">β版は現在4機能。これからどんどん機能が追加されていきます。</p>
 
-    <div class="steps-list">
-      <div class="step-item">
-        <div class="step-num-big">01</div>
-        <div class="step-body">
-          <h3>ログイン</h3>
-          <p>公式LINEまたはStreamlitアプリからアクセス。登録不要ですぐ始められます。</p>
-        </div>
+    <div class="features-grid">
+      <div class="feature-card" style="border-color: rgba(251,191,36,0.3);">
+        <div class="feature-tag" style="background:rgba(251,191,36,0.15); color:#fbbf24;">COMING SOON</div>
+        <h3>✨ AIアートプロンプト生成</h3>
+        <p>投稿の世界観に合わせたAIアート画像を自動生成。より視覚的で魅力的なコンテンツに進化します。</p>
       </div>
-      <div class="step-item">
-        <div class="step-num-big">02</div>
-        <div class="step-body">
-          <h3>ヒアリング → 素材シート作成</h3>
-          <p>ぴーまん🫑があなたの現状・目標・悩みをヒアリング。素材シートを自動で作成します。</p>
-        </div>
+      <div class="feature-card" style="border-color: rgba(251,191,36,0.3);">
+        <div class="feature-tag" style="background:rgba(251,191,36,0.15); color:#fbbf24;">COMING SOON</div>
+        <h3>📊 詳細分析・レポート機能</h3>
+        <p>Threads×noteの投稿パフォーマンスを分析し、改善ポイントを自動レポートします。</p>
       </div>
-      <div class="step-item">
-        <div class="step-num-big">03</div>
-        <div class="step-body">
-          <h3>記事執筆 → Threads投稿</h3>
-          <p>素材シートをもとに投稿文を自動生成。そのまま貼り付けるだけで発信できます。</p>
-        </div>
+      <div class="feature-card" style="border-color: rgba(251,191,36,0.3);">
+        <div class="feature-tag" style="background:rgba(251,191,36,0.15); color:#fbbf24;">FUTURE</div>
+        <h3>👥 ユーザーコミュニティ</h3>
+        <p>同じ目標を持つ仲間とつながれるコミュニティを構築予定。一緒に成長できる場を作ります。</p>
       </div>
-      <div class="step-item">
-        <div class="step-num-big">04</div>
-        <div class="step-body">
-          <h3>画像生成 → ビジュアル完成</h3>
-          <p>図解モードでプロンプトを生成→ChatGPT/Geminiに貼り付けるだけで画像完成。</p>
-        </div>
-      </div>
-      <div class="step-item">
-        <div class="step-num-big">05</div>
-        <div class="step-body">
-          <h3>週次Todo → 継続実行</h3>
-          <p>毎週Todoモードで「今週やること」を確認。1日2〜3タスクで無理なく継続できます。</p>
-        </div>
+      <div class="feature-card" style="border-color: rgba(251,191,36,0.3);">
+        <div class="feature-tag" style="background:rgba(251,191,36,0.15); color:#fbbf24;">VISION</div>
+        <h3>🚀 7桁狙えるSNSマーケAI</h3>
+        <p>Threads×noteでの収益化を完全自動化するエコシステム構築。業界標準のAIへ。</p>
       </div>
     </div>
   </div>
@@ -722,27 +711,28 @@
 
 <div class="pixel-divider"></div>
 
-<!-- CASES -->
+<!-- PRICING PLAN -->
 <section>
   <div class="inner">
-    <div class="sec-label">Use Cases</div>
-    <h2 class="sec-title"><span class="g">実際の</span>活用例</h2>
+    <div class="sec-label">Pricing</div>
+    <h2 class="sec-title"><span class="g">今後の予定</span></h2>
+    <p class="sec-desc">現在はβ版として無料でご利用いただけます。今後、月額プランを予定しています。</p>
 
     <div class="cases-grid">
-      <div class="case-card">
-        <div class="case-result">月5万フォロワー</div>
-        <div class="case-person">主婦クリエイター</div>
-        <p>Threadsで毎日発信するネタに困っていたが、ヒアリング→執筆モードで投稿サイクルが確立。フォロワーが急増。</p>
+      <div class="case-card" style="border-color: rgba(90,255,58,0.4);">
+        <div class="case-result" style="font-size:1.4rem;">🟢 β版（現在）</div>
+        <div class="case-person">無料 · 今すぐ利用可能</div>
+        <p>全4機能が無料で使えます。モニターとして参加し、一緒にぴーまん🫑を育てましょう。</p>
       </div>
-      <div class="case-card">
-        <div class="case-result">月30万円 副収入</div>
-        <div class="case-person">会社員 / noteライター</div>
-        <p>「バズっても売れない」状態から脱出。4ステップの流れを設計し直したことでnote経由の購入が激増。</p>
+      <div class="case-card" style="border-color: rgba(251,191,36,0.3); opacity:0.8;">
+        <div class="case-result" style="font-size:1.4rem; color:#fbbf24;">🔜 月額プラン（予定）</div>
+        <div class="case-person">Coming Soon · いつ抜けてもOK</div>
+        <p>月額課金制を予定。縛りなし・いつでも解約可能。詳細は公式LINEにてご案内します。</p>
       </div>
-      <div class="case-card">
-        <div class="case-result">1000人→収益化</div>
-        <div class="case-person">フォロワー1000人の個人事業主</div>
-        <p>フォロワーが少なくても収益化できるロードマップを提示。6フェーズ診断で「今すべきこと」が明確になった。</p>
+      <div class="case-card" style="border-color: rgba(251,191,36,0.3); opacity:0.8;">
+        <div class="case-result" style="font-size:1.4rem; color:#fbbf24;">🔜 プレミアムプラン（予定）</div>
+        <div class="case-person">Coming Soon · 詳細分析＋優先サポート</div>
+        <p>詳細レポート・コミュニティアクセス・個別サポートつきのプレミアムプランを準備中。</p>
       </div>
     </div>
   </div>
@@ -808,58 +798,40 @@
   <span class="star-icon">⭐</span>
   <span class="star-count" id="starCount">0</span>
 </button>
-<div class="star-popup" id="starPopup">気になる！🫑</div>
+<div class="star-popup" id="starPopup"><span id="starPopupText">気になる！🫑</span></div>
 
 <script>
-  /* ====== PIXEL PEPPER ====== */
-  (function(){
-    const c = document.getElementById('pepperCanvas');
-    const ctx = c.getContext('2d');
-    // 16x16 pixel art pepper (green)
-    const _ = 0, G = '#5aff3a', D = '#2d5a20', S = '#a8d98a', W = '#ffffff', T = 'transparent';
-    const px = [
-      [_,_,_,_,_,_,_,D,_,_,_,_,_,_,_,_],
-      [_,_,_,_,_,_,D,D,D,_,_,_,_,_,_,_],
-      [_,_,_,_,_,_,_,D,_,_,_,_,_,_,_,_],
-      [_,_,_,_,_,G,G,G,G,G,_,_,_,_,_,_],
-      [_,_,_,_,G,G,S,G,G,G,G,_,_,_,_,_],
-      [_,_,_,G,G,S,G,G,G,G,G,G,_,_,_,_],
-      [_,_,G,G,G,G,G,G,G,G,G,G,G,_,_,_],
-      [_,_,G,G,G,G,G,G,G,G,G,G,G,_,_,_],
-      [_,_,G,G,G,G,G,G,G,G,G,G,G,_,_,_],
-      [_,_,G,G,G,G,G,G,G,G,G,G,G,_,_,_],
-      [_,_,_,G,G,G,G,G,G,G,G,G,_,_,_,_],
-      [_,_,_,G,G,G,G,G,G,G,G,G,_,_,_,_],
-      [_,_,_,_,G,G,G,G,G,G,G,_,_,_,_,_],
-      [_,_,_,_,_,G,G,G,G,G,_,_,_,_,_,_],
-      [_,_,_,_,_,_,G,G,G,_,_,_,_,_,_,_],
-      [_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_],
-    ];
-    px.forEach((row, y) => {
-      row.forEach((col, x) => {
-        if (col) { ctx.fillStyle = col; ctx.fillRect(x, y, 1, 1); }
-      });
-    });
-  })();
+  /* ====== STAR BUTTON（最大3回） ====== */
+  const MAX_PRESS = 3;
+  let totalCount = parseInt(localStorage.getItem('peaman_star_total') || '0');
+  let myPress    = parseInt(localStorage.getItem('peaman_star_mine')  || '0');
 
-  /* ====== STAR BUTTON ====== */
-  let count = parseInt(localStorage.getItem('peaman_star') || '0');
   function updateDisplay() {
-    document.getElementById('starCount').textContent = count;
-    document.getElementById('heroCount').textContent = count;
+    document.getElementById('starCount').textContent = totalCount;
+    document.getElementById('heroCount').textContent = totalCount;
+    if (myPress >= MAX_PRESS) {
+      const btn = document.getElementById('starBtn');
+      btn.style.opacity = '0.5';
+      btn.style.cursor  = 'not-allowed';
+      document.getElementById('starPopupText').textContent = 'ありがとう！🫑';
+    }
   }
   updateDisplay();
 
   function onStar() {
-    count++;
-    localStorage.setItem('peaman_star', count);
+    if (myPress >= MAX_PRESS) return;
+    myPress++;
+    totalCount++;
+    localStorage.setItem('peaman_star_mine',  myPress);
+    localStorage.setItem('peaman_star_total', totalCount);
     updateDisplay();
+
     const popup = document.getElementById('starPopup');
+    document.getElementById('starPopupText').textContent =
+      myPress >= MAX_PRESS ? 'ありがとう！🫑' : '気になる！🫑';
     popup.classList.add('show');
     setTimeout(() => popup.classList.remove('show'), 1500);
 
-    // particle effect
-    const btn = document.getElementById('starBtn');
     const star = document.createElement('span');
     star.textContent = '⭐';
     star.style.cssText = `
@@ -871,7 +843,6 @@
     setTimeout(() => star.remove(), 800);
   }
 
-  /* float animation */
   const style = document.createElement('style');
   style.textContent = `
     @keyframes floatUp {
