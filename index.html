@@ -851,19 +851,31 @@
 <div class="star-popup" id="starPopup"><span id="starPopupText">気になる！🫑</span></div>
 
 <script>
-  /* ====== 気になるボタン（無制限） ====== */
-  let totalCount = parseInt(localStorage.getItem('peaman_star_total') || '0');
+  /* ====== 気になるボタン（全端末共有カウンター） ====== */
+  const API = 'https://api.counterapi.dev/v1/peaman-lp-2026/kininaru';
+  let totalCount = 0;
+
+  // 起動時に現在のカウントを取得
+  fetch(API)
+    .then(r => r.json())
+    .then(d => { totalCount = d.count || 0; updateDisplay(); })
+    .catch(() => { totalCount = parseInt(localStorage.getItem('peaman_star_fallback') || '0'); updateDisplay(); });
 
   function updateDisplay() {
     document.getElementById('starCount').textContent = totalCount;
     document.getElementById('heroCount').textContent = totalCount;
   }
-  updateDisplay();
 
   function onStar() {
+    // 楽観的に即時 +1 表示
     totalCount++;
-    localStorage.setItem('peaman_star_total', totalCount);
     updateDisplay();
+
+    // サーバー側をインクリメント
+    fetch(API + '/hit')
+      .then(r => r.json())
+      .then(d => { totalCount = d.count || totalCount; updateDisplay(); })
+      .catch(() => { localStorage.setItem('peaman_star_fallback', totalCount); });
 
     const popup = document.getElementById('starPopup');
     document.getElementById('starPopupText').textContent = '気になる！🫑';
