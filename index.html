@@ -852,26 +852,22 @@
 
 <script>
   /* ====== 気になるボタン ====== */
-  const NS   = 'peaman2026';
-  const KEY  = 'kininaru';
-  const HIT  = `https://api.countapi.xyz/hit/${NS}/${KEY}`;
-  const GET  = `https://api.countapi.xyz/get/${NS}/${KEY}`;
-  const CACHE = 'peaman_kininaru_v2';
+  const API_GET = 'https://api.counterapi.dev/v1/peaman-lp-2026/kininaru';
+  const API_HIT = 'https://api.counterapi.dev/v1/peaman-lp-2026/kininaru/up';
+  const CACHE   = 'peaman_kininaru_v3';
 
   let totalCount = parseInt(localStorage.getItem(CACHE) || '0');
   updateDisplay();
 
-  // サーバーから最新値を取得
+  // サーバーから最新値を取得（読み取りのみ・インクリメントなし）
   function fetchCount() {
-    fetch(GET)
+    fetch(API_GET)
       .then(r => r.json())
       .then(d => {
-        const v = d.value ?? 0;
-        if (v > totalCount) {
-          totalCount = v;
-          localStorage.setItem(CACHE, totalCount);
-          updateDisplay();
-        }
+        const v = d.count ?? 0;
+        totalCount = Math.max(v, totalCount);
+        localStorage.setItem(CACHE, totalCount);
+        updateDisplay();
       })
       .catch(() => {});
   }
@@ -879,7 +875,7 @@
   // ページ読み込み時に取得
   fetchCount();
 
-  // 30秒ごとに自動更新（ボタン押さなくても他の人の分が反映される）
+  // 30秒ごとに自動更新
   setInterval(fetchCount, 30000);
 
   function updateDisplay() {
@@ -892,10 +888,10 @@
     localStorage.setItem(CACHE, totalCount);
     updateDisplay();
 
-    fetch(HIT)
+    fetch(API_HIT)
       .then(r => r.json())
       .then(d => {
-        const v = d.value ?? totalCount;
+        const v = d.count ?? totalCount;
         totalCount = Math.max(v, totalCount);
         localStorage.setItem(CACHE, totalCount);
         updateDisplay();
