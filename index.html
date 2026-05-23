@@ -852,24 +852,35 @@
 
 <script>
   /* ====== 気になるボタン ====== */
-  const API_HIT = 'https://api.counterapi.dev/v1/peaman-lp-2026/kininaru/up';
-  const API_GET = 'https://api.counterapi.dev/v1/peaman-lp-2026/kininaru';
-  const CACHE_KEY = 'peaman_kininaru_cache';
+  const NS   = 'peaman2026';
+  const KEY  = 'kininaru';
+  const HIT  = `https://api.countapi.xyz/hit/${NS}/${KEY}`;
+  const GET  = `https://api.countapi.xyz/get/${NS}/${KEY}`;
+  const CACHE = 'peaman_kininaru_v2';
 
-  // ① まずキャッシュ値で即表示（0にならない）
-  let totalCount = parseInt(localStorage.getItem(CACHE_KEY) || '0');
+  let totalCount = parseInt(localStorage.getItem(CACHE) || '0');
   updateDisplay();
 
-  // ② バックグラウンドでサーバーから最新値を取得して上書き
-  fetch(API_GET)
-    .then(r => r.json())
-    .then(d => {
-      const serverVal = d.count ?? d.value ?? 0;
-      totalCount = Math.max(serverVal, totalCount); // サーバーと手元の大きい方を採用
-      localStorage.setItem(CACHE_KEY, totalCount);
-      updateDisplay();
-    })
-    .catch(() => { /* キャッシュ値をそのまま使う */ });
+  // サーバーから最新値を取得
+  function fetchCount() {
+    fetch(GET)
+      .then(r => r.json())
+      .then(d => {
+        const v = d.value ?? 0;
+        if (v > totalCount) {
+          totalCount = v;
+          localStorage.setItem(CACHE, totalCount);
+          updateDisplay();
+        }
+      })
+      .catch(() => {});
+  }
+
+  // ページ読み込み時に取得
+  fetchCount();
+
+  // 30秒ごとに自動更新（ボタン押さなくても他の人の分が反映される）
+  setInterval(fetchCount, 30000);
 
   function updateDisplay() {
     document.getElementById('starCount').textContent = totalCount;
@@ -877,29 +888,25 @@
   }
 
   function onStar() {
-    // 即時 +1（楽観的更新）
     totalCount++;
-    localStorage.setItem(CACHE_KEY, totalCount);
+    localStorage.setItem(CACHE, totalCount);
     updateDisplay();
 
-    // サーバー側もインクリメント
-    fetch(API_HIT)
+    fetch(HIT)
       .then(r => r.json())
       .then(d => {
-        const serverVal = d.count ?? d.value ?? totalCount;
-        totalCount = Math.max(serverVal, totalCount);
-        localStorage.setItem(CACHE_KEY, totalCount);
+        const v = d.value ?? totalCount;
+        totalCount = Math.max(v, totalCount);
+        localStorage.setItem(CACHE, totalCount);
         updateDisplay();
       })
-      .catch(() => { /* キャッシュ値を維持 */ });
+      .catch(() => {});
 
-    // ポップアップ
     const popup = document.getElementById('starPopup');
     document.getElementById('starPopupText').textContent = '気になる！🫑';
     popup.classList.add('show');
     setTimeout(() => popup.classList.remove('show'), 1200);
 
-    // 飛ぶピーマン
     const el = document.createElement('span');
     el.textContent = '🫑';
     el.style.cssText = `
