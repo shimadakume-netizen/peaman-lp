@@ -851,15 +851,25 @@
 <div class="star-popup" id="starPopup"><span id="starPopupText">気になる！🫑</span></div>
 
 <script>
-  /* ====== 気になるボタン（全端末共有カウンター） ====== */
-  const API = 'https://api.counterapi.dev/v1/peaman-lp-2026/kininaru';
-  let totalCount = 0;
+  /* ====== 気になるボタン ====== */
+  const API_HIT = 'https://api.counterapi.dev/v1/peaman-lp-2026/kininaru/up';
+  const API_GET = 'https://api.counterapi.dev/v1/peaman-lp-2026/kininaru';
+  const CACHE_KEY = 'peaman_kininaru_cache';
 
-  // 起動時に現在のカウントを取得
-  fetch(API)
+  // ① まずキャッシュ値で即表示（0にならない）
+  let totalCount = parseInt(localStorage.getItem(CACHE_KEY) || '0');
+  updateDisplay();
+
+  // ② バックグラウンドでサーバーから最新値を取得して上書き
+  fetch(API_GET)
     .then(r => r.json())
-    .then(d => { totalCount = d.count || 0; updateDisplay(); })
-    .catch(() => { totalCount = parseInt(localStorage.getItem('peaman_star_fallback') || '0'); updateDisplay(); });
+    .then(d => {
+      const serverVal = d.count ?? d.value ?? 0;
+      totalCount = Math.max(serverVal, totalCount); // サーバーと手元の大きい方を採用
+      localStorage.setItem(CACHE_KEY, totalCount);
+      updateDisplay();
+    })
+    .catch(() => { /* キャッシュ値をそのまま使う */ });
 
   function updateDisplay() {
     document.getElementById('starCount').textContent = totalCount;
@@ -867,21 +877,29 @@
   }
 
   function onStar() {
-    // 楽観的に即時 +1 表示
+    // 即時 +1（楽観的更新）
     totalCount++;
+    localStorage.setItem(CACHE_KEY, totalCount);
     updateDisplay();
 
-    // サーバー側をインクリメント
-    fetch(API + '/hit')
+    // サーバー側もインクリメント
+    fetch(API_HIT)
       .then(r => r.json())
-      .then(d => { totalCount = d.count || totalCount; updateDisplay(); })
-      .catch(() => { localStorage.setItem('peaman_star_fallback', totalCount); });
+      .then(d => {
+        const serverVal = d.count ?? d.value ?? totalCount;
+        totalCount = Math.max(serverVal, totalCount);
+        localStorage.setItem(CACHE_KEY, totalCount);
+        updateDisplay();
+      })
+      .catch(() => { /* キャッシュ値を維持 */ });
 
+    // ポップアップ
     const popup = document.getElementById('starPopup');
     document.getElementById('starPopupText').textContent = '気になる！🫑';
     popup.classList.add('show');
     setTimeout(() => popup.classList.remove('show'), 1200);
 
+    // 飛ぶピーマン
     const el = document.createElement('span');
     el.textContent = '🫑';
     el.style.cssText = `
@@ -896,8 +914,8 @@
   const style = document.createElement('style');
   style.textContent = `
     @keyframes floatUp {
-      0%   { opacity:1; transform: translateY(0) scale(1); }
-      100% { opacity:0; transform: translateY(-80px) scale(1.5); }
+      0%   { opacity:1; transform:translateY(0) scale(1); }
+      100% { opacity:0; transform:translateY(-80px) scale(1.5); }
     }
   `;
   document.head.appendChild(style);
