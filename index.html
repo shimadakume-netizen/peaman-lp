@@ -794,6 +794,94 @@
       .dash-terminal, .dash-right, .dash-status { display: none; }
     }
 
+    /* ─── MOBILE PANEL STRIP ─── */
+    .mobile-panels {
+      display: none; /* hidden on desktop */
+    }
+    @media (max-width: 1200px) {
+      .mobile-panels {
+        display: flex;
+        gap: 0.5rem;
+        overflow-x: auto;
+        padding: 0 0.5rem;
+        margin-bottom: 2rem;
+        scrollbar-width: none;
+        width: 100%;
+        max-width: 580px;
+      }
+      .mobile-panels::-webkit-scrollbar { display: none; }
+    }
+    .mob-panel {
+      flex-shrink: 0;
+      width: 145px;
+      background: rgba(6,15,3,0.88);
+      border: 1px solid rgba(90,255,58,0.28);
+      border-radius: 8px;
+      overflow: hidden;
+      font-family: 'Courier New', monospace;
+    }
+    .mob-panel-head {
+      background: rgba(90,255,58,0.07);
+      border-bottom: 1px solid rgba(90,255,58,0.15);
+      padding: 0.28rem 0.55rem;
+      font-size: 0.52rem; font-weight: 700;
+      color: rgba(90,255,58,0.55); letter-spacing: 0.12em;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .mob-panel-head .mob-live {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--pixel);
+      animation: pulseDot 1.5s ease-in-out infinite;
+    }
+    .mob-panel-body {
+      padding: 0.5rem 0.6rem;
+      font-size: 0.58rem;
+      color: rgba(90,255,58,0.7);
+      line-height: 1.8;
+    }
+    .mob-bar-row { display: flex; align-items: center; gap: 0.3rem; margin-bottom: 0.2rem; }
+    .mob-bar-label { font-size: 0.5rem; color: rgba(255,255,255,0.35); width: 2rem; text-align: right; }
+    .mob-bar-track { flex: 1; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; overflow: hidden; }
+    .mob-bar-fill { height: 100%; background: linear-gradient(90deg,var(--g3),var(--pixel)); border-radius: 2px; animation: growBar 1.3s ease both; }
+
+    /* ─── FLOATING THREADS BUTTON ─── */
+    .threads-float-btn {
+      position: fixed; bottom: 7.5rem; right: 2rem; z-index: 300;
+      background: #111;
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 50%;
+      width: 58px; height: 58px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.6), 3px 3px 0 rgba(255,255,255,0.07);
+      transition: all 0.15s;
+      font-family: inherit;
+      color: #fff;
+      gap: 0.1rem;
+    }
+    .threads-float-btn:hover {
+      transform: translate(-2px,-2px) scale(1.05);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.7), 5px 5px 0 rgba(255,255,255,0.1);
+    }
+    .threads-float-btn:active { transform: translate(1px,1px); }
+    .threads-float-icon { font-size: 1.3rem; line-height: 1; }
+    .threads-float-label { font-size: 0.52rem; font-weight: 900; color: rgba(255,255,255,0.8); line-height: 1; }
+    /* tooltip */
+    .threads-float-tip {
+      position: fixed; bottom: 9.5rem; right: 2rem; z-index: 300;
+      background: #111; color: #fff;
+      padding: 0.35rem 0.7rem; border-radius: 4px;
+      font-size: 0.72rem; font-weight: 700;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s, transform 0.2s;
+      transform: translateY(6px);
+      white-space: nowrap;
+      border: 1px solid rgba(255,255,255,0.15);
+      box-shadow: 2px 2px 0 rgba(255,255,255,0.06);
+    }
+    .threads-float-tip.show { opacity: 1; transform: translateY(0); }
+
     /* ─── THREADS SHARE SECTION ─── */
     .threads-template {
       background: rgba(255,255,255,0.025);
@@ -954,6 +1042,54 @@
     </div>
 
   </div><!-- /.hero-dashboard -->
+
+  <!-- モバイル用ミニパネルストリップ -->
+  <div class="mobile-panels">
+
+    <!-- TERMINAL -->
+    <div class="mob-panel">
+      <div class="mob-panel-head"><span>TERMINAL</span><span class="mob-live"></span></div>
+      <div class="mob-panel-body">
+        › boot peaman-ai<br>
+        › coach ready <span style="color:var(--pixel);">✓</span><br>
+        STATUS: <span style="color:var(--pixel);">ONLINE</span>
+      </div>
+    </div>
+
+    <!-- GROWTH -->
+    <div class="mob-panel">
+      <div class="mob-panel-head"><span>GROWTH</span><span class="mob-live"></span></div>
+      <div class="mob-panel-body" style="padding-top:0.4rem;">
+        <div class="mob-bar-row"><div class="mob-bar-label">Threads</div><div class="mob-bar-track"><div class="mob-bar-fill" style="--w:85%;"></div></div></div>
+        <div class="mob-bar-row"><div class="mob-bar-label">note</div><div class="mob-bar-track"><div class="mob-bar-fill" style="--w:68%; animation-delay:0.15s;"></div></div></div>
+        <div class="mob-bar-row"><div class="mob-bar-label">収益</div><div class="mob-bar-track"><div class="mob-bar-fill" style="--w:72%; animation-delay:0.3s;"></div></div></div>
+        <div class="mob-bar-row"><div class="mob-bar-label">LINE</div><div class="mob-bar-track"><div class="mob-bar-fill" style="--w:91%; animation-delay:0.45s;"></div></div></div>
+      </div>
+    </div>
+
+    <!-- TODO -->
+    <div class="mob-panel">
+      <div class="mob-panel-head"><span>WEEKLY TODO</span><span class="mob-live"></span></div>
+      <div class="mob-panel-body">
+        <span style="color:var(--pixel);">✅</span> Threads投稿(3/3)<br>
+        <span style="color:var(--pixel);">✅</span> note記事執筆<br>
+        <span style="color:var(--pixel);">✅</span> フォロワー分析<br>
+        <span style="color:rgba(255,255,255,0.2);">⬜</span> LP最適化
+      </div>
+    </div>
+
+    <!-- STATUS -->
+    <div class="mob-panel">
+      <div class="mob-panel-head"><span>SYSTEM</span><span class="mob-live"></span></div>
+      <div class="mob-panel-body">
+        VERSION : <span style="color:var(--pixel);">β1.0</span><br>
+        STATUS  : <span style="color:var(--pixel);">ONLINE</span><br>
+        MODE    : <span style="color:var(--pixel);">COACH</span><br>
+        USERS   : <span style="color:var(--pixel);">募集中</span>
+      </div>
+    </div>
+
+  </div>
 
   <div class="hero-announce">⚡ 重大発表 ⚡</div>
 
@@ -1439,6 +1575,13 @@ https://peaman-lp.vercel.app/</div>
   <p>© 2026 ぴーまん🫑 AI — Threads×note収益化コーチ</p>
 </footer>
 
+<!-- Threads シェア フローティングボタン -->
+<button class="threads-float-btn" onclick="shareThreadsFloat()" onmouseenter="showThreadsTip(true)" onmouseleave="showThreadsTip(false)">
+  <span class="threads-float-icon">🫑</span>
+  <span class="threads-float-label">シェア</span>
+</button>
+<div class="threads-float-tip" id="threadsTip">Threadsで投稿する</div>
+
 <!-- 気になる⭐ ボタン -->
 <button class="star-btn" id="starBtn" onclick="onStar()">
   <span class="star-icon">気になる</span>
@@ -1519,24 +1662,37 @@ https://peaman-lp.vercel.app/</div>
   `;
   document.head.appendChild(style);
 
-  /* ====== Threads シェア ====== */
+  /* ====== Threads シェア（共通テンプレ） ====== */
+  function buildThreadsText() {
+    // 絵文字を Unicode エスケープで記述し文字化けを防ぐ
+    const rocket   = '🚀'; // 🚀
+    const pepper   = '🫑'; // 🫑
+    const warning  = '⚠️'; // ⚠️
+    const pencil   = '📝'; // 📝
+    const arrow    = '👇'; // 👇
+    return (
+      '【' + pepper + 'AIがやばすぎる！】\n\n' +
+      rocket + ' 正直、スレッズ×コンテンツで稼ぎたい人、「AI」はこれがあれば十分！\n\n' +
+      warning + ' 画像と動画が作れないのはデメリット。\nでも、そんなことよりこれは革命すぎる！！\n\n' +
+      pencil + ' 【ここにあなたの感想を書いてください】\n\n' +
+      arrow + ' 詳細はこちら\nhttps://peaman-lp.vercel.app/'
+    );
+  }
+
   function shareThreads() {
-    const text =
-`【ぴーまん🫑AIがやばすぎる！】
-
-🚀 正直、スレッズ×コンテンツで稼ぎたい人、「AI」はこれがあれば十分！
-
-⚠️ 画像と動画が作れないのはデメリット。
-でも、そんなことよりこれは革命すぎる！！
-
-✍️ 【ここにあなたの感想を書いてください】
-
-👇 詳細はこちら
-https://peaman-lp.vercel.app/`;
-
-    // Threads 公式 intent URL（投稿画面がテンプレ入力済みで開く）
-    const threadsUrl = 'https://www.threads.net/intent/post?text=' + encodeURIComponent(text);
+    const threadsUrl = 'https://www.threads.net/intent/post?text=' + encodeURIComponent(buildThreadsText());
     window.open(threadsUrl, '_blank');
+  }
+
+  function shareThreadsFloat() {
+    const threadsUrl = 'https://www.threads.net/intent/post?text=' + encodeURIComponent(buildThreadsText());
+    window.open(threadsUrl, '_blank');
+  }
+
+  function showThreadsTip(show) {
+    const tip = document.getElementById('threadsTip');
+    if (show) tip.classList.add('show');
+    else tip.classList.remove('show');
   }
 </script>
 </body>
