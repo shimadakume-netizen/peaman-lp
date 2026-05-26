@@ -563,6 +563,188 @@
     .flow-card .flow-txt { font-size: 0.88rem; color: rgba(255,255,255,0.75); line-height: 1.6; }
     .flow-card .flow-txt strong { color: #fff; }
 
+    /* ========= DASHBOARD PANELS ========= */
+    .hero-dashboard {
+      position: absolute; inset: 0;
+      pointer-events: none; overflow: hidden; z-index: 0;
+    }
+
+    /* ─── LEFT: TERMINAL ─── */
+    .dash-terminal {
+      position: absolute;
+      left: 1.5rem; top: 50%;
+      transform: translateY(-50%);
+      width: 222px;
+      background: rgba(6,15,3,0.93);
+      border: 1px solid rgba(90,255,58,0.35);
+      border-radius: 8px; overflow: hidden;
+      font-family: 'Courier New', monospace;
+      animation: dashAppearL 0.7s 0.3s both;
+    }
+    @keyframes dashAppearL {
+      from { opacity:0; transform: translateY(calc(-50% + 18px)); }
+      to   { opacity:1; transform: translateY(-50%); }
+    }
+    .dash-term-bar {
+      background: rgba(90,255,58,0.07);
+      border-bottom: 1px solid rgba(90,255,58,0.18);
+      padding: 0.4rem 0.65rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .dash-term-dots { display:flex; gap:4px; }
+    .dash-term-dots span {
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    }
+    .dash-term-title { color: rgba(90,255,58,0.55); font-size:0.58rem; letter-spacing:0.12em; }
+    .dash-term-body  { padding: 0.7rem 0.8rem; }
+    .dash-term-line  { font-size:0.62rem; line-height:1.9; color:rgba(90,255,58,0.65); }
+    .dash-term-line .cmd  { color:rgba(90,255,58,0.35); }
+    .dash-term-line .ok   { color:var(--pixel); }
+    .dash-term-line .info { color:rgba(168,217,138,0.75); }
+    .dash-cursor {
+      display:inline-block; width:6px; height:11px;
+      background:var(--pixel); vertical-align:middle; margin-left:2px;
+      animation: blink 1s step-end infinite;
+    }
+
+    /* ─── RIGHT PANELS ─── */
+    .dash-right {
+      position: absolute;
+      right: 1.5rem; top: 50%; transform: translateY(-50%);
+      width: 188px;
+      display: flex; flex-direction: column; gap: 0.55rem;
+      animation: dashAppearR 0.7s 0.5s both;
+    }
+    @keyframes dashAppearR {
+      from { opacity:0; transform: translateY(calc(-50% + 18px)); }
+      to   { opacity:1; transform: translateY(-50%); }
+    }
+    .dash-panel {
+      background: rgba(6,15,3,0.9);
+      border: 1px solid rgba(90,255,58,0.22);
+      border-radius: 6px; overflow: hidden;
+    }
+    .dash-panel-head {
+      background: rgba(90,255,58,0.055);
+      border-bottom: 1px solid rgba(90,255,58,0.13);
+      padding: 0.3rem 0.65rem;
+      font-size: 0.56rem; font-weight:700;
+      color: rgba(90,255,58,0.55); letter-spacing:0.12em; text-transform:uppercase;
+      display:flex; align-items:center; justify-content:space-between;
+      font-family: 'Courier New', monospace;
+    }
+    .dash-panel-head .live {
+      width:5px; height:5px; border-radius:50%;
+      background: var(--pixel);
+      animation: pulseDot 1.5s ease-in-out infinite;
+    }
+    .dash-panel-body { padding: 0.55rem 0.7rem; }
+
+    /* analytics bars */
+    .bar-row { display:flex; align-items:center; gap:0.4rem; margin-bottom:0.3rem; }
+    .bar-label { font-size:0.54rem; color:rgba(255,255,255,0.38); width:2.6rem; text-align:right; font-family:'Courier New',monospace; }
+    .bar-track { flex:1; height:5px; background:rgba(255,255,255,0.05); border-radius:3px; overflow:hidden; }
+    .bar-fill {
+      height:100%; width:0%;
+      background: linear-gradient(90deg, var(--g3), var(--pixel));
+      border-radius:3px;
+      animation: growBar 1.3s ease both;
+    }
+    @keyframes growBar { to { width: var(--w); } }
+
+    /* todo list */
+    .todo-item {
+      display:flex; align-items:center; gap:0.35rem;
+      font-size:0.59rem; color:rgba(255,255,255,0.55);
+      padding:0.18rem 0; font-family:'Courier New',monospace;
+    }
+    .todo-item.done { color:rgba(255,255,255,0.3); text-decoration:line-through; }
+
+    /* AI thinking */
+    .ai-think { text-align:center; padding:0.3rem 0; }
+    .ai-think-icon { font-size:1.7rem; display:block; animation: floatPepper 3s ease-in-out infinite; }
+    .ai-think-dots { font-size:0.58rem; color:rgba(90,255,58,0.5); letter-spacing:0.25em; animation: blink 1.2s step-end infinite; }
+
+    /* ─── SYSTEM STATUS (bottom-left) ─── */
+    .dash-status {
+      position: absolute;
+      left: 1.5rem; bottom: 3.5rem;
+      width: 200px;
+      background: rgba(6,15,3,0.9);
+      border: 1px solid rgba(90,255,58,0.22);
+      border-radius: 6px;
+      padding: 0.6rem 0.75rem;
+      font-family: 'Courier New', monospace;
+      animation: dashAppearSimple 0.7s 0.7s both;
+    }
+    @keyframes dashAppearSimple {
+      from { opacity:0; transform:translateY(10px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .status-row {
+      font-size:0.58rem; color:rgba(90,255,58,0.55);
+      display:flex; justify-content:space-between;
+      margin-bottom:0.28rem; line-height:1.5;
+    }
+    .status-row .val { color:var(--pixel); font-weight:700; }
+    .status-bar-track { height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden; margin-top:0.4rem; }
+    .status-bar-fill  { height:100%; width:0%; background:linear-gradient(90deg,var(--g3),var(--pixel)); border-radius:2px; --w:73%; animation:growBar 2s 0.8s ease both; }
+
+    /* ─── TICKER ─── */
+    .hero-ticker {
+      position: absolute; bottom:0; left:0; right:0;
+      height: 30px;
+      background: rgba(90,255,58,0.055);
+      border-top: 1px solid rgba(90,255,58,0.13);
+      display: flex; align-items: center; overflow: hidden;
+      z-index: 2;
+    }
+    .ticker-inner {
+      display: inline-flex; white-space: nowrap;
+      animation: tickerScroll 24s linear infinite;
+      font-size: 0.65rem; font-weight:700;
+      color: rgba(90,255,58,0.55); letter-spacing:0.06em;
+      font-family: 'Courier New', monospace;
+      gap: 0;
+    }
+    @keyframes tickerScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* hide dashboard panels on small screens */
+    @media (max-width: 1200px) {
+      .dash-terminal, .dash-right, .dash-status { display: none; }
+    }
+
+    /* ─── THREADS SHARE SECTION ─── */
+    .threads-template {
+      background: rgba(255,255,255,0.025);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1.75rem 2rem;
+      max-width: 520px; margin: 0 auto 2rem;
+      font-size: 0.9rem; line-height: 2;
+      color: rgba(255,255,255,0.72);
+      white-space: pre-line; text-align: left;
+    }
+    .threads-template .tpl-hl {
+      color: var(--pixel);
+      background: rgba(90,255,58,0.08);
+      border-radius: 3px; padding: 0 0.3rem;
+    }
+    .btn-threads {
+      background: #0f0f0f; color: #fff;
+      border: 2px solid rgba(255,255,255,0.25);
+      box-shadow: 4px 4px 0 rgba(255,255,255,0.08);
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-threads:hover {
+      background: #1a1a1a;
+      transform: translate(-2px,-2px);
+      box-shadow: 6px 6px 0 rgba(255,255,255,0.12);
+    }
+
     /* responsive */
     @media (max-width: 600px) {
       .features-grid { grid-template-columns: 1fr; }
@@ -590,63 +772,111 @@
 <!-- HERO -->
 <section class="hero">
 
-  <!-- ホログラム装飾 -->
-  <div class="holo-wrap">
+  <!-- ダッシュボード装飾 -->
+  <div class="hero-dashboard">
 
-    <!-- 脳 -->
-    <div class="holo-item holo-brain">
-      <span class="holo-icon">🧠</span>
-      <span class="holo-label">AI Brain</span>
+    <!-- 左：ターミナル -->
+    <div class="dash-terminal">
+      <div class="dash-term-bar">
+        <div class="dash-term-dots">
+          <span style="background:#ff5f57;"></span>
+          <span style="background:#febc2e;"></span>
+          <span style="background:#28c840;"></span>
+        </div>
+        <span class="dash-term-title">AI COACH SYSTEM</span>
+      </div>
+      <div class="dash-term-body">
+        <div class="dash-term-line"><span class="cmd">$</span> boot peaman-ai</div>
+        <div class="dash-term-line"><span class="cmd">›</span> Loading strategy... <span class="ok">✓</span></div>
+        <div class="dash-term-line"><span class="cmd">›</span> SNS marketing mod <span class="ok">✓</span></div>
+        <div class="dash-term-line"><span class="cmd">›</span> Threads engine <span class="ok">✓</span></div>
+        <div class="dash-term-line"><span class="cmd">›</span> note optimizer <span class="ok">✓</span></div>
+        <div class="dash-term-line"><span class="cmd">›</span> AI coach ready <span class="ok">✓</span></div>
+        <div style="height:0.45rem;"></div>
+        <div class="dash-term-line"><span class="info">COACH</span> : ぴーまん🫑</div>
+        <div class="dash-term-line"><span class="info">MODE  </span> : 収益化コーチ</div>
+        <div class="dash-term-line"><span class="info">STATUS</span> : <span class="ok">ONLINE ●</span></div>
+        <div class="dash-term-line"><span class="cmd">_</span><span class="dash-cursor"></span></div>
+      </div>
     </div>
 
-    <!-- ロボット -->
-    <div class="holo-item holo-robot">
-      <span class="holo-icon">🤖</span>
-      <span class="holo-label">Auto Agent</span>
+    <!-- 右：パネル群 -->
+    <div class="dash-right">
+
+      <!-- GROWTH ANALYTICS -->
+      <div class="dash-panel">
+        <div class="dash-panel-head">
+          <span>GROWTH ANALYTICS</span>
+          <span class="live"></span>
+        </div>
+        <div class="dash-panel-body">
+          <div class="bar-row">
+            <div class="bar-label">Threads</div>
+            <div class="bar-track"><div class="bar-fill" style="--w:85%; animation-delay:0s;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">note</div>
+            <div class="bar-track"><div class="bar-fill" style="--w:68%; animation-delay:0.15s;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">収益</div>
+            <div class="bar-track"><div class="bar-fill" style="--w:72%; animation-delay:0.3s;"></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label">LINE</div>
+            <div class="bar-track"><div class="bar-fill" style="--w:91%; animation-delay:0.45s;"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WEEKLY TODO -->
+      <div class="dash-panel">
+        <div class="dash-panel-head">
+          <span>WEEKLY TODO</span>
+          <span class="live"></span>
+        </div>
+        <div class="dash-panel-body">
+          <div class="todo-item done"><span style="color:var(--pixel);">✅</span>&nbsp;Threads投稿(3/3)</div>
+          <div class="todo-item done"><span style="color:var(--pixel);">✅</span>&nbsp;note記事執筆</div>
+          <div class="todo-item done"><span style="color:var(--pixel);">✅</span>&nbsp;フォロワー分析</div>
+          <div class="todo-item"><span style="color:rgba(255,255,255,0.18);">⬜</span>&nbsp;LP最適化</div>
+        </div>
+      </div>
+
+      <!-- AI THINKING -->
+      <div class="dash-panel">
+        <div class="dash-panel-head">
+          <span>AI THINKING</span>
+          <span class="live"></span>
+        </div>
+        <div class="dash-panel-body">
+          <div class="ai-think">
+            <span class="ai-think-icon">🧠</span>
+            <div class="ai-think-dots">● ● ●</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.dash-right -->
+
+    <!-- 左下：SYSTEM STATUS -->
+    <div class="dash-status">
+      <div class="status-row"><span>VERSION</span><span class="val">β 1.0</span></div>
+      <div class="status-row"><span>STATUS </span><span class="val">ONLINE</span></div>
+      <div class="status-row"><span>MODE   </span><span class="val">COACH</span></div>
+      <div class="status-row"><span>USERS  </span><span class="val">募集中</span></div>
+      <div class="status-bar-track"><div class="status-bar-fill"></div></div>
     </div>
 
-    <!-- ロードマップ -->
-    <div class="holo-item holo-chart">
-      <span class="holo-icon">🗺️</span>
-      <span class="holo-label">Road Map</span>
+    <!-- ティッカー -->
+    <div class="hero-ticker">
+      <div class="ticker-inner">
+        &nbsp;🫑&nbsp;ぴーまん AIコーチがあなたを伴走サポート&emsp;★&emsp;Threads × note 収益化の全フローを自動化&emsp;★&emsp;7桁を出し続けたぴーまんの思想がそのままAIに&emsp;★&emsp;β版モニター募集中&emsp;★&emsp;使いこなせばぴーまんと同じことをやることになる&emsp;★&emsp;
+        &nbsp;🫑&nbsp;ぴーまん AIコーチがあなたを伴走サポート&emsp;★&emsp;Threads × note 収益化の全フローを自動化&emsp;★&emsp;7桁を出し続けたぴーまんの思想がそのままAIに&emsp;★&emsp;β版モニター募集中&emsp;★&emsp;使いこなせばぴーまんと同じことをやることになる&emsp;★&emsp;
+      </div>
     </div>
 
-    <!-- サーキット -->
-    <div class="holo-item holo-circuit">
-      <span class="holo-icon">⚙️</span>
-      <span class="holo-label">Auto Flow</span>
-    </div>
-
-    <!-- 折れ線グラフ SVG -->
-    <div class="holo-graph">
-      <svg viewBox="0 0 140 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- グリッド -->
-        <line x1="0" y1="70" x2="140" y2="70" stroke="rgba(90,255,58,0.15)" stroke-width="1"/>
-        <line x1="0" y1="50" x2="140" y2="50" stroke="rgba(90,255,58,0.1)" stroke-width="1"/>
-        <line x1="0" y1="30" x2="140" y2="30" stroke="rgba(90,255,58,0.1)" stroke-width="1"/>
-        <line x1="0" y1="10" x2="140" y2="10" stroke="rgba(90,255,58,0.1)" stroke-width="1"/>
-        <!-- 折れ線 -->
-        <polyline class="graph-line"
-          points="0,65 25,58 50,48 70,38 90,25 115,15 140,5"
-          stroke="#5aff3a" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-        <!-- 塗りつぶし -->
-        <polygon
-          points="0,65 25,58 50,48 70,38 90,25 115,15 140,5 140,70 0,70"
-          fill="url(#chartGrad)" opacity="0.2"/>
-        <!-- ドット -->
-        <circle class="graph-dot" cx="140" cy="5" r="3" fill="#5aff3a"/>
-        <!-- ラベル -->
-        <text x="2" y="79" fill="rgba(90,255,58,0.5)" font-size="7" font-family="monospace">収益</text>
-        <text x="110" y="79" fill="rgba(90,255,58,0.5)" font-size="7" font-family="monospace">7桁→</text>
-        <defs>
-          <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#5aff3a"/>
-            <stop offset="100%" stop-color="transparent"/>
-          </linearGradient>
-        </defs>
-      </svg>
-    </div>
-  </div>
+  </div><!-- /.hero-dashboard -->
 
   <div class="hero-announce">⚡ 重大発表 ⚡</div>
 
@@ -993,6 +1223,35 @@
   </div>
 </section>
 
+<!-- THREADS SHARE -->
+<section style="background: rgba(0,0,0,0.25);">
+  <div class="inner" style="text-align:center;">
+    <div class="sec-label">Share</div>
+    <h2 class="sec-title">Threadsで<span class="g">シェアしよう</span></h2>
+    <p class="sec-desc" style="margin:0 auto 2.5rem;">気に入ったら Threads でシェアして仲間に広めよう。<br>ボタンを押すと投稿テンプレが自動でセットされます。</p>
+
+    <!-- テンプレ プレビュー -->
+    <div class="threads-template">🚀 正直、スレッズ×コンテンツで稼ぎたい人、これがあれば十分！
+
+⚠️ 画像と動画が作れないのはデメリット。
+でも、そんなことよりこれは革命。
+
+✍️ <span class="tpl-hl">【ここにあなたの感想を書いてください】</span>
+
+👇 詳細はこちら
+<span class="tpl-hl">（URLが自動で入ります）</span></div>
+
+    <button onclick="shareThreads()" class="btn-big btn-threads">
+      🫑&nbsp;Threadsでシェア（テンプレ付き）
+    </button>
+    <p style="margin-top:1rem; color:rgba(255,255,255,0.3); font-size:0.78rem;">
+      ※ 投稿前に感想を書き換えてからポストしてください
+    </p>
+  </div>
+</section>
+
+<div class="pixel-divider"></div>
+
 <!-- CONSULT -->
 <section>
   <div class="inner">
@@ -1106,6 +1365,30 @@
     }
   `;
   document.head.appendChild(style);
+
+  /* ====== Threads シェア ====== */
+  function shareThreads() {
+    const url = window.location.href;
+    const text =
+`🚀 正直、スレッズ×コンテンツで稼ぎたい人、これがあれば十分！
+
+⚠️ 画像と動画が作れないのはデメリット。
+でも、そんなことよりこれは革命。
+
+✍️ 【ここにあなたの感想を書いてください】
+
+👇 詳細はこちら
+${url}`;
+
+    // モバイルは Web Share API でそのまま共有
+    if (navigator.share) {
+      navigator.share({ text }).catch(() => {});
+      return;
+    }
+    // PC は Threads intent URL
+    const threadsUrl = 'https://www.threads.net/intent/post?text=' + encodeURIComponent(text);
+    window.open(threadsUrl, '_blank');
+  }
 </script>
 </body>
 </html>
