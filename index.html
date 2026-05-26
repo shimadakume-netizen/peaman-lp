@@ -488,6 +488,81 @@
       margin: 0;
     }
 
+    /* ========= HOLOGRAM ========= */
+    .holo-wrap {
+      position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+    }
+    .holo-item {
+      position: absolute;
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      opacity: 0;
+      animation: holoAppear 1s ease forwards, holoFloat 5s ease-in-out infinite;
+    }
+    @keyframes holoAppear { to { opacity: 1; } }
+    @keyframes holoFloat {
+      0%,100% { transform: translateY(0) rotate(-3deg); }
+      50%      { transform: translateY(-18px) rotate(3deg); }
+    }
+    .holo-icon {
+      font-size: 2.8rem;
+      filter: drop-shadow(0 0 12px rgba(90,255,58,0.7));
+      opacity: 0.55;
+    }
+    .holo-label {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em;
+      color: rgba(90,255,58,0.5);
+      text-transform: uppercase;
+    }
+    /* 個別位置・タイミング */
+    .holo-brain  { top:18%; left:4%;  animation-delay:0.2s, 0.2s; animation-duration:1s,6s; }
+    .holo-robot  { top:30%; right:4%; animation-delay:0.5s, 0.5s; animation-duration:1s,7s; }
+    .holo-chart  { bottom:20%; left:6%; animation-delay:0.8s, 0.8s; animation-duration:1s,5.5s; }
+    .holo-circuit{ bottom:25%; right:5%; animation-delay:0.3s, 0.3s; animation-duration:1s,8s; }
+
+    /* SVG line-graph hologram */
+    .holo-graph {
+      position: absolute;
+      top: 12%; right: 8%;
+      opacity: 0;
+      animation: holoAppear 1s 0.6s ease forwards;
+    }
+    .holo-graph svg { width: 140px; height: 80px; overflow: visible; }
+    .graph-line {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: drawLine 2s 1s ease forwards;
+    }
+    @keyframes drawLine { to { stroke-dashoffset: 0; } }
+    .graph-dot { animation: pulseDot 2s ease-in-out infinite; }
+    @keyframes pulseDot { 0%,100%{r:3;opacity:1;} 50%{r:5;opacity:0.6;} }
+
+    /* ========= FLOW SECTION ========= */
+    .flow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 0.75rem;
+      counter-reset: flow;
+    }
+    .flow-card {
+      background: rgba(45,90,32,0.15);
+      border: 1px solid rgba(125,192,90,0.15);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      counter-increment: flow;
+    }
+    .flow-card .flow-num {
+      min-width: 1.6rem; height: 1.6rem;
+      background: rgba(90,255,58,0.12);
+      border: 1px solid rgba(90,255,58,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.72rem; font-weight: 900; color: var(--pixel);
+      flex-shrink: 0;
+    }
+    .flow-card .flow-txt { font-size: 0.88rem; color: rgba(255,255,255,0.75); line-height: 1.6; }
+    .flow-card .flow-txt strong { color: #fff; }
+
     /* responsive */
     @media (max-width: 600px) {
       .features-grid { grid-template-columns: 1fr; }
@@ -514,6 +589,65 @@
 
 <!-- HERO -->
 <section class="hero">
+
+  <!-- ホログラム装飾 -->
+  <div class="holo-wrap">
+
+    <!-- 脳 -->
+    <div class="holo-item holo-brain">
+      <span class="holo-icon">🧠</span>
+      <span class="holo-label">AI Brain</span>
+    </div>
+
+    <!-- ロボット -->
+    <div class="holo-item holo-robot">
+      <span class="holo-icon">🤖</span>
+      <span class="holo-label">Auto Agent</span>
+    </div>
+
+    <!-- ロードマップ -->
+    <div class="holo-item holo-chart">
+      <span class="holo-icon">🗺️</span>
+      <span class="holo-label">Road Map</span>
+    </div>
+
+    <!-- サーキット -->
+    <div class="holo-item holo-circuit">
+      <span class="holo-icon">⚙️</span>
+      <span class="holo-label">Auto Flow</span>
+    </div>
+
+    <!-- 折れ線グラフ SVG -->
+    <div class="holo-graph">
+      <svg viewBox="0 0 140 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- グリッド -->
+        <line x1="0" y1="70" x2="140" y2="70" stroke="rgba(90,255,58,0.15)" stroke-width="1"/>
+        <line x1="0" y1="50" x2="140" y2="50" stroke="rgba(90,255,58,0.1)" stroke-width="1"/>
+        <line x1="0" y1="30" x2="140" y2="30" stroke="rgba(90,255,58,0.1)" stroke-width="1"/>
+        <line x1="0" y1="10" x2="140" y2="10" stroke="rgba(90,255,58,0.1)" stroke-width="1"/>
+        <!-- 折れ線 -->
+        <polyline class="graph-line"
+          points="0,65 25,58 50,48 70,38 90,25 115,15 140,5"
+          stroke="#5aff3a" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- 塗りつぶし -->
+        <polygon
+          points="0,65 25,58 50,48 70,38 90,25 115,15 140,5 140,70 0,70"
+          fill="url(#chartGrad)" opacity="0.2"/>
+        <!-- ドット -->
+        <circle class="graph-dot" cx="140" cy="5" r="3" fill="#5aff3a"/>
+        <!-- ラベル -->
+        <text x="2" y="79" fill="rgba(90,255,58,0.5)" font-size="7" font-family="monospace">収益</text>
+        <text x="110" y="79" fill="rgba(90,255,58,0.5)" font-size="7" font-family="monospace">7桁→</text>
+        <defs>
+          <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5aff3a"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </div>
+
   <div class="hero-announce">⚡ 重大発表 ⚡</div>
 
   <span class="hero-pepper">🫑</span>
@@ -574,56 +708,106 @@
 <section>
   <div class="inner">
     <div class="sec-label">Features</div>
-    <h2 class="sec-title">4つの<span class="g">モード</span>で<br>全部解決する</h2>
-    <p class="sec-desc">ヒアリングから投稿作成・画像生成・週次ToDoまで、収益化に必要な機能をすべて搭載。</p>
+    <h2 class="sec-title"><span class="g">7つのモード</span>で<br>全部解決する</h2>
+    <p class="sec-desc">相談から記事執筆・図解・AIアート・ロードマップ・ToDoまで、収益化に必要な機能をすべて搭載。</p>
 
     <div class="features-grid">
       <div class="feature-card">
         <div class="feature-num">01</div>
-        <div class="feature-tag">HEARING MODE</div>
-        <h3>🎤 ヒアリングモード</h3>
-        <p>現状・悩みを聞き出し、Threads×note運用の「素材シート」を自動作成。次のステップに必要な情報を整理します。</p>
+        <div class="feature-tag">CONSULT MODE</div>
+        <h3>💬 何でも相談</h3>
+        <p>記事作成・収益化プロセスについて何でも相談できる窓口。「次はどうすれば？」に具体的に答えます。</p>
         <ul>
-          <li>現状・目標のヒアリング</li>
-          <li>素材シート自動生成</li>
-          <li>次のアクション整理</li>
+          <li>「何を書いたらいい？」という相談</li>
+          <li>各モードの使い方説明</li>
+          <li>SNSマーケの知識に基づくアドバイス</li>
         </ul>
       </div>
 
       <div class="feature-card">
         <div class="feature-num">02</div>
-        <div class="feature-tag">WRITING MODE</div>
-        <h3>✍️ 執筆モード</h3>
-        <p>素材シートからThreads投稿・note記事を自動生成。SNSマーケティング4ステップに沿った構成で仕上げます。</p>
+        <div class="feature-tag">HEARING MODE</div>
+        <h3>🎤 記事ヒアリング</h3>
+        <p>あなたの考えやテーマを聞いて、記事の方向性を決定。「何を書くか」から「どう書くか」まで一緒に考えます。</p>
         <ul>
-          <li>Threads投稿文の自動生成</li>
-          <li>4ステップ構成で記事執筆</li>
-          <li>素材シート作成後に利用可能</li>
+          <li>「何について書きたいか」をヒアリング</li>
+          <li>どんな構成にするか一緒に考える</li>
+          <li>テーマ・ターゲット・メッセージを明確化</li>
         </ul>
       </div>
 
       <div class="feature-card">
         <div class="feature-num">03</div>
-        <div class="feature-tag">IMAGE MODE</div>
-        <h3>🎨 図解モード（画像生成）</h3>
-        <p>Threads投稿用の画像生成プロンプトを自動作成。ChatGPT/Geminiに貼るだけで完成。</p>
+        <div class="feature-tag">WRITING MODE</div>
+        <h3>✍️ 記事本文作成</h3>
+        <p>ヒアリングの内容をもとに、あなたの言葉とスタイルを活かした高品質な記事を生成します。</p>
         <ul>
-          <li>16:9（Threads用）/ 縦長（壁紙用）対応</li>
-          <li>雰囲気・カラー・スタイルをカスタマイズ</li>
-          <li>AIに貼るだけで即完成</li>
+          <li>Threads向け短編（140文字〜）</li>
+          <li>note向け記事（1000〜5000文字）</li>
+          <li>あなたの言葉・スタイルを活かした執筆</li>
         </ul>
       </div>
 
       <div class="feature-card">
         <div class="feature-num">04</div>
-        <div class="feature-tag">TODO MODE</div>
-        <h3>📋 Todoモード（週次）</h3>
-        <p>6フェーズ診断で「今自分がどこにいるか」を特定し、今週やるべき具体的なToDoを自動生成。</p>
+        <div class="feature-tag">DIAGRAM MODE</div>
+        <h3>📐 図解作成</h3>
+        <p>Threads投稿やnoteで使える図を作成。データを視覚的にわかりやすく表現します。</p>
         <ul>
-          <li>4ステップ×6フェーズで現在地診断</li>
-          <li>1日2〜3タスク×7日の実行計画</li>
-          <li>毎週更新で無理のない継続</li>
+          <li>画像生成AIのプロンプト作成</li>
+          <li>Mermaid図など複数形式で出力</li>
+          <li>データを視覚的にわかりやすく表現</li>
         </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-num">05</div>
+        <div class="feature-tag">AI ART MODE</div>
+        <h3>🎨 AIアート</h3>
+        <p>Midjourneyプロンプト設計アシスタント。「何を作りたいか」を対話形式で整理してコピペ用プロンプトを自動生成。</p>
+        <ul>
+          <li>初心者向けステップバイステップガイド</li>
+          <li>コピペで使える英文プロンプト自動生成</li>
+          <li>雰囲気・カラー・スタイルをカスタマイズ</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-num">06</div>
+        <div class="feature-tag">ROADMAP MODE</div>
+        <h3>🗺️ ロードマップ作製</h3>
+        <p>「何をしていいかわからない」をビジュアルで解決。現在地とゴールを整理して次のステップを明確化。</p>
+        <ul>
+          <li>Threads×note収益化の全体像を把握</li>
+          <li>ビジュアルロードマップ画像を生成</li>
+          <li>現在地とゴールの整理・次ステップ明確化</li>
+        </ul>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-num">07</div>
+        <div class="feature-tag">TODO MODE</div>
+        <h3>📋 Todo作成</h3>
+        <p>収益化フェーズを診断して今週のタスクを自動生成。SNSマーケの4ステップ×6フェーズで現在地を特定します。</p>
+        <ul>
+          <li>4ステップ×6フェーズ診断</li>
+          <li>実行可能な週次タスク生成</li>
+          <li>ビジュアルロードマップ画像を生成</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 推奨フロー -->
+    <div style="margin-top:3rem;">
+      <div class="sec-label" style="margin-bottom:1rem;">🎯 推奨される使用フロー</div>
+      <div class="flow-grid">
+        <div class="flow-card"><div class="flow-num">1</div><div class="flow-txt"><strong>💬 何でも相談</strong> — 困ったことがある・次をどうしようか</div></div>
+        <div class="flow-card"><div class="flow-num">2</div><div class="flow-txt"><strong>🎤 記事ヒアリング</strong> — テーマや構成を決める</div></div>
+        <div class="flow-card"><div class="flow-num">3</div><div class="flow-txt"><strong>✍️ 記事本文作成</strong> — ヒアリングをもとに本文を執筆</div></div>
+        <div class="flow-card"><div class="flow-num">4</div><div class="flow-txt"><strong>📐 図解作成</strong> — （必要に応じて）図やビジュアルを作成</div></div>
+        <div class="flow-card"><div class="flow-num">5</div><div class="flow-txt"><strong>🎨 AIアート</strong> — （必要に応じて）視覚的な素材を作成</div></div>
+        <div class="flow-card"><div class="flow-num">6</div><div class="flow-txt"><strong>🗺️ ロードマップ</strong> — 全体像を知りたい・何をしていいかわからない</div></div>
+        <div class="flow-card"><div class="flow-num">7</div><div class="flow-txt"><strong>📋 Todo作成</strong> — 今週何をするか決めたい</div></div>
       </div>
     </div>
   </div>
@@ -682,13 +866,13 @@
   <div class="inner">
     <div class="sec-label">Coming Soon</div>
     <h2 class="sec-title">ぴーまん🫑は<br><span class="g">まだ進化する</span></h2>
-    <p class="sec-desc">β版は現在4機能。これからどんどん機能が追加されていきます。</p>
+    <p class="sec-desc">β版は現在7機能。これからもどんどん機能が追加されていきます。</p>
 
     <div class="features-grid">
       <div class="feature-card" style="border-color: rgba(251,191,36,0.3);">
         <div class="feature-tag" style="background:rgba(251,191,36,0.15); color:#fbbf24;">COMING SOON</div>
-        <h3>✨ AIアートプロンプト生成</h3>
-        <p>投稿の世界観に合わせたAIアート画像を自動生成。より視覚的で魅力的なコンテンツに進化します。</p>
+        <h3>📊 詳細パフォーマンス分析</h3>
+        <p>Threads×noteの投稿ごとのパフォーマンスを分析。伸びた投稿・伸びなかった投稿の差を自動解析します。</p>
       </div>
       <div class="feature-card" style="border-color: rgba(251,191,36,0.3);">
         <div class="feature-tag" style="background:rgba(251,191,36,0.15); color:#fbbf24;">FUTURE</div>
