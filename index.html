@@ -1518,16 +1518,16 @@
     <p class="sec-desc" style="margin:0 auto 2.5rem;">気に入ったら Threads でシェアして仲間に広めよう。<br>ボタンを押すと投稿テンプレが自動でセットされます。</p>
 
     <!-- テンプレ プレビュー -->
-    <div class="threads-template">【ぴーまん🫑AIがやばすぎる！】
+    <div class="threads-template">【ぴーまんAIがやばすぎる！】
 
-🚀 正直、スレッズ×コンテンツで稼ぎたい人、「AI」はこれがあれば十分！
+正直、スレッズ×コンテンツで稼ぎたい人、「AI」はこれがあれば十分！
 
-⚠️ 画像と動画が作れないのはデメリット。
+画像と動画が作れないのはデメリットだけど...
 でも、そんなことよりこれは革命すぎる！！
 
-✍️ <span class="tpl-hl">【ここにあなたの感想を書いてください】</span>
+<span class="tpl-hl">【ここにあなたの感想を書いてください】</span>
 
-👇 詳細はこちら
+詳細はこちら↓
 https://peaman-lp.vercel.app/</div>
 
     <button onclick="shareThreads()" class="btn-big btn-threads">
@@ -1664,18 +1664,13 @@ https://peaman-lp.vercel.app/</div>
 
   /* ====== Threads シェア（共通テンプレ） ====== */
   function buildThreadsText() {
-    // 絵文字を Unicode エスケープで記述し文字化けを防ぐ
-    const rocket   = '🚀'; // 🚀
-    const pepper   = '🫑'; // 🫑
-    const warning  = '⚠️'; // ⚠️
-    const pencil   = '📝'; // 📝
-    const arrow    = '👇'; // 👇
     return (
-      '【' + pepper + 'AIがやばすぎる！】\n\n' +
-      rocket + ' 正直、スレッズ×コンテンツで稼ぎたい人、「AI」はこれがあれば十分！\n\n' +
-      warning + ' 画像と動画が作れないのはデメリット。\nでも、そんなことよりこれは革命すぎる！！\n\n' +
-      pencil + ' 【ここにあなたの感想を書いてください】\n\n' +
-      arrow + ' 詳細はこちら\nhttps://peaman-lp.vercel.app/'
+      '【ぴーまんAIがやばすぎる！】\n\n' +
+      '正直、スレッズ×コンテンツで稼ぎたい人、「AI」はこれがあれば十分！\n\n' +
+      '画像と動画が作れないのはデメリットだけど...\n' +
+      'でも、そんなことよりこれは革命すぎる！！\n\n' +
+      '【ここにあなたの感想を書いてください】\n\n' +
+      '詳細はこちら↓\nhttps://peaman-lp.vercel.app/'
     );
   }
 
