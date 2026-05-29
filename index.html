@@ -910,6 +910,111 @@
       box-shadow: 6px 6px 0 rgba(255,255,255,0.12);
     }
 
+    /* ========= UPDATE NOTES ========= */
+    .update-section {
+      background: linear-gradient(180deg, rgba(6,15,3,1) 0%, rgba(10,26,6,0.8) 100%);
+    }
+    .update-header-row {
+      display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .update-ver-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      background: rgba(90,255,58,0.1);
+      border: 1px solid rgba(90,255,58,0.4);
+      border-radius: 4px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.72rem; font-weight: 700;
+      color: var(--pixel);
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+    .update-ver-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--pixel);
+      animation: pulse 1.5s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    .update-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.25rem;
+    }
+    .update-card {
+      background: rgba(168,217,138,0.04);
+      border: 1px solid rgba(90,255,58,0.2);
+      border-radius: 10px;
+      padding: 1.75rem 1.75rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .update-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--g3), var(--pixel));
+    }
+    .update-card:hover {
+      border-color: rgba(90,255,58,0.45);
+      transform: translateY(-2px);
+    }
+    .update-card-new {
+      display: inline-block;
+      background: var(--pixel);
+      color: var(--dark);
+      font-size: 0.6rem; font-weight: 900;
+      padding: 0.12rem 0.45rem;
+      border-radius: 3px;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+    }
+    .update-card-icon { font-size: 1.75rem; margin-bottom: 0.5rem; display: block; }
+    .update-card h3 {
+      font-size: 1.05rem; font-weight: 900;
+      margin-bottom: 0.6rem; color: #fff;
+      line-height: 1.4;
+    }
+    .update-card .update-desc {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.85rem; line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    .update-items {
+      display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .update-item {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      font-size: 0.82rem; color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+    }
+    .update-item-icon {
+      font-size: 0.85rem; flex-shrink: 0; margin-top: 0.05rem;
+    }
+    .update-item strong { color: #fff; }
+    .update-merit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+    .update-merit {
+      background: rgba(45,90,32,0.25);
+      border: 1px solid rgba(90,255,58,0.12);
+      border-radius: 6px;
+      padding: 0.7rem 0.85rem;
+      display: flex; align-items: flex-start; gap: 0.5rem;
+    }
+    .update-merit .merit-check {
+      color: var(--pixel); font-size: 0.78rem; flex-shrink: 0; margin-top: 0.05rem;
+    }
+    .update-merit .merit-text {
+      font-size: 0.78rem; color: rgba(255,255,255,0.7); line-height: 1.5;
+    }
+    .update-merit .merit-text strong { color: #fff; font-size: 0.8rem; }
+
     /* responsive */
     @media (max-width: 600px) {
       .features-grid { grid-template-columns: 1fr; }
@@ -1026,7 +1131,7 @@
 
     <!-- 左下：SYSTEM STATUS -->
     <div class="dash-status">
-      <div class="status-row"><span>VERSION</span><span class="val">β 1.0</span></div>
+      <div class="status-row"><span>VERSION</span><span class="val">β 1.1</span></div>
       <div class="status-row"><span>STATUS </span><span class="val">ONLINE</span></div>
       <div class="status-row"><span>MODE   </span><span class="val">COACH</span></div>
       <div class="status-row"><span>USERS  </span><span class="val">募集中</span></div>
@@ -1082,7 +1187,7 @@
     <div class="mob-panel">
       <div class="mob-panel-head"><span>SYSTEM</span><span class="mob-live"></span></div>
       <div class="mob-panel-body">
-        VERSION : <span style="color:var(--pixel);">β1.0</span><br>
+        VERSION : <span style="color:var(--pixel);">β1.1</span><br>
         STATUS  : <span style="color:var(--pixel);">ONLINE</span><br>
         MODE    : <span style="color:var(--pixel);">COACH</span><br>
         USERS   : <span style="color:var(--pixel);">募集中</span>
@@ -1327,6 +1432,75 @@
         <h3>🚀 7桁狙えるSNSマーケAI</h3>
         <p>Threads×noteでの収益化を完全自動化するエコシステム構築。業界標準のAIへ。</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<div class="pixel-divider"></div>
+
+<!-- UPDATE NOTES -->
+<section class="update-section">
+  <div class="inner">
+    <div class="update-header-row">
+      <div class="sec-label" style="margin-bottom:0;">Update</div>
+      <div class="update-ver-badge">
+        <span class="update-ver-dot"></span>
+        最新アップデート — v1.1
+      </div>
+    </div>
+    <h2 class="sec-title" style="margin-bottom:0.75rem;"><span class="g">2つの新機能</span>が追加されました</h2>
+    <p class="sec-desc">使えば使うほど、あなた専用に育っていくAIへ。</p>
+
+    <div class="update-cards">
+
+      <!-- UPDATE 1: パーソナル設定 -->
+      <div class="update-card">
+        <span class="update-card-new">✨ NEW</span>
+        <span class="update-card-icon">👥</span>
+        <h3>あなた専用の情報をAIが理解するようになりました</h3>
+        <p class="update-desc">
+          これまでは毎回「私のターゲットは〇〇で…」と説明する必要がありました。<br>
+          今回のアップデートで、あなたの発信背景を一度登録しておくだけで、<strong style="color:#fff;">全モードのAIがそれを前提に回答</strong>するようになります。
+        </p>
+        <div class="update-items">
+          <div class="update-item"><span class="update-item-icon">👥</span><div><strong>ペルソナ</strong> — 誰に届けたいか（読者像）</div></div>
+          <div class="update-item"><span class="update-item-icon">💡</span><div><strong>コンセプト</strong> — あなたの発信の軸・世界観</div></div>
+          <div class="update-item"><span class="update-item-icon">📍</span><div><strong>ポジション／競合との違い</strong> — あなたならではの立ち位置</div></div>
+          <div class="update-item"><span class="update-item-icon">📈</span><div><strong>需要</strong> — 読者・市場が求めているもの</div></div>
+          <div class="update-item"><span class="update-item-icon">🎁</span><div><strong>供給</strong> — あなたが提供できる価値</div></div>
+        </div>
+        <div class="update-merit-grid" style="margin-top:1.25rem;">
+          <div class="update-merit"><span class="merit-check">✅</span><div class="merit-text"><strong>前提説明がゼロに</strong><br>本題からすぐ始められる</div></div>
+          <div class="update-merit"><span class="merit-check">✅</span><div class="merit-text"><strong>回答がブレない</strong><br>どのモードでも一貫した提案</div></div>
+          <div class="update-merit"><span class="merit-check">✅</span><div class="merit-text"><strong>「刺さる」表現に</strong><br>ペルソナを踏まえた言葉選び</div></div>
+          <div class="update-merit"><span class="merit-check">✅</span><div class="merit-text"><strong>競合と差がつく</strong><br>あなたのポジションを理解した切り口</div></div>
+        </div>
+      </div>
+
+      <!-- UPDATE 2: お問い合わせ -->
+      <div class="update-card">
+        <span class="update-card-new">✨ NEW</span>
+        <span class="update-card-icon">📬</span>
+        <h3>お問い合わせ機能を追加しました</h3>
+        <p class="update-desc">
+          要望・不具合報告・質問を、<strong style="color:#fff;">アプリから離れずにそのまま送信</strong>できるようになりました。<br>
+          メールアプリを開いたり、連絡先を探したりする必要はありません。
+        </p>
+        <div class="update-items">
+          <div class="update-item"><span class="update-item-icon">📱</span><div><strong>アプリ内で完結</strong> — 思いついたその場ですぐ送れます</div></div>
+          <div class="update-item"><span class="update-item-icon">💬</span><div><strong>返信もアプリ内で確認</strong> — メールを見逃す心配なし</div></div>
+          <div class="update-item"><span class="update-item-icon">🔔</span><div><strong>状況がひと目でわかる</strong> — 「確認中／対応済み」などの状態が表示</div></div>
+          <div class="update-item"><span class="update-item-icon">🫑</span><div><strong>声が機能改善に直結</strong> — いただいた要望が次のアップデートへ</div></div>
+        </div>
+        <div style="margin-top:1.25rem; background:rgba(45,90,32,0.3); border:1px solid rgba(90,255,58,0.15); border-radius:8px; padding:1rem 1.1rem;">
+          <div style="font-size:0.72rem; color:var(--g1); font-weight:700; margin-bottom:0.4rem; letter-spacing:0.05em;">ぴーまん🫑 より</div>
+          <p style="font-size:0.82rem; color:rgba(255,255,255,0.7); line-height:1.8;">
+            「この機能が欲しい」「ここがわかりにくい」など、どんな小さなことでもお気軽にどうぞ。<br>
+            <strong style="color:#fff;">あなたの声がぴーまんAIを育てます🫑</strong>
+          </p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
