@@ -574,6 +574,75 @@ nav{
   display:block;margin-bottom:1rem;
 }
 
+/* AI LP mini preview card */
+.lp-preview{
+  width:100%;max-width:320px;
+  margin:0 auto 1rem;
+  border-radius:16px;overflow:hidden;
+  border:2px solid rgba(90,255,58,0.3);
+  box-shadow:0 12px 48px rgba(0,0,0,0.5);
+  background:#060f03;
+  font-family:'Courier New',monospace;
+  cursor:pointer;
+  transition:transform 0.2s,box-shadow 0.2s;
+  display:block;text-decoration:none;
+}
+.lp-preview:hover{transform:translateY(-4px);box-shadow:0 16px 60px rgba(0,0,0,0.6);}
+.lp-preview-inner{
+  padding:1.5rem 1.25rem;
+  position:relative;overflow:hidden;
+  background:
+    linear-gradient(rgba(90,255,58,0.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(90,255,58,0.03) 1px,transparent 1px);
+  background-size:20px 20px;
+  min-height:200px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  gap:0.6rem;
+}
+.lp-preview-badge{
+  display:inline-block;
+  background:#ff6b35;color:#fff;
+  font-size:0.55rem;font-weight:900;
+  padding:0.15rem 0.6rem;border-radius:2px;
+  letter-spacing:0.15em;
+}
+.lp-preview-emoji{
+  font-size:3rem;
+  filter:drop-shadow(0 0 16px rgba(90,255,58,0.8));
+  animation:floatChar 3s ease-in-out infinite;
+}
+.lp-preview-title{
+  font-family:'Noto Sans JP',sans-serif;
+  font-size:1.1rem;font-weight:900;
+  color:#fff;line-height:1.2;
+  text-shadow:0 0 20px rgba(168,217,138,0.4);
+}
+.lp-preview-title span{color:#a8d98a;}
+.lp-preview-sub{
+  font-size:0.6rem;color:rgba(90,255,58,0.6);
+  letter-spacing:0.06em;
+}
+.lp-preview-panels{
+  display:flex;gap:0.4rem;margin-top:0.5rem;
+}
+.lp-mini-panel{
+  background:rgba(6,15,3,0.9);
+  border:1px solid rgba(90,255,58,0.25);
+  border-radius:4px;padding:0.3rem 0.4rem;
+  font-size:0.42rem;color:rgba(90,255,58,0.55);
+  text-align:left;line-height:1.6;
+  flex:1;
+}
+.lp-preview-bar{
+  position:absolute;bottom:0;left:0;right:0;
+  height:20px;background:rgba(90,255,58,0.05);
+  border-top:1px solid rgba(90,255,58,0.12);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.48rem;color:rgba(90,255,58,0.4);
+  letter-spacing:0.06em;
+}
+
 /* ─────────────────── FOOTER ─────────────────── */
 footer{
   background:var(--g-dark);color:rgba(255,255,255,0.7);
@@ -750,10 +819,26 @@ footer{
 
     <div class="ai-layout">
 
-      <!-- 動画 & サムネ -->
+      <!-- 動画 & LPプレビュー -->
       <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
-        <!-- AIサムネ：画像を提供してもらったら追加 -->
-        <!-- <img class="ai-thumb" src="ai-thumb.png" alt="ぴーまんAI"> -->
+
+        <!-- AI LP ミニプレビュー -->
+        <a class="lp-preview" href="https://peaman-lp.vercel.app/" target="_blank">
+          <div class="lp-preview-inner">
+            <span class="lp-preview-badge">⚡ 重大発表 ⚡</span>
+            <span class="lp-preview-emoji">🫑</span>
+            <div class="lp-preview-title"><span>ぴーまん🫑 AI</span><br>公開</div>
+            <div class="lp-preview-sub">Threads × note 収益化コーチ、ついにリリース</div>
+            <div class="lp-preview-panels">
+              <div class="lp-mini-panel">$ boot peaman-ai<br>› coach ready ✓<br>STATUS: ONLINE</div>
+              <div class="lp-mini-panel">GROWTH<br>Threads ████<br>note ███<br>収益 ████</div>
+              <div class="lp-mini-panel">TODO<br>✅ Threads投稿<br>✅ note記事<br>⬜ LP最適化</div>
+            </div>
+            <div class="lp-preview-bar">🫑 peaman-lp.vercel.app — タップして見る</div>
+          </div>
+        </a>
+
+        <!-- 動画 -->
         <div class="ai-video-wrap">
           <video autoplay muted loop playsinline controls>
             <source src="peaman-ai.mov" type="video/mp4">
