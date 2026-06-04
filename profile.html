@@ -5,23 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ぴーまん🫑 — 難しいを簡単に✨</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Zen+Maru+Gothic:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
 <style>
+/* ─────────────────── VARIABLES ─────────────────── */
 :root{
   --bg:#eef6e4;
-  --bg2:#f7faf0;
+  --bg2:#f6fbee;
   --white:#ffffff;
-  --g-dark:#2d5a1e;
-  --g-mid:#4a8a32;
+  --g-dark:#1e4a12;
+  --g-mid:#3a7a28;
+  --g-bright:#5db83e;
   --g-light:#8dc86a;
   --g-pale:#c8e8b0;
-  --g-super-pale:#e8f5dc;
-  --gold:#f5c218;
-  --orange:#ff7a3d;
-  --text:#2d4a1e;
-  --muted:#7a9866;
-  --card-shadow:0 4px 20px rgba(45,90,30,0.1);
-  --card-shadow-hover:0 8px 28px rgba(45,90,30,0.18);
+  --g-xpale:#e4f5d4;
+  --gold:#f0b800;
+  --gold-dark:#c89600;
+  --orange:#ff6b2b;
+  --text:#1e3a12;
+  --muted:#5a8050;
+  --card-sh:0 4px 24px rgba(30,74,18,0.09);
+  --card-sh-h:0 10px 36px rgba(30,74,18,0.16);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -29,679 +32,688 @@ body{
   background:var(--bg);
   color:var(--text);
   font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;
-  max-width:480px;
-  margin:0 auto;
   overflow-x:hidden;
 }
 
-/* ── BG DECORATION ── */
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background:
-    radial-gradient(circle at 10% 20%,rgba(141,200,106,0.12) 0%,transparent 50%),
-    radial-gradient(circle at 90% 80%,rgba(141,200,106,0.1) 0%,transparent 50%);
-  pointer-events:none;z-index:0;
-}
+/* ─────────────────── LAYOUT WRAPPER ─────────────────── */
+.page{max-width:1100px;margin:0 auto;}
 
-/* ── HERO ── */
-.hero{
-  position:relative;z-index:1;
-  background:linear-gradient(160deg,#d8f0b8 0%,#eef6e4 60%,#f0fae6 100%);
-  padding:2.5rem 1.5rem 2rem;
-  text-align:center;
-  border-bottom:3px dashed var(--g-pale);
+/* ─────────────────── NAV ─────────────────── */
+nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(238,246,228,0.92);
+  backdrop-filter:blur(10px);
+  border-bottom:2px solid var(--g-pale);
+  padding:0.75rem 2rem;
+  display:flex;align-items:center;justify-content:space-between;
 }
-.hero-sparkles{
-  display:flex;justify-content:center;gap:0.5rem;
-  margin-bottom:0.5rem;
-  font-size:0.9rem;
-  animation:sparkle 2s ease-in-out infinite;
-}
-@keyframes sparkle{0%,100%{opacity:1;}50%{opacity:0.5;}}
-
-.chara-area{
-  position:relative;display:inline-block;
-  margin-bottom:1.2rem;
-}
-.chara-emoji{
-  font-size:8rem;
-  display:block;
-  filter:drop-shadow(0 8px 20px rgba(45,90,30,0.25));
-  animation:bounce 3s ease-in-out infinite;
-}
-@keyframes bounce{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-12px) rotate(3deg);}}
-
-.crown-badge{
-  position:absolute;
-  top:-0.5rem;left:50%;
-  transform:translateX(-50%);
-  background:var(--gold);
-  color:#fff;
-  font-size:0.65rem;font-weight:900;
-  padding:0.2rem 0.75rem;
-  border-radius:99px;
-  white-space:nowrap;
-  box-shadow:0 2px 8px rgba(245,194,24,0.4);
-  letter-spacing:0.05em;
-}
-
-.hero-tag{
-  display:inline-block;
-  background:var(--g-dark);
-  color:#fff;
+.nav-logo{font-size:1.1rem;font-weight:900;color:var(--g-dark);}
+.nav-links{display:flex;align-items:center;gap:0.6rem;}
+.nav-link{
   font-size:0.78rem;font-weight:700;
-  padding:0.35rem 1.25rem;
+  color:var(--g-mid);
+  text-decoration:none;
+  padding:0.35rem 0.85rem;
   border-radius:99px;
-  margin-bottom:0.75rem;
-  letter-spacing:0.05em;
+  border:1.5px solid transparent;
+  transition:all 0.2s;
+}
+.nav-link:hover{border-color:var(--g-pale);background:var(--white);}
+.nav-cta{
+  background:var(--g-dark);color:#fff;
+  border-radius:99px;
+  font-size:0.78rem;font-weight:900;
+  padding:0.4rem 1.1rem;
+  text-decoration:none;
+  transition:all 0.2s;
+}
+.nav-cta:hover{background:var(--g-mid);}
+
+/* ─────────────────── HERO ─────────────────── */
+.hero{
+  background:linear-gradient(145deg,#c8e8a0 0%,#dff0c4 40%,#eef6e4 100%);
+  padding:4rem 2rem 3rem;
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'🌿';
+  position:absolute;right:-2rem;bottom:-1rem;
+  font-size:12rem;opacity:0.07;
+  transform:rotate(20deg);
+  pointer-events:none;
+}
+.hero-inner{
+  max-width:1100px;margin:0 auto;
+  display:flex;align-items:center;gap:4rem;
+}
+/* Mobile: stack */
+@media(max-width:767px){
+  .hero-inner{flex-direction:column;gap:2rem;text-align:center;}
+  .hero{padding:3rem 1.25rem 2.5rem;}
+}
+
+/* character side */
+.hero-chara{
+  flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;gap:1rem;
+}
+.chara-circle{
+  width:220px;height:220px;
+  background:rgba(255,255,255,0.7);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+  box-shadow:0 8px 40px rgba(30,74,18,0.15);
+  border:3px solid rgba(255,255,255,0.9);
+}
+@media(max-width:767px){.chara-circle{width:160px;height:160px;}}
+.chara-circle::before{
+  content:'';position:absolute;inset:-6px;
+  border-radius:50%;
+  border:2px dashed var(--g-light);
+  animation:rotateDash 12s linear infinite;
+}
+@keyframes rotateDash{to{transform:rotate(360deg);}}
+.chara-emoji{
+  font-size:7rem;
+  animation:floatChar 3.5s ease-in-out infinite;
+  display:block;
+}
+@media(max-width:767px){.chara-emoji{font-size:5rem;}}
+@keyframes floatChar{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-14px) rotate(4deg);}}
+.crown{font-size:2.2rem;animation:crownBob 2s ease-in-out infinite;}
+@keyframes crownBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+
+/* content side */
+.hero-content{flex:1;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  background:var(--g-dark);color:#fff;
+  font-size:0.75rem;font-weight:900;
+  padding:0.3rem 1rem;border-radius:99px;
+  letter-spacing:0.06em;margin-bottom:1rem;
 }
 .hero-name{
-  font-size:2.8rem;font-weight:900;
-  color:var(--g-dark);
-  line-height:1.1;
-  margin-bottom:0.35rem;
-  letter-spacing:-0.01em;
+  font-size:clamp(2.5rem,5vw,4rem);font-weight:900;
+  color:var(--g-dark);line-height:1;
+  margin-bottom:0.5rem;letter-spacing:-0.02em;
 }
-.hero-concept{
-  display:inline-block;
-  background:var(--white);
-  color:var(--g-mid);
-  font-size:0.9rem;font-weight:700;
-  padding:0.4rem 1.25rem;
-  border-radius:8px;
-  border:2px solid var(--g-pale);
-  margin-bottom:0.75rem;
+.hero-catch{
+  font-size:clamp(1rem,2.5vw,1.4rem);font-weight:700;
+  color:var(--g-mid);margin-bottom:0.75rem;
 }
-.hero-copy{
-  font-size:0.82rem;color:var(--muted);
-  line-height:1.8;
-  margin-bottom:1.5rem;
+.hero-desc{
+  font-size:0.9rem;color:var(--muted);
+  line-height:1.9;margin-bottom:1.75rem;
 }
+.hero-desc strong{color:var(--g-dark);}
 
-/* income card */
+/* income */
+.income-wrap{display:flex;gap:1rem;flex-wrap:wrap;}
+@media(max-width:767px){.income-wrap{justify-content:center;}}
 .income-card{
-  display:inline-block;
   background:var(--white);
-  border-radius:16px;
-  padding:1rem 1.5rem;
-  box-shadow:var(--card-shadow);
+  border-radius:16px;padding:1.1rem 1.5rem;
+  box-shadow:var(--card-sh);
   border:2px solid var(--g-pale);
+  flex:1;min-width:160px;
 }
-.income-label{
-  font-size:0.68rem;color:var(--muted);
-  font-weight:700;letter-spacing:0.08em;
-  margin-bottom:0.2rem;
+.income-l{font-size:0.65rem;color:var(--muted);font-weight:700;letter-spacing:0.08em;margin-bottom:0.15rem;}
+.income-n{
+  font-size:1.9rem;font-weight:900;color:var(--g-dark);line-height:1;
 }
-.income-num{
-  font-size:2.2rem;font-weight:900;
-  color:var(--g-dark);
-  line-height:1;
-}
-.income-num .yen{font-size:1.1rem;}
-.income-sub{font-size:0.68rem;color:var(--muted);margin-top:0.2rem;}
+.income-n small{font-size:1rem;}
+.income-s{font-size:0.65rem;color:var(--muted);margin-top:0.15rem;}
+.income-card.gold{border-color:rgba(240,184,0,0.4);background:linear-gradient(135deg,#fffbe0,#fff9d4);}
+.income-card.gold .income-n{color:var(--gold-dark);}
 
-/* ── STATS ── */
-.stats{
-  position:relative;z-index:1;
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:0.6rem;
-  padding:1.25rem 1rem;
-  background:var(--white);
-  border-bottom:2px solid var(--bg);
+/* ─────────────────── STATS ─────────────────── */
+.stats-sec{
+  background:var(--g-dark);
+  padding:1.5rem 2rem;
 }
-.stat{
-  background:var(--bg2);
-  border-radius:12px;
-  padding:0.85rem 0.5rem;
+.stats-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;
+}
+@media(max-width:600px){.stats-inner{grid-template-columns:repeat(2,1fr);}}
+.stat-item{
+  padding:1rem 0.5rem;
   text-align:center;
-  border:1.5px solid var(--g-pale);
+  border-right:1px solid rgba(255,255,255,0.12);
 }
-.stat-n{
-  font-size:1.6rem;font-weight:900;
-  color:var(--g-dark);
-  line-height:1;display:block;
+.stat-item:last-child{border-right:none;}
+@media(max-width:600px){
+  .stat-item:nth-child(2){border-right:none;}
+  .stat-item:nth-child(3){border-right:1px solid rgba(255,255,255,0.12);}
 }
-.stat-u{font-size:0.7rem;color:var(--g-mid);font-weight:700;}
-.stat-l{font-size:0.6rem;color:var(--muted);margin-top:0.15rem;}
+.s-num{font-size:1.8rem;font-weight:900;color:#fff;display:block;line-height:1;}
+.s-unit{font-size:0.72rem;color:var(--g-pale);font-weight:700;margin-top:0.1rem;}
+.s-label{font-size:0.6rem;color:rgba(255,255,255,0.45);margin-top:0.2rem;}
 
-/* ── SECTION ── */
-.sec{
-  position:relative;z-index:1;
-  padding:1.75rem 1rem;
-}
+/* ─────────────────── SECTION BASE ─────────────────── */
+.sec{padding:4rem 2rem;}
+@media(max-width:767px){.sec{padding:2.5rem 1.25rem;}}
+.sec-inner{max-width:1100px;margin:0 auto;}
+
 .sec-tag{
-  display:inline-flex;align-items:center;gap:0.3rem;
-  background:var(--g-super-pale);
-  color:var(--g-mid);
-  font-size:0.72rem;font-weight:700;
-  padding:0.25rem 0.75rem;
-  border-radius:99px;
+  display:inline-flex;align-items:center;gap:0.35rem;
+  background:var(--g-xpale);color:var(--g-mid);
+  font-size:0.72rem;font-weight:900;
+  padding:0.3rem 0.85rem;border-radius:99px;
   border:1.5px solid var(--g-pale);
-  margin-bottom:0.6rem;
+  letter-spacing:0.05em;margin-bottom:0.65rem;
 }
 .sec-title{
-  font-size:1.35rem;font-weight:900;
-  color:var(--g-dark);
-  line-height:1.3;
+  font-size:clamp(1.5rem,4vw,2.2rem);font-weight:900;
+  color:var(--g-dark);line-height:1.2;
   margin-bottom:0.4rem;
 }
 .sec-title .em{color:var(--g-mid);}
-.sec-desc{
-  font-size:0.82rem;color:var(--muted);
-  line-height:1.8;margin-bottom:1.25rem;
-}
+.sec-desc{font-size:0.85rem;color:var(--muted);line-height:1.9;margin-bottom:2rem;}
 
-/* ── INTRO ── */
+/* ─────────────────── INTRO ─────────────────── */
+.intro-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1.5rem;
+  align-items:start;
+}
+@media(max-width:767px){.intro-grid{grid-template-columns:1fr;}}
 .intro-card{
-  background:var(--white);
-  border-radius:16px;
-  padding:1.5rem;
-  box-shadow:var(--card-shadow);
+  background:var(--white);border-radius:20px;
+  padding:2rem;box-shadow:var(--card-sh);
   border:1.5px solid var(--g-pale);
-  font-size:0.85rem;line-height:2;
-  color:var(--text);
+  font-size:0.88rem;line-height:2;color:var(--text);
 }
 .intro-hi{
   display:flex;align-items:center;gap:0.5rem;
-  font-size:1rem;font-weight:900;color:var(--g-dark);
-  margin-bottom:0.75rem;
+  font-size:1.05rem;font-weight:900;color:var(--g-dark);
+  margin-bottom:1rem;
 }
+.intro-card strong{color:var(--g-dark);}
+.intro-side{display:flex;flex-direction:column;gap:1rem;}
+.mini-card{
+  background:var(--white);border-radius:16px;
+  padding:1.25rem 1.5rem;box-shadow:var(--card-sh);
+  border:1.5px solid var(--g-pale);
+}
+.mini-card .mc-label{font-size:0.68rem;color:var(--muted);font-weight:700;letter-spacing:0.08em;margin-bottom:0.4rem;}
+.mini-card .mc-val{font-size:1.6rem;font-weight:900;color:var(--g-dark);line-height:1;}
+.mini-card .mc-sub{font-size:0.72rem;color:var(--muted);margin-top:0.2rem;}
 
-/* ── PILLARS ── */
-.pillar-card{
-  background:var(--white);
-  border-radius:16px;
-  padding:1.25rem 1.25rem 1.25rem;
-  box-shadow:var(--card-shadow);
-  border:1.5px solid var(--g-pale);
-  margin-bottom:0.75rem;
-  transition:transform 0.2s,box-shadow 0.2s;
+/* ─────────────────── PILLARS ─────────────────── */
+.pillars-bg{background:var(--g-dark);}
+.pillars-bg .sec-tag{background:rgba(200,232,176,0.15);border-color:rgba(200,232,176,0.25);color:var(--g-pale);}
+.pillars-bg .sec-title{color:#fff;}
+.pillars-bg .sec-title .em{color:var(--g-light);}
+.pillars-bg .sec-desc{color:rgba(255,255,255,0.55);}
+.pillars-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.25rem;
 }
-.pillar-card:hover{transform:translateY(-2px);box-shadow:var(--card-shadow-hover);}
-.pillar-head{
-  display:flex;align-items:center;gap:0.6rem;
-  margin-bottom:0.85rem;
+@media(max-width:900px){.pillars-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:580px){.pillars-grid{grid-template-columns:1fr;}}
+.pillar{
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(200,232,176,0.15);
+  border-radius:20px;padding:1.75rem;
+  transition:transform 0.2s,border-color 0.2s;
 }
-.pillar-icon-wrap{
-  width:40px;height:40px;
-  background:var(--g-super-pale);
-  border-radius:12px;
+.pillar:hover{transform:translateY(-4px);border-color:rgba(200,232,176,0.35);}
+.pi-head{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.1rem;}
+.pi-icon{
+  width:46px;height:46px;border-radius:14px;
+  background:rgba(141,200,106,0.15);
+  border:1.5px solid rgba(141,200,106,0.25);
   display:flex;align-items:center;justify-content:center;
-  font-size:1.4rem;
-  border:1.5px solid var(--g-pale);
-  flex-shrink:0;
+  font-size:1.5rem;flex-shrink:0;
 }
-.pillar-name{font-size:1rem;font-weight:900;color:var(--g-dark);}
-.pillar-items{display:flex;flex-direction:column;gap:0.4rem;}
-.pillar-item{
+.pi-name{font-size:1.05rem;font-weight:900;color:#fff;}
+.pi-items{display:flex;flex-direction:column;gap:0.5rem;}
+.pi-item{
   display:flex;align-items:flex-start;gap:0.5rem;
-  font-size:0.8rem;color:var(--text);line-height:1.6;
-  padding:0.35rem 0;
-  border-bottom:1px dashed var(--g-pale);
+  font-size:0.8rem;color:rgba(255,255,255,0.65);line-height:1.5;
+  padding-bottom:0.45rem;
+  border-bottom:1px solid rgba(255,255,255,0.06);
 }
-.pillar-item:last-child{border-bottom:none;padding-bottom:0;}
-.pillar-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:var(--g-light);
-  flex-shrink:0;margin-top:0.4rem;
+.pi-item:last-child{border-bottom:none;padding-bottom:0;}
+.pi-dot{width:6px;height:6px;border-radius:50%;background:var(--g-light);flex-shrink:0;margin-top:0.45rem;}
+/* AI special */
+.ai-q{
+  background:rgba(141,200,106,0.08);
+  border-left:3px solid var(--g-light);
+  border-radius:0 10px 10px 0;
+  padding:0.85rem 1rem;
+  font-size:0.82rem;font-weight:700;color:#fff;
+  line-height:1.8;margin-bottom:1rem;
 }
-
-/* AI tags */
-.ai-quote{
-  background:var(--g-super-pale);
-  border-left:4px solid var(--g-mid);
-  border-radius:0 8px 8px 0;
-  padding:0.75rem 1rem;
-  font-size:0.82rem;font-weight:700;
-  color:var(--g-dark);
-  line-height:1.8;
-  margin-bottom:0.85rem;
-}
-.tag-wrap{display:flex;flex-wrap:wrap;gap:0.35rem;}
-.tag{
-  background:var(--white);
-  border:1.5px solid var(--g-pale);
-  color:var(--g-mid);
-  font-size:0.7rem;font-weight:700;
-  padding:0.2rem 0.55rem;
-  border-radius:6px;
+.ai-tags{display:flex;flex-wrap:wrap;gap:0.35rem;}
+.ai-tag{
+  background:rgba(141,200,106,0.12);
+  border:1px solid rgba(141,200,106,0.2);
+  color:var(--g-light);
+  font-size:0.68rem;font-weight:700;
+  padding:0.2rem 0.55rem;border-radius:6px;
 }
 
-/* ── SERIES ── */
-.series-head{
-  background:var(--g-dark);
-  color:#fff;
-  border-radius:14px;
-  padding:1.1rem 1.25rem;
-  margin-bottom:0.85rem;
-  font-size:0.85rem;line-height:1.9;
+/* ─────────────────── SERIES ─────────────────── */
+.series-layout{
+  display:grid;
+  grid-template-columns:320px 1fr;
+  gap:2.5rem;align-items:start;
 }
-.series-head strong{color:var(--g-pale);}
-.chapter-list{display:flex;flex-direction:column;gap:0.45rem;}
-.chapter{
-  display:flex;align-items:flex-start;gap:0.75rem;
-  background:var(--white);
-  border-radius:12px;
-  padding:0.8rem 1rem;
-  box-shadow:0 2px 8px rgba(45,90,30,0.07);
+@media(max-width:900px){.series-layout{grid-template-columns:1fr;}}
+.series-sticky{position:sticky;top:80px;}
+@media(max-width:900px){.series-sticky{position:static;}}
+.series-promo{
+  background:var(--g-dark);color:#fff;
+  border-radius:20px;padding:2rem;
+  margin-bottom:1.5rem;
+}
+.sp-num{font-size:3rem;font-weight:900;color:var(--g-light);line-height:1;}
+.sp-title{font-size:1.1rem;font-weight:900;margin-top:0.3rem;margin-bottom:0.75rem;}
+.sp-desc{font-size:0.82rem;color:rgba(255,255,255,0.65);line-height:1.9;}
+.series-btn{
+  display:block;
+  background:var(--white);color:var(--g-dark);
+  border-radius:12px;padding:1rem 1.25rem;
+  text-decoration:none;font-weight:900;font-size:0.88rem;
+  text-align:center;
+  box-shadow:0 2px 12px rgba(30,74,18,0.12);
   border:1.5px solid var(--g-pale);
-  text-decoration:none;
-  color:inherit;
-  transition:border-color 0.2s,transform 0.15s;
-}
-.chapter:hover{border-color:var(--g-mid);transform:translateX(3px);}
-.ch-num{
-  font-size:0.85rem;font-weight:900;color:var(--g-pale);
-  background:var(--g-dark);
-  width:28px;height:28px;
-  border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;font-size:0.7rem;
-}
-.ch-body{}
-.ch-title{font-size:0.82rem;font-weight:700;color:var(--g-dark);line-height:1.4;margin-bottom:0.1rem;}
-.ch-sub{font-size:0.7rem;color:var(--muted);line-height:1.5;}
-.chapter.secret{
-  background:linear-gradient(135deg,#fff9e0,#fffbe8);
-  border-color:rgba(245,194,24,0.4);
-}
-.chapter.secret .ch-num{background:var(--gold);}
-.chapter.secret .ch-title{color:#8a7000;}
-
-/* ── GPTs ── */
-.gpt-list{display:flex;flex-direction:column;gap:0.6rem;}
-.gpt-card{
-  display:flex;align-items:center;gap:0.9rem;
-  background:var(--white);
-  border-radius:14px;
-  padding:0.95rem 1rem;
-  box-shadow:0 2px 10px rgba(45,90,30,0.08);
-  border:1.5px solid var(--g-pale);
-  text-decoration:none;
-  color:inherit;
   transition:all 0.2s;
 }
-.gpt-card:hover{border-color:var(--g-mid);transform:translateX(4px);box-shadow:var(--card-shadow-hover);}
-.gpt-icon-wrap{
-  width:44px;height:44px;
-  background:var(--g-super-pale);
-  border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.5rem;
+.series-btn:hover{transform:translateY(-2px);box-shadow:var(--card-sh-h);}
+
+.chapter-grid{display:flex;flex-direction:column;gap:0.5rem;}
+.ch{
+  display:flex;align-items:flex-start;gap:0.85rem;
+  background:var(--white);border-radius:14px;
+  padding:0.9rem 1.1rem;
+  box-shadow:0 2px 8px rgba(30,74,18,0.07);
   border:1.5px solid var(--g-pale);
+  text-decoration:none;color:inherit;
+  transition:all 0.18s;
+}
+.ch:hover{border-color:var(--g-mid);transform:translateX(4px);}
+.ch-n{
+  width:30px;height:30px;border-radius:9px;
+  background:var(--g-dark);color:#fff;
+  font-size:0.68rem;font-weight:900;
+  display:flex;align-items:center;justify-content:center;
   flex-shrink:0;
+}
+.ch-t{font-size:0.82rem;font-weight:700;color:var(--g-dark);line-height:1.4;margin-bottom:0.1rem;}
+.ch-s{font-size:0.7rem;color:var(--muted);line-height:1.4;}
+.ch.secret{background:linear-gradient(135deg,#fffbe0,#fff9d0);border-color:rgba(240,184,0,0.35);}
+.ch.secret .ch-n{background:var(--gold);}
+.ch.secret .ch-t{color:#856800;}
+
+/* ─────────────────── GPTs ─────────────────── */
+.gpts-bg{background:var(--bg2);}
+.gpt-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:0.85rem;
+}
+@media(max-width:580px){.gpt-grid{grid-template-columns:1fr;}}
+.gpt{
+  display:flex;align-items:center;gap:1rem;
+  background:var(--white);border-radius:16px;
+  padding:1.1rem 1.25rem;
+  box-shadow:var(--card-sh);
+  border:1.5px solid var(--g-pale);
+  text-decoration:none;color:inherit;
+  transition:all 0.2s;
+}
+.gpt:hover{border-color:var(--g-mid);transform:translateY(-3px);box-shadow:var(--card-sh-h);}
+.gpt-ico{
+  width:48px;height:48px;border-radius:14px;
+  background:var(--g-xpale);border:1.5px solid var(--g-pale);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.6rem;flex-shrink:0;
 }
 .gpt-info{flex:1;}
 .free-pill{
-  display:inline-block;
-  background:var(--g-mid);color:#fff;
-  font-size:0.55rem;font-weight:900;
-  padding:0.1rem 0.4rem;
-  border-radius:99px;
-  letter-spacing:0.08em;
-  margin-bottom:0.15rem;
+  display:inline-block;background:var(--g-mid);color:#fff;
+  font-size:0.55rem;font-weight:900;padding:0.1rem 0.45rem;
+  border-radius:99px;letter-spacing:0.08em;margin-bottom:0.2rem;
 }
-.gpt-name{font-size:0.85rem;font-weight:700;color:var(--g-dark);}
+.gpt-name{font-size:0.85rem;font-weight:900;color:var(--g-dark);}
 .gpt-desc{font-size:0.7rem;color:var(--muted);}
-.gpt-arr{font-size:1rem;color:var(--g-light);flex-shrink:0;}
+.gpt-arr{font-size:1.2rem;color:var(--g-light);flex-shrink:0;}
 
-/* ── COMMUNITY ── */
-.community-card{
-  background:linear-gradient(135deg,#06C755 0%,#04a847 100%);
-  border-radius:16px;
-  padding:1.25rem;
-  text-align:center;
-  color:#fff;
-  margin-bottom:0.75rem;
-  box-shadow:0 4px 20px rgba(6,199,85,0.25);
+/* ─────────────────── CTA ─────────────────── */
+.cta-bg{background:linear-gradient(160deg,#c8e8a0 0%,#dff0c4 100%);}
+.com-box{
+  background:var(--g-dark);color:#fff;
+  border-radius:20px;padding:2rem;
+  text-align:center;margin-bottom:2rem;
+  position:relative;overflow:hidden;
 }
-.com-num{font-size:2.5rem;font-weight:900;line-height:1;}
-.com-label{font-size:0.78rem;margin-top:0.2rem;opacity:0.9;}
+.com-box::before{content:'🫑';position:absolute;right:-1rem;top:-1rem;font-size:8rem;opacity:0.06;}
+.com-n{font-size:3.5rem;font-weight:900;color:var(--g-light);line-height:1;}
+.com-l{font-size:0.88rem;color:rgba(255,255,255,0.7);margin-top:0.25rem;}
 
-/* ── CTA ── */
-.cta-stack{display:flex;flex-direction:column;gap:0.65rem;}
+.cta-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0.85rem;
+}
+@media(max-width:580px){.cta-grid{grid-template-columns:1fr;}}
 .cta-btn{
   display:flex;align-items:center;justify-content:center;gap:0.6rem;
-  padding:1rem 1.5rem;
-  border-radius:14px;
+  padding:1.1rem 1.5rem;border-radius:16px;
   font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;
-  font-size:0.95rem;font-weight:900;
-  text-decoration:none;
-  transition:all 0.2s;
-  border:none;cursor:pointer;
-  letter-spacing:0.03em;
+  font-size:0.92rem;font-weight:900;
+  text-decoration:none;text-align:center;
+  transition:all 0.2s;cursor:pointer;border:none;
 }
-.cta-note{background:var(--g-dark);color:#fff;box-shadow:0 4px 16px rgba(45,90,30,0.3);}
-.cta-note:hover{background:var(--g-mid);transform:translateY(-2px);}
-.cta-line{background:#06C755;color:#fff;box-shadow:0 4px 16px rgba(6,199,85,0.3);}
-.cta-line:hover{background:#05b54d;transform:translateY(-2px);}
-.cta-chat{background:var(--white);color:var(--g-dark);border:2px solid var(--g-pale);box-shadow:var(--card-shadow);}
-.cta-chat:hover{border-color:var(--g-mid);transform:translateY(-2px);}
-.cta-ai{
-  background:linear-gradient(135deg,var(--g-mid),var(--g-dark));
-  color:#fff;
-  box-shadow:0 4px 16px rgba(74,138,50,0.3);
-}
-.cta-ai:hover{transform:translateY(-2px);}
-.cta-threads{background:#1a1a1a;color:#fff;box-shadow:0 4px 12px rgba(0,0,0,0.15);}
-.cta-threads:hover{background:#333;transform:translateY(-2px);}
-.cta-note-sm{
-  font-size:0.72rem;color:var(--muted);
-  text-align:center;margin-top:-0.1rem;
-}
+.cta-note-btn{background:var(--g-dark);color:#fff;box-shadow:0 4px 20px rgba(30,74,18,0.25);}
+.cta-note-btn:hover{background:var(--g-mid);transform:translateY(-3px);}
+.cta-line-btn{background:#06C755;color:#fff;box-shadow:0 4px 20px rgba(6,199,85,0.3);}
+.cta-line-btn:hover{filter:brightness(1.1);transform:translateY(-3px);}
+.cta-chat-btn{background:var(--white);color:var(--g-dark);border:2px solid var(--g-pale);box-shadow:var(--card-sh);}
+.cta-chat-btn:hover{border-color:var(--g-mid);transform:translateY(-3px);}
+.cta-ai-btn{background:linear-gradient(135deg,var(--g-mid),var(--g-dark));color:#fff;box-shadow:0 4px 20px rgba(30,74,18,0.25);}
+.cta-ai-btn:hover{transform:translateY(-3px);}
+.cta-threads{background:#1a1a1a;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,0.15);grid-column:span 2;}
+@media(max-width:580px){.cta-threads{grid-column:span 1;}}
+.cta-threads:hover{background:#333;transform:translateY(-3px);}
+.cta-note-sm{font-size:0.7rem;color:var(--muted);text-align:center;grid-column:span 2;}
+@media(max-width:580px){.cta-note-sm{grid-column:span 1;}}
 
-/* ── DIVIDER ── */
-.leaf-div{
-  text-align:center;
-  padding:0.5rem;
-  font-size:1rem;
-  color:var(--g-pale);
+/* ─────────────────── MESSAGE ─────────────────── */
+.msg{
+  background:var(--white);border-radius:20px;
+  padding:2rem;box-shadow:var(--card-sh);
+  border:1.5px solid var(--g-pale);
+  display:flex;align-items:flex-start;gap:1.25rem;
+  max-width:600px;margin:0 auto;
+}
+@media(max-width:767px){.msg{flex-direction:column;align-items:center;text-align:center;}}
+.msg-ico{font-size:3rem;flex-shrink:0;}
+.msg-t{font-size:1rem;font-weight:900;color:var(--g-dark);margin-bottom:0.5rem;}
+.msg-d{font-size:0.85rem;color:var(--muted);line-height:1.9;}
+
+/* ─────────────────── LEAF DIVIDER ─────────────────── */
+.ldiv{
+  text-align:center;padding:0.75rem 2rem;
+  font-size:1rem;color:var(--g-pale);
   letter-spacing:0.5rem;
 }
 
-/* ── FOOTER ── */
+/* ─────────────────── FOOTER ─────────────────── */
 footer{
-  position:relative;z-index:1;
-  background:var(--g-dark);
-  color:rgba(255,255,255,0.8);
-  padding:1.75rem 1.5rem;
-  text-align:center;
+  background:var(--g-dark);color:rgba(255,255,255,0.7);
+  padding:2.5rem 2rem;text-align:center;
 }
-.footer-char{font-size:2.5rem;margin-bottom:0.5rem;display:block;}
-.footer-name{font-size:1.1rem;font-weight:900;color:#fff;margin-bottom:0.3rem;}
-.footer-sub{font-size:0.72rem;opacity:0.6;}
-
-/* ── MESSAGE ── */
-.message-card{
-  background:var(--white);
-  border-radius:16px;
-  padding:1.25rem 1.25rem;
-  box-shadow:var(--card-shadow);
-  border:2px solid var(--g-pale);
-  display:flex;align-items:flex-start;gap:0.85rem;
-}
-.msg-icon{font-size:2rem;flex-shrink:0;}
-.msg-body{}
-.msg-title{font-size:0.85rem;font-weight:900;color:var(--g-dark);margin-bottom:0.3rem;}
-.msg-text{font-size:0.8rem;color:var(--muted);line-height:1.8;}
+.f-char{font-size:3rem;display:block;margin-bottom:0.5rem;}
+.f-name{font-size:1.2rem;font-weight:900;color:#fff;margin-bottom:0.3rem;}
+.f-links{display:flex;justify-content:center;gap:1.25rem;flex-wrap:wrap;margin:1rem 0;}
+.f-link{color:rgba(255,255,255,0.45);font-size:0.8rem;text-decoration:none;transition:color 0.2s;}
+.f-link:hover{color:var(--g-light);}
+.f-copy{font-size:0.72rem;opacity:0.35;}
 </style>
 </head>
 <body>
 
-<!-- ===== HERO ===== -->
-<section class="hero">
-  <div class="hero-sparkles">✨ 🌿 ✨ 🌿 ✨</div>
-
-  <div class="chara-area">
-    <div class="crown-badge">👑 野菜の王</div>
-    <span class="chara-emoji">🫑</span>
+<!-- ======== NAV ======== -->
+<nav>
+  <div class="nav-logo">🫑 ぴーまん</div>
+  <div class="nav-links">
+    <a class="nav-link" href="#pillars">専門</a>
+    <a class="nav-link" href="#series">シリーズ</a>
+    <a class="nav-link" href="#gpts">無料GPTs</a>
+    <a class="nav-cta" href="#cta">つながる</a>
   </div>
+</nav>
 
-  <div class="hero-tag">🫑 ぴーまん</div>
-  <div class="hero-name">ぴーまん<br><span style="font-size:1.6rem;color:var(--g-mid);">🫑</span></div>
+<!-- ======== HERO ======== -->
+<section class="hero">
+  <div class="hero-inner">
 
-  <div class="hero-concept">【難しいを簡単に✨】</div>
+    <div class="hero-chara">
+      <div class="chara-circle">
+        <span class="chara-emoji">🫑</span>
+      </div>
+      <span class="crown">👑</span>
+    </div>
 
-  <p class="hero-copy">
-    Threads × note で<br>
-    マネタイズ・ブランディング・AI を<br>
-    土台からわかりやすく発信中🫑
-  </p>
+    <div class="hero-content">
+      <div class="hero-eyebrow">⚡ 野菜の王 — PEAMAN</div>
+      <div class="hero-name">ぴーまん🫑</div>
+      <div class="hero-catch">【難しいを簡単に✨】</div>
+      <p class="hero-desc">
+        Threads × note の<strong>マネタイズ・ブランディング・AI</strong> を<br>
+        土台からわかりやすく発信中。<br>
+        15年の経験 × 最前線のノウハウで<br>
+        <strong>3ヶ月目で月収7桁</strong>の仕組みを作りました🫑
+      </p>
 
-  <div class="income-card">
-    <div class="income-label">🔥 1ヶ月の実績</div>
-    <div class="income-num">1,825,920<span class="yen">円</span></div>
-    <div class="income-sub">Threads × note で達成</div>
+      <div class="income-wrap">
+        <div class="income-card gold">
+          <div class="income-l">🔥 1ヶ月の最高実績</div>
+          <div class="income-n">1,825,920<small>円</small></div>
+          <div class="income-s">Threads × note で達成</div>
+        </div>
+        <div class="income-card">
+          <div class="income-l">📅 この世界歴</div>
+          <div class="income-n">約15<small>年</small></div>
+          <div class="income-s">note歴12年・初期メンバー</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<!-- ===== STATS ===== -->
-<div class="stats">
-  <div class="stat">
-    <span class="stat-n">15</span>
-    <div class="stat-u">年</div>
-    <div class="stat-l">この世界に</div>
-  </div>
-  <div class="stat">
-    <span class="stat-n">7桁</span>
-    <div class="stat-u"></div>
-    <div class="stat-l">月収を継続</div>
-  </div>
-  <div class="stat">
-    <span class="stat-n">100<small style="font-size:0.9rem;">名+</small></span>
-    <div class="stat-u"></div>
-    <div class="stat-l">コミュニティ</div>
+<!-- ======== STATS ======== -->
+<div class="stats-sec">
+  <div class="stats-inner">
+    <div class="stat-item"><span class="s-num">7桁</span><div class="s-unit">月収継続</div><div class="s-label">再現できる仕組み</div></div>
+    <div class="stat-item"><span class="s-num">3ヶ月</span><div class="s-unit">で結果</div><div class="s-label">土台があるから早い</div></div>
+    <div class="stat-item"><span class="s-num">15</span><div class="s-unit">章シリーズ</div><div class="s-label">note/100万への道</div></div>
+    <div class="stat-item"><span class="s-num">100名+</span><div class="s-unit">コミュニティ</div><div class="s-label">オープンチャット参加</div></div>
   </div>
 </div>
 
-<!-- ===== WHO ===== -->
-<div class="sec">
-  <div class="sec-tag">🌱 はじめまして</div>
-  <h2 class="sec-title">ぴーまんって<span class="em">誰？</span></h2>
-  <div class="intro-card">
-    <div class="intro-hi">
-      <span>🫑</span>
-      <span>はじめまして！ぴーまんです。</span>
-    </div>
-    <strong>15年間</strong>、ブログ・コンサル・サポート・<br>
-    講演会・座談会を経験してきました。<br><br>
-    note歴も<strong>12年以上</strong>の初期メンバーです😆<br><br>
-    Threads × note の最前線で得たノウハウを<br>
-    全部まとめて、<strong>3ヶ月目で月収7桁</strong>を<br>
-    出せる仕組みを作りました。<br><br>
-    「難しい」じゃなくて、<strong>「知らないだけ」</strong>。<br>
-    一緒に、土台から作っていきましょう🫑✨
-  </div>
-</div>
-
-<div class="leaf-div">🌿 🍃 🌿 🍃 🌿</div>
-
-<!-- ===== 3 PILLARS ===== -->
-<div class="sec">
-  <div class="sec-tag">💪 得意なこと</div>
-  <h2 class="sec-title">ぴーまんの<span class="em">3本柱</span></h2>
-
-  <!-- ブランディング -->
-  <div class="pillar-card">
-    <div class="pillar-head">
-      <div class="pillar-icon-wrap">🌱</div>
-      <div class="pillar-name">ブランディング</div>
-    </div>
-    <div class="pillar-items">
-      <div class="pillar-item"><div class="pillar-dot"></div>根っこ ― コンセプトとキャラクターの確立</div>
-      <div class="pillar-item"><div class="pillar-dot"></div>視覚 ― パッと見の世界観作り</div>
-      <div class="pillar-item"><div class="pillar-dot"></div>共感 ― 親近感の醸成</div>
-      <div class="pillar-item"><div class="pillar-dot"></div>証明 ― 信頼性の構築</div>
-      <div class="pillar-item"><div class="pillar-dot"></div>唯一無二 ― 存在感の確立</div>
-    </div>
-  </div>
-
-  <!-- マーケティング -->
-  <div class="pillar-card">
-    <div class="pillar-head">
-      <div class="pillar-icon-wrap">📣</div>
-      <div class="pillar-name">マーケティング</div>
-    </div>
-    <div class="pillar-items">
-      <div class="pillar-item"><div class="pillar-dot"></div>土台作り ― すべてが始まる前の準備</div>
-      <div class="pillar-item"><div class="pillar-dot"></div>交流 ― 認知を広げる・集客の第一歩</div>
-      <div class="pillar-item"><div class="pillar-dot"></div>信頼 ― ファン化・集客の深化</div>
-      <div class="pillar-item"><div class="pillar-dot"></div>導線 ― 次の行動への橋渡し</div>
-      <div class="pillar-item"><div class="pillar-dot"></div>商品化 ― マネタイズの実現</div>
-      <div class="pillar-item"><div class="pillar-dot"></div>仕組み化 ― 自動化・スケールアップ</div>
-    </div>
-  </div>
-
-  <!-- AI -->
-  <div class="pillar-card">
-    <div class="pillar-head">
-      <div class="pillar-icon-wrap">🤖</div>
-      <div class="pillar-name">AI × GPTs</div>
-    </div>
-    <div class="ai-quote">
-      「どんなGPTsも作れる」のが<br>
-      ぴーまんの強み。<br>
-      パソコンで作れることは<br>全部できると思ってください🫑
-    </div>
-    <div class="tag-wrap">
-      <span class="tag">図解生成</span>
-      <span class="tag">文章生成</span>
-      <span class="tag">LP広告</span>
-      <span class="tag">マーケ専用</span>
-      <span class="tag">ブランディング専用</span>
-      <span class="tag">料理専用</span>
-      <span class="tag">AIアート</span>
-      <span class="tag">講座用</span>
-      <span class="tag">noteサムネ</span>
-    </div>
-  </div>
-</div>
-
-<div class="leaf-div">🌿 🍃 🌿 🍃 🌿</div>
-
-<!-- ===== NOTE SERIES ===== -->
-<div class="sec">
-  <div class="sec-tag">📖 note</div>
-  <h2 class="sec-title">100万への道<br><span class="em">全15章</span> 作成中</h2>
-
-  <div class="series-head">
-    月収7桁を<strong>「再現」</strong>するための戦略書。<br>
-    マインドセットから自動化まで、<br>
-    <strong>全15章で完全ロードマップ化</strong>しています🫑
-  </div>
-
-  <div class="chapter-list">
-    <a class="chapter" href="https://note.com/pimaan_threads" target="_blank">
-      <div class="ch-num">01</div>
-      <div class="ch-body"><div class="ch-title">マインドセット</div><div class="ch-sub">稼げる人と稼げない人の決定的な違い</div></div>
-    </a>
-    <a class="chapter" href="https://note.com/pimaan_threads" target="_blank">
-      <div class="ch-num">02</div>
-      <div class="ch-body"><div class="ch-title">情報収集力とインプットの習慣</div><div class="ch-sub">ネタを枯らさない技術</div></div>
-    </a>
-    <a class="chapter" href="https://note.com/pimaan_threads" target="_blank">
-      <div class="ch-num">03</div>
-      <div class="ch-body"><div class="ch-title">収益化の全体像</div><div class="ch-sub">note × Threads で稼ぐ仕組みを理解する</div></div>
-    </a>
-    <div class="chapter"><div class="ch-num">04</div><div class="ch-body"><div class="ch-title">AIの基礎操作</div><div class="ch-sub">ChatGPT・Claude・画像生成AIを使いこなす</div></div></div>
-    <div class="chapter"><div class="ch-num">05</div><div class="ch-body"><div class="ch-title">Threadsのブランディング</div><div class="ch-sub">需要と供給・競合分析・ファン化・ポジション</div></div></div>
-    <div class="chapter"><div class="ch-num">06</div><div class="ch-body"><div class="ch-title">ブランディングはセクシーにして</div><div class="ch-sub">世界観の磨き方・他と被らない存在感</div></div></div>
-    <div class="chapter"><div class="ch-num">07</div><div class="ch-body"><div class="ch-title">Threadsのマーケティング</div><div class="ch-sub">集客・導線・商品化・仕組み化</div></div></div>
-    <div class="chapter"><div class="ch-num">08</div><div class="ch-body"><div class="ch-title">交流力・コミュニティ戦略</div><div class="ch-sub">信頼と口コミを生む人間関係の築き方</div></div></div>
-    <div class="chapter"><div class="ch-num">09</div><div class="ch-body"><div class="ch-title">図解生成</div><div class="ch-sub">ぴーまん式GPTsによる図解の理論と活用方法</div></div></div>
-    <div class="chapter"><div class="ch-num">10</div><div class="ch-body"><div class="ch-title">ぴーまん式プロンプト設計術【本質編】</div><div class="ch-sub">ハードなプロンプト設計を極める</div></div></div>
-    <div class="chapter"><div class="ch-num">11</div><div class="ch-body"><div class="ch-title">note攻略</div><div class="ch-sub">操作方法・発信方法・刺さる書き方</div></div></div>
-    <div class="chapter"><div class="ch-num">12</div><div class="ch-body"><div class="ch-title">ぴーまん式ライティング</div><div class="ch-sub">noteに適切な構成・実際のぴーまんの執筆方法</div></div></div>
-    <div class="chapter"><div class="ch-num">13</div><div class="ch-body"><div class="ch-title">note価値提供と価格設定</div><div class="ch-sub">適正価格で他と差をつけろ</div></div></div>
-    <div class="chapter"><div class="ch-num">14</div><div class="ch-body"><div class="ch-title">カスタムAIでの業務の半自動化</div><div class="ch-sub">GPTsなどで仕組みを回す方法</div></div></div>
-    <div class="chapter secret"><div class="ch-num">15</div><div class="ch-body"><div class="ch-title">🔒 シークレット</div><div class="ch-sub" style="color:#b8a020;">完成をお楽しみに...</div></div></div>
-  </div>
-</div>
-
-<div class="leaf-div">🌿 🍃 🌿 🍃 🌿</div>
-
-<!-- ===== FREE GPTs ===== -->
-<div class="sec">
-  <div class="sec-tag">🎁 無料プレゼント</div>
-  <h2 class="sec-title">無料<span class="em">GPTs</span></h2>
-  <p class="sec-desc">気になるやつ、ぜひ使ってみてください🫑</p>
-
-  <div class="gpt-list">
-    <a class="gpt-card" href="https://chatgpt.com/g/g-69bbef1b94bc81919c0f41b2f7679217-himannomaintomatuhuzuo-cheng" target="_blank">
-      <div class="gpt-icon-wrap">🧠</div>
-      <div class="gpt-info">
-        <div class="free-pill">FREE</div>
-        <div class="gpt-name">マインドマップGPT</div>
-        <div class="gpt-desc">思考を整理・可視化するぴーまん式</div>
+<!-- ======== WHO ======== -->
+<section class="sec">
+  <div class="sec-inner">
+    <div class="sec-tag">🌱 はじめまして</div>
+    <h2 class="sec-title">ぴーまんって<span class="em">誰？</span></h2>
+    <div class="intro-grid">
+      <div class="intro-card">
+        <div class="intro-hi"><span>🫑</span>はじめまして！ぴーまんです。</div>
+        <strong>15年間</strong>、ブログ・コンサル・サポート・講演会・座談会を経験してきました。note歴も<strong>12年以上</strong>の初期メンバーです😆<br><br>
+        入れ食い状態の、片手間で300万売れたりする時代もありました。<br><br>
+        Threads × note の最前線で得たノウハウをすべて詰め込んで、<strong>3ヶ月目で月収7桁</strong>を出せる仕組みを作りました。<br><br>
+        「難しい」じゃなくて、<strong>「知らないだけ」</strong>。一緒に、土台から作っていきましょう🫑✨
       </div>
-      <span class="gpt-arr">›</span>
-    </a>
-    <a class="gpt-card" href="https://chatgpt.com/g/g-69d1fbe78d888191ae5ed1ed44820e1b-himanrotomatuhuzuo-zhi-notete-dian" target="_blank">
-      <div class="gpt-icon-wrap">🗺️</div>
-      <div class="gpt-info">
-        <div class="free-pill">FREE</div>
-        <div class="gpt-name">ロードマップGPT</div>
-        <div class="gpt-desc">あなただけの収益化ロードマップを作成</div>
+      <div class="intro-side">
+        <div class="mini-card">
+          <div class="mc-label">💰 実績</div>
+          <div class="mc-val" style="font-size:1.3rem;">月収7桁を継続</div>
+          <div class="mc-sub">1ヶ月最高 1,825,920円達成</div>
+        </div>
+        <div class="mini-card">
+          <div class="mc-label">📖 得意なこと</div>
+          <div class="mc-val" style="font-size:1.1rem;line-height:1.5;">ブランディング<br>マーケティング<br>AI × GPTs</div>
+        </div>
+        <div class="mini-card">
+          <div class="mc-label">🤖 AI強み</div>
+          <div class="mc-val" style="font-size:1rem;line-height:1.6;">どんなGPTsも<br>作れます🫑</div>
+          <div class="mc-sub">図解・文章・マーケ・ブランディング etc</div>
+        </div>
       </div>
-      <span class="gpt-arr">›</span>
-    </a>
-    <a class="gpt-card" href="https://chatgpt.com/g/g-69eb9af15f848191b0e85182cf1c9d18-shou-yi-hua-dao-xian-atohaisa-jia" target="_blank">
-      <div class="gpt-icon-wrap">💡</div>
-      <div class="gpt-info">
-        <div class="free-pill">FREE</div>
-        <div class="gpt-name">収益化導線アドバイスGPT</div>
-        <div class="gpt-desc">あなたの現状から次の一手を提案</div>
-      </div>
-      <span class="gpt-arr">›</span>
-    </a>
-    <a class="gpt-card" href="https://chatgpt.com/g/g-69b808342f6c819193d8e61f01ff14a4-himanjiao-liu-meka" target="_blank">
-      <div class="gpt-icon-wrap">🤝</div>
-      <div class="gpt-info">
-        <div class="free-pill">FREE</div>
-        <div class="gpt-name">交流メーカー</div>
-        <div class="gpt-desc">Threadsでの交流文を自動生成</div>
-      </div>
-      <span class="gpt-arr">›</span>
-    </a>
-    <a class="gpt-card" href="https://chatgpt.com/g/g-69b80ce21a28819191dc2362fa879de6-himanlu-kouliu-meka" target="_blank">
-      <div class="gpt-icon-wrap">✈️</div>
-      <div class="gpt-info">
-        <div class="free-pill">FREE</div>
-        <div class="gpt-name">旅こうメーカー</div>
-        <div class="gpt-desc">旅行コンテンツを楽しく生成</div>
-      </div>
-      <span class="gpt-arr">›</span>
-    </a>
+    </div>
   </div>
-</div>
+</section>
 
-<div class="leaf-div">🌿 🍃 🌿 🍃 🌿</div>
+<div class="ldiv">🌿 ・ 🍃 ・ 🌿 ・ 🍃 ・ 🌿</div>
 
-<!-- ===== CTA ===== -->
-<div class="sec">
-  <div class="sec-tag">🚀 つながろう</div>
-  <h2 class="sec-title">一緒に<span class="em">始めよう</span>🫑</h2>
+<!-- ======== PILLARS ======== -->
+<section class="sec pillars-bg" id="pillars">
+  <div class="sec-inner">
+    <div class="sec-tag">💪 専門分野</div>
+    <h2 class="sec-title">ぴーまんの<span class="em">3本柱</span></h2>
+    <p class="sec-desc">15年間磨き続けてきた、ぴーまんの核心。</p>
 
-  <div class="community-card">
-    <div class="com-num">100名以上</div>
-    <div class="com-label">がオープンチャットに参加中 🫑✨</div>
+    <div class="pillars-grid">
+      <div class="pillar">
+        <div class="pi-head"><div class="pi-icon">🌱</div><div class="pi-name">ブランディング</div></div>
+        <div class="pi-items">
+          <div class="pi-item"><div class="pi-dot"></div>根っこ ― コンセプトとキャラクターの確立</div>
+          <div class="pi-item"><div class="pi-dot"></div>視覚 ― パッと見の世界観作り</div>
+          <div class="pi-item"><div class="pi-dot"></div>共感 ― 親近感の醸成</div>
+          <div class="pi-item"><div class="pi-dot"></div>証明 ― 信頼性の構築</div>
+          <div class="pi-item"><div class="pi-dot"></div>唯一無二 ― 存在感の確立</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pi-head"><div class="pi-icon">📣</div><div class="pi-name">マーケティング</div></div>
+        <div class="pi-items">
+          <div class="pi-item"><div class="pi-dot"></div>土台作り ― すべてが始まる前の準備</div>
+          <div class="pi-item"><div class="pi-dot"></div>交流 ― 認知を広げる・集客の第一歩</div>
+          <div class="pi-item"><div class="pi-dot"></div>信頼 ― ファン化・集客の深化</div>
+          <div class="pi-item"><div class="pi-dot"></div>導線 ― 次の行動への橋渡し</div>
+          <div class="pi-item"><div class="pi-dot"></div>商品化 ― マネタイズの実現</div>
+          <div class="pi-item"><div class="pi-dot"></div>仕組み化 ― 自動化・スケールアップ</div>
+        </div>
+      </div>
+      <div class="pillar">
+        <div class="pi-head"><div class="pi-icon">🤖</div><div class="pi-name">AI × GPTs</div></div>
+        <div class="ai-q">「どんなGPTsも作れる」のが<br>ぴーまんの強み。<br>パソコンで作れることは全部できます🫑</div>
+        <div class="ai-tags">
+          <span class="ai-tag">図解生成</span><span class="ai-tag">文章生成</span>
+          <span class="ai-tag">LP広告</span><span class="ai-tag">マーケ専用</span>
+          <span class="ai-tag">ブランディング</span><span class="ai-tag">料理専用</span>
+          <span class="ai-tag">AIアート</span><span class="ai-tag">講座用</span>
+          <span class="ai-tag">noteサムネ</span>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <div class="cta-stack">
-    <a class="cta-btn cta-note" href="https://note.com/pimaan_threads" target="_blank">📝 noteを読む</a>
-    <a class="cta-btn cta-line" href="https://lin.ee/WMvu4HS" target="_blank">📲 LINE公式 — 無料相談受付中</a>
-    <p class="cta-note-sm">サポート・個別相談を気軽にどうぞ</p>
-    <a class="cta-btn cta-chat" href="https://line.me/ti/g2/olYPEgt7wtjyw24LMRDtfekhiS8G5UFSIQG54g?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank">💬 オープンチャットに参加</a>
-    <p class="cta-note-sm">最新情報をいち早くゲット</p>
-    <a class="cta-btn cta-ai" href="https://peaman-lp.vercel.app/" target="_blank">🫑 ぴーまんAI を使ってみる</a>
-    <p class="cta-note-sm">Threads×note特化AIコーチ — β版公開中</p>
-    <a class="cta-btn cta-threads" href="https://www.threads.com/@pmen.1212" target="_blank">🫑 Threadsでフォロー</a>
+<div class="ldiv">🌿 ・ 🍃 ・ 🌿 ・ 🍃 ・ 🌿</div>
+
+<!-- ======== SERIES ======== -->
+<section class="sec" id="series">
+  <div class="sec-inner">
+    <div class="sec-tag">📖 note シリーズ</div>
+    <h2 class="sec-title">100万への道<span class="em">全15章</span></h2>
+    <p class="sec-desc">月収7桁を「再現」するための完全ロードマップ。作成中——完成時がどうなるか…🫑</p>
+
+    <div class="series-layout">
+      <div class="series-sticky">
+        <div class="series-promo">
+          <div class="sp-num">15章</div>
+          <div class="sp-title">月収7桁を再現するための戦略書</div>
+          <div class="sp-desc">マインドセットから自動化まで。ぴーまんのすべてを詰め込んだシリーズです。</div>
+        </div>
+        <a class="series-btn" href="https://note.com/pimaan_threads" target="_blank">📝 noteで読む →</a>
+      </div>
+
+      <div class="chapter-grid">
+        <a class="ch" href="https://note.com/pimaan_threads" target="_blank"><div class="ch-n">01</div><div><div class="ch-t">マインドセット</div><div class="ch-s">稼げる人と稼げない人の決定的な違い</div></div></a>
+        <a class="ch" href="https://note.com/pimaan_threads" target="_blank"><div class="ch-n">02</div><div><div class="ch-t">情報収集力とインプットの習慣</div><div class="ch-s">ネタを枯らさない技術</div></div></a>
+        <a class="ch" href="https://note.com/pimaan_threads" target="_blank"><div class="ch-n">03</div><div><div class="ch-t">収益化の全体像</div><div class="ch-s">note × Threads で稼ぐ仕組みを理解する</div></div></a>
+        <div class="ch"><div class="ch-n">04</div><div><div class="ch-t">AIの基礎操作</div><div class="ch-s">ChatGPT・Claude・画像生成AIを使いこなす</div></div></div>
+        <div class="ch"><div class="ch-n">05</div><div><div class="ch-t">Threadsのブランディング</div><div class="ch-s">需要と供給・競合分析・ファン化・ポジション</div></div></div>
+        <div class="ch"><div class="ch-n">06</div><div><div class="ch-t">ブランディングはセクシーにして</div><div class="ch-s">世界観の磨き方・唯一無二の存在感</div></div></div>
+        <div class="ch"><div class="ch-n">07</div><div><div class="ch-t">Threadsのマーケティング</div><div class="ch-s">集客・導線・商品化・仕組み化</div></div></div>
+        <div class="ch"><div class="ch-n">08</div><div><div class="ch-t">交流力・コミュニティ戦略</div><div class="ch-s">信頼と口コミを生む人間関係の築き方</div></div></div>
+        <div class="ch"><div class="ch-n">09</div><div><div class="ch-t">図解生成</div><div class="ch-s">ぴーまん式GPTsによる図解の理論と活用方法</div></div></div>
+        <div class="ch"><div class="ch-n">10</div><div><div class="ch-t">ぴーまん式プロンプト設計術【本質編】</div><div class="ch-s">ハードなプロンプト設計を極める</div></div></div>
+        <div class="ch"><div class="ch-n">11</div><div><div class="ch-t">note攻略</div><div class="ch-s">操作方法・発信方法・刺さる書き方</div></div></div>
+        <div class="ch"><div class="ch-n">12</div><div><div class="ch-t">ぴーまん式ライティング</div><div class="ch-s">noteに適切な構成・ぴーまんの執筆方法</div></div></div>
+        <div class="ch"><div class="ch-n">13</div><div><div class="ch-t">note価値提供と価格設定</div><div class="ch-s">適正価格で他と差をつけろ</div></div></div>
+        <div class="ch"><div class="ch-n">14</div><div><div class="ch-t">カスタムAIでの業務の半自動化</div><div class="ch-s">GPTsなどで仕組みを回す方法</div></div></div>
+        <div class="ch secret"><div class="ch-n">15</div><div><div class="ch-t">🔒 シークレット</div><div class="ch-s" style="color:#a07800;">完成をお楽しみに...</div></div></div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
-<div class="leaf-div">🌿 🍃 🌿 🍃 🌿</div>
+<!-- ======== GPTs ======== -->
+<section class="sec gpts-bg" id="gpts">
+  <div class="sec-inner">
+    <div class="sec-tag">🎁 無料プレゼント</div>
+    <h2 class="sec-title">無料<span class="em">GPTs</span> 5選</h2>
+    <p class="sec-desc">気になるやつ、ぜひ使ってみてください🫑</p>
+    <div class="gpt-grid">
+      <a class="gpt" href="https://chatgpt.com/g/g-69bbef1b94bc81919c0f41b2f7679217-himannomaintomatuhuzuo-cheng" target="_blank">
+        <div class="gpt-ico">🧠</div><div class="gpt-info"><div class="free-pill">FREE</div><div class="gpt-name">マインドマップGPT</div><div class="gpt-desc">思考を整理・可視化するぴーまん式</div></div><span class="gpt-arr">›</span>
+      </a>
+      <a class="gpt" href="https://chatgpt.com/g/g-69d1fbe78d888191ae5ed1ed44820e1b-himanrotomatuhuzuo-zhi-notete-dian" target="_blank">
+        <div class="gpt-ico">🗺️</div><div class="gpt-info"><div class="free-pill">FREE</div><div class="gpt-name">ロードマップGPT</div><div class="gpt-desc">あなただけの収益化ロードマップ</div></div><span class="gpt-arr">›</span>
+      </a>
+      <a class="gpt" href="https://chatgpt.com/g/g-69eb9af15f848191b0e85182cf1c9d18-shou-yi-hua-dao-xian-atohaisa-jia" target="_blank">
+        <div class="gpt-ico">💡</div><div class="gpt-info"><div class="free-pill">FREE</div><div class="gpt-name">収益化導線アドバイスGPT</div><div class="gpt-desc">あなたの現状から次の一手を提案</div></div><span class="gpt-arr">›</span>
+      </a>
+      <a class="gpt" href="https://chatgpt.com/g/g-69b808342f6c819193d8e61f01ff14a4-himanjiao-liu-meka" target="_blank">
+        <div class="gpt-ico">🤝</div><div class="gpt-info"><div class="free-pill">FREE</div><div class="gpt-name">交流メーカー</div><div class="gpt-desc">Threadsでの交流文を自動生成</div></div><span class="gpt-arr">›</span>
+      </a>
+      <a class="gpt" href="https://chatgpt.com/g/g-69b80ce21a28819191dc2362fa879de6-himanlu-kouliu-meka" target="_blank">
+        <div class="gpt-ico">✈️</div><div class="gpt-info"><div class="free-pill">FREE</div><div class="gpt-name">旅こうメーカー</div><div class="gpt-desc">旅行コンテンツを楽しく生成</div></div><span class="gpt-arr">›</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="ldiv">🌿 ・ 🍃 ・ 🌿 ・ 🍃 ・ 🌿</div>
+
+<!-- ======== CTA ======== -->
+<section class="sec cta-bg" id="cta">
+  <div class="sec-inner">
+    <div class="sec-tag">🚀 つながろう</div>
+    <h2 class="sec-title">一緒に<span class="em">始めよう</span>🫑</h2>
+
+    <div class="com-box">
+      <div class="com-n">100名以上</div>
+      <div class="com-l">がオープンチャットに参加中 🫑✨</div>
+    </div>
+
+    <div class="cta-grid">
+      <a class="cta-btn cta-note-btn" href="https://note.com/pimaan_threads" target="_blank">📝 noteを読む</a>
+      <a class="cta-btn cta-line-btn" href="https://lin.ee/WMvu4HS" target="_blank">📲 LINE公式 — 無料相談</a>
+      <p class="cta-note-sm">個別サポート・相談を気軽にどうぞ</p>
+      <a class="cta-btn cta-chat-btn" href="https://line.me/ti/g2/olYPEgt7wtjyw24LMRDtfekhiS8G5UFSIQG54g?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank">💬 オープンチャットに参加</a>
+      <a class="cta-btn cta-ai-btn" href="https://peaman-lp.vercel.app/" target="_blank">🫑 ぴーまんAI を使う</a>
+      <a class="cta-btn cta-threads" href="https://www.threads.com/@pmen.1212" target="_blank">🫑 Threadsでフォロー @pmen.1212</a>
+    </div>
+  </div>
+</section>
 
 <!-- MESSAGE -->
-<div class="sec" style="padding-top:0;">
-  <div class="message-card">
-    <div class="msg-icon">🫑</div>
-    <div class="msg-body">
-      <div class="msg-title">みんなへメッセージ</div>
-      <div class="msg-text">
-        立ち止まってしまうことがあれば、<br>
-        遠慮なくぴーまんに教えてね🫑✨<br>
-        一緒に楽しく思考力を育てていきましょう！
+<section class="sec" style="padding-top:0;">
+  <div class="sec-inner">
+    <div class="msg">
+      <div class="msg-ico">🫑</div>
+      <div>
+        <div class="msg-t">みんなへメッセージ</div>
+        <div class="msg-d">立ち止まってしまうことがあれば、遠慮なくぴーまんに教えてね🫑✨<br>一緒に楽しく思考力を育てていきましょう！</div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- FOOTER -->
 <footer>
-  <span class="footer-char">🫑</span>
-  <div class="footer-name">ぴーまん🫑</div>
-  <div class="footer-sub">© 2026 ぴーまん — 難しいを簡単に✨</div>
+  <span class="f-char">🫑</span>
+  <div class="f-name">ぴーまん🫑</div>
+  <div class="f-links">
+    <a class="f-link" href="https://note.com/pimaan_threads" target="_blank">note</a>
+    <a class="f-link" href="https://lin.ee/WMvu4HS" target="_blank">LINE公式</a>
+    <a class="f-link" href="https://www.threads.com/@pmen.1212" target="_blank">Threads</a>
+    <a class="f-link" href="https://peaman-lp.vercel.app/" target="_blank">ぴーまんAI</a>
+  </div>
+  <div class="f-copy">© 2026 ぴーまん🫑 — 難しいを簡単に✨</div>
 </footer>
 
 </body>
