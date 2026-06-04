@@ -316,15 +316,18 @@ nav{
 
 .ai-video-wrap{
   border-radius:20px;overflow:hidden;
-  box-shadow:0 12px 48px rgba(0,0,0,0.4);
-  border:2px solid rgba(141,200,106,0.25);
+  box-shadow:0 12px 48px rgba(0,0,0,0.5);
+  border:2px solid rgba(141,200,106,0.3);
   background:#000;
-  aspect-ratio:9/16;
-  max-height:500px;
+  width:100%;
+  max-width:320px;
+  margin:0 auto;
 }
+@media(max-width:767px){.ai-video-wrap{max-width:280px;}}
 .ai-video-wrap video{
-  width:100%;height:100%;
-  object-fit:cover;display:block;
+  width:100%;height:auto;
+  display:block;
+  object-fit:contain;
 }
 
 .ai-content-side{}
@@ -521,6 +524,56 @@ nav{
   letter-spacing:0.5rem;
 }
 
+/* ─────────────────── PEPPER PATTERN ─────────────────── */
+.pepper-bg{
+  position:relative;
+  overflow:hidden;
+}
+.pepper-bg::before{
+  content:'';
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='90' viewBox='0 0 80 90'%3E%3Cellipse cx='40' cy='55' rx='18' ry='22' fill='none' stroke='%238dc86a' stroke-width='1.2' opacity='0.12'/%3E%3Cpath d='M40 33 Q46 22 50 18' fill='none' stroke='%238dc86a' stroke-width='1.5' opacity='0.12' stroke-linecap='round'/%3E%3Cellipse cx='40' cy='55' rx='10' ry='12' fill='none' stroke='%238dc86a' stroke-width='0.8' opacity='0.07'/%3E%3C/svg%3E");
+  background-repeat:repeat;
+  pointer-events:none;z-index:0;
+}
+.pepper-bg > *{position:relative;z-index:1;}
+
+/* floating deco peppers */
+.deco-wrap{position:relative;overflow:hidden;}
+.deco-p{
+  position:absolute;
+  font-size:4rem;
+  opacity:0.06;
+  pointer-events:none;
+  animation:decoF 6s ease-in-out infinite;
+  user-select:none;
+}
+@keyframes decoF{0%,100%{transform:translateY(0) rotate(-10deg);}50%{transform:translateY(-15px) rotate(10deg);}}
+
+/* ─────────────────── CHARA IMAGE ─────────────────── */
+.chara-img{
+  width:200px;height:200px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid rgba(255,255,255,0.8);
+  box-shadow:0 8px 32px rgba(30,74,18,0.2);
+  display:block;
+}
+@media(max-width:767px){.chara-img{width:150px;height:150px;}}
+.chara-emoji-fallback{
+  font-size:7rem;
+  display:block;
+  animation:floatChar 3.5s ease-in-out infinite;
+}
+
+/* AI thumbnail */
+.ai-thumb{
+  width:100%;border-radius:14px;
+  border:2px solid rgba(141,200,106,0.25);
+  box-shadow:0 8px 32px rgba(0,0,0,0.3);
+  display:block;margin-bottom:1rem;
+}
+
 /* ─────────────────── FOOTER ─────────────────── */
 footer{
   background:var(--g-dark);color:rgba(255,255,255,0.7);
@@ -548,12 +601,18 @@ footer{
 </nav>
 
 <!-- ======== HERO ======== -->
-<section class="hero">
+<section class="hero pepper-bg">
+  <!-- 装飾ぴーまん -->
+  <span style="position:absolute;top:8%;right:3%;font-size:6rem;opacity:0.07;pointer-events:none;transform:rotate(20deg);">🫑</span>
+  <span style="position:absolute;bottom:12%;left:2%;font-size:4rem;opacity:0.07;pointer-events:none;transform:rotate(-15deg);">🫑</span>
+  <span style="position:absolute;top:50%;right:1%;font-size:2.5rem;opacity:0.05;pointer-events:none;">🌿</span>
   <div class="hero-inner">
 
     <div class="hero-chara">
       <div class="chara-circle">
+        <!-- キャラ画像：ファイルパスを教えてもらったら src を更新 -->
         <span class="chara-emoji">🫑</span>
+        <!-- <img class="chara-img" src="chara.png" alt="ぴーまんキャラ"> -->
       </div>
       <span class="crown">👑</span>
     </div>
@@ -632,7 +691,9 @@ footer{
 <div class="ldiv">🌿 ・ 🍃 ・ 🌿 ・ 🍃 ・ 🌿</div>
 
 <!-- ======== PILLARS ======== -->
-<section class="sec pillars-bg" id="pillars">
+<section class="sec pillars-bg pepper-bg deco-wrap" id="pillars">
+  <span class="deco-p" style="top:10%;right:2%;font-size:6rem;opacity:0.04;animation-delay:1s;">🫑</span>
+  <span class="deco-p" style="bottom:5%;left:1%;font-size:4rem;opacity:0.04;animation-delay:2.5s;">🫑</span>
   <div class="sec-inner">
     <div class="sec-tag">💪 専門分野</div>
     <h2 class="sec-title">ぴーまんの<span class="em">3本柱</span></h2>
@@ -678,7 +739,12 @@ footer{
 <div class="ldiv">🌿 ・ 🍃 ・ 🌿 ・ 🍃 ・ 🌿</div>
 
 <!-- ======== AI SECTION ======== -->
-<section class="sec ai-sec-bg">
+<section class="sec ai-sec-bg pepper-bg deco-wrap">
+  <!-- 装飾ぴーまん -->
+  <span class="deco-p" style="top:5%;left:2%;font-size:5rem;animation-delay:0s;">🫑</span>
+  <span class="deco-p" style="top:20%;right:3%;font-size:3rem;animation-delay:1.5s;">🫑</span>
+  <span class="deco-p" style="bottom:10%;left:5%;font-size:3.5rem;animation-delay:3s;">🫑</span>
+  <span class="deco-p" style="bottom:5%;right:4%;font-size:6rem;animation-delay:2s;">🫑</span>
   <div class="sec-inner">
     <div class="sec-tag">🤖 NEW</div>
     <h2 class="sec-title">ぴーまん<span class="em">AI</span>🫑、登場。</h2>
@@ -686,12 +752,16 @@ footer{
 
     <div class="ai-layout">
 
-      <!-- 動画 -->
-      <div class="ai-video-wrap">
-        <video autoplay muted loop playsinline controls>
-          <source src="peaman-ai.mov" type="video/mp4">
-          <source src="peaman-ai.mov" type="video/quicktime">
-        </video>
+      <!-- 動画 & サムネ -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:1rem;">
+        <!-- AIサムネ：画像を提供してもらったら追加 -->
+        <!-- <img class="ai-thumb" src="ai-thumb.png" alt="ぴーまんAI"> -->
+        <div class="ai-video-wrap">
+          <video autoplay muted loop playsinline controls>
+            <source src="peaman-ai.mov" type="video/mp4">
+            <source src="peaman-ai.mov" type="video/quicktime">
+          </video>
+        </div>
       </div>
 
       <!-- コンテンツ -->
@@ -727,7 +797,7 @@ footer{
         </div>
 
         <a class="ai-cta" href="https://peaman-lp.vercel.app/" target="_blank">
-          🫑 ぴーまんAI を体験する →
+          🫑 ぴーまんAI をもっと詳しく →
         </a>
       </div>
 
