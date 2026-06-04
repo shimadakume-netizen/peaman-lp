@@ -299,6 +299,81 @@ nav{
   padding:0.2rem 0.55rem;border-radius:6px;
 }
 
+/* ─────────────────── AI SECTION ─────────────────── */
+.ai-sec-bg{
+  background:linear-gradient(160deg,#0d1f09 0%,#1a3a0f 50%,#0d1f09 100%);
+}
+.ai-sec-bg .sec-tag{background:rgba(141,200,106,0.12);border-color:rgba(141,200,106,0.25);color:var(--g-light);}
+.ai-sec-bg .sec-title{color:#fff;}
+.ai-sec-bg .sec-title .em{color:var(--g-light);}
+.ai-sec-bg .sec-desc{color:rgba(255,255,255,0.55);}
+
+.ai-layout{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2.5rem;align-items:center;
+}
+@media(max-width:767px){.ai-layout{grid-template-columns:1fr;}}
+
+.ai-video-wrap{
+  border-radius:20px;overflow:hidden;
+  box-shadow:0 12px 48px rgba(0,0,0,0.4);
+  border:2px solid rgba(141,200,106,0.25);
+  background:#000;
+  aspect-ratio:9/16;
+  max-height:500px;
+}
+.ai-video-wrap video{
+  width:100%;height:100%;
+  object-fit:cover;display:block;
+}
+
+.ai-content-side{}
+.ai-monitor-card{
+  display:flex;align-items:center;gap:1rem;
+  background:rgba(141,200,106,0.08);
+  border:1.5px solid rgba(141,200,106,0.2);
+  border-radius:14px;padding:1.1rem 1.25rem;
+  text-decoration:none;margin-bottom:1.25rem;
+  transition:all 0.2s;
+}
+.ai-monitor-card:hover{border-color:rgba(141,200,106,0.5);transform:translateX(4px);}
+.ai-monitor-ico{font-size:1.8rem;flex-shrink:0;}
+.ai-monitor-info{}
+.ai-monitor-label{font-size:0.65rem;color:var(--g-light);font-weight:900;letter-spacing:0.1em;margin-bottom:0.15rem;}
+.ai-monitor-title{font-size:0.85rem;font-weight:700;color:#fff;line-height:1.4;}
+.ai-monitor-sub{font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:0.1rem;}
+
+.ai-features{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.5rem;}
+.ai-feature{
+  display:flex;align-items:flex-start;gap:0.75rem;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07);
+  border-radius:12px;padding:0.85rem 1rem;
+}
+.af-ico{font-size:1.2rem;flex-shrink:0;}
+.af-text{font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.5;}
+.af-text strong{color:#fff;}
+
+.ai-cta{
+  display:flex;align-items:center;justify-content:center;gap:0.6rem;
+  background:linear-gradient(135deg,var(--g-mid),var(--g-dark));
+  color:#fff;border-radius:14px;
+  padding:1.1rem 1.5rem;
+  font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;
+  font-size:0.95rem;font-weight:900;
+  text-decoration:none;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+  transition:all 0.2s;border:1.5px solid rgba(141,200,106,0.3);
+}
+.ai-cta:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,0.4);}
+
+/* chapter special styles */
+.ch-special{border-color:rgba(93,184,62,0.4)!important;background:linear-gradient(135deg,#eaffd8,#f0fce4)!important;}
+.ch-special .ch-t{color:var(--g-dark)!important;}
+.ch-soon{opacity:0.65;}
+.ch-n-soon{background:rgba(90,128,80,0.4)!important;color:rgba(255,255,255,0.6)!important;}
+.ch-s-soon{color:var(--muted)!important;}
+
 /* ─────────────────── SERIES ─────────────────── */
 .series-layout{
   display:grid;
@@ -602,6 +677,66 @@ footer{
 
 <div class="ldiv">🌿 ・ 🍃 ・ 🌿 ・ 🍃 ・ 🌿</div>
 
+<!-- ======== AI SECTION ======== -->
+<section class="sec ai-sec-bg">
+  <div class="sec-inner">
+    <div class="sec-tag">🤖 NEW</div>
+    <h2 class="sec-title">ぴーまん<span class="em">AI</span>🫑、登場。</h2>
+    <p class="sec-desc">Threads × note に特化させた、ぴーまんのすべてが詰まったAIコーチ。</p>
+
+    <div class="ai-layout">
+
+      <!-- 動画 -->
+      <div class="ai-video-wrap">
+        <video autoplay muted loop playsinline controls>
+          <source src="peaman-ai.mov" type="video/mp4">
+          <source src="peaman-ai.mov" type="video/quicktime">
+        </video>
+      </div>
+
+      <!-- コンテンツ -->
+      <div class="ai-content-side">
+
+        <!-- AIモニター募集中 -->
+        <a class="ai-monitor-card" href="https://note.com/pman1212/n/n9865077bf9cc" target="_blank">
+          <div class="ai-monitor-ico">🫑</div>
+          <div class="ai-monitor-info">
+            <div class="ai-monitor-label">📋 AIモニター募集中</div>
+            <div class="ai-monitor-title">ぴーまんAI β版<br>モニター参加の詳細はこちら</div>
+            <div class="ai-monitor-sub">noteで詳細を読む →</div>
+          </div>
+        </a>
+
+        <div class="ai-features">
+          <div class="ai-feature">
+            <div class="af-ico">💬</div>
+            <div class="af-text"><strong>7つのモード搭載</strong><br>相談・ヒアリング・記事作成・図解・AIアート・ロードマップ・ToDoまで全部対応</div>
+          </div>
+          <div class="ai-feature">
+            <div class="af-ico">🧠</div>
+            <div class="af-text"><strong>ぴーまんの思想がそのまま入ってる</strong><br>7桁を出し続けた戦略と思考をAIに落とし込みました</div>
+          </div>
+          <div class="ai-feature">
+            <div class="af-ico">📱</div>
+            <div class="af-text"><strong>使い方はシンプル</strong><br>パスワード1つでアクセス。モードを選んで話しかけるだけ</div>
+          </div>
+          <div class="ai-feature">
+            <div class="af-ico">🟢</div>
+            <div class="af-text"><strong>β版モニター募集中</strong><br>今なら先着優先でご案内。一緒にぴーまんAIを育ててほしい🫑</div>
+          </div>
+        </div>
+
+        <a class="ai-cta" href="https://peaman-lp.vercel.app/" target="_blank">
+          🫑 ぴーまんAI を体験する →
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="ldiv">🌿 ・ 🍃 ・ 🌿 ・ 🍃 ・ 🌿</div>
+
 <!-- ======== SERIES ======== -->
 <section class="sec" id="series">
   <div class="sec-inner">
@@ -616,24 +751,25 @@ footer{
           <div class="sp-title">月収7桁を再現するための戦略書</div>
           <div class="sp-desc">マインドセットから自動化まで。ぴーまんのすべてを詰め込んだシリーズです。</div>
         </div>
-        <a class="series-btn" href="https://note.com/pimaan_threads" target="_blank">📝 noteで読む →</a>
+        <a class="series-btn" href="https://note.com/pman1212" target="_blank">📝 noteで読む →</a>
       </div>
 
       <div class="chapter-grid">
-        <a class="ch" href="https://note.com/pimaan_threads" target="_blank"><div class="ch-n">01</div><div><div class="ch-t">マインドセット</div><div class="ch-s">稼げる人と稼げない人の決定的な違い</div></div></a>
-        <a class="ch" href="https://note.com/pimaan_threads" target="_blank"><div class="ch-n">02</div><div><div class="ch-t">情報収集力とインプットの習慣</div><div class="ch-s">ネタを枯らさない技術</div></div></a>
-        <a class="ch" href="https://note.com/pimaan_threads" target="_blank"><div class="ch-n">03</div><div><div class="ch-t">収益化の全体像</div><div class="ch-s">note × Threads で稼ぐ仕組みを理解する</div></div></a>
-        <div class="ch"><div class="ch-n">04</div><div><div class="ch-t">AIの基礎操作</div><div class="ch-s">ChatGPT・Claude・画像生成AIを使いこなす</div></div></div>
-        <div class="ch"><div class="ch-n">05</div><div><div class="ch-t">Threadsのブランディング</div><div class="ch-s">需要と供給・競合分析・ファン化・ポジション</div></div></div>
-        <div class="ch"><div class="ch-n">06</div><div><div class="ch-t">ブランディングはセクシーにして</div><div class="ch-s">世界観の磨き方・唯一無二の存在感</div></div></div>
-        <div class="ch"><div class="ch-n">07</div><div><div class="ch-t">Threadsのマーケティング</div><div class="ch-s">集客・導線・商品化・仕組み化</div></div></div>
-        <div class="ch"><div class="ch-n">08</div><div><div class="ch-t">交流力・コミュニティ戦略</div><div class="ch-s">信頼と口コミを生む人間関係の築き方</div></div></div>
-        <div class="ch"><div class="ch-n">09</div><div><div class="ch-t">図解生成</div><div class="ch-s">ぴーまん式GPTsによる図解の理論と活用方法</div></div></div>
-        <div class="ch"><div class="ch-n">10</div><div><div class="ch-t">ぴーまん式プロンプト設計術【本質編】</div><div class="ch-s">ハードなプロンプト設計を極める</div></div></div>
-        <div class="ch"><div class="ch-n">11</div><div><div class="ch-t">note攻略</div><div class="ch-s">操作方法・発信方法・刺さる書き方</div></div></div>
-        <div class="ch"><div class="ch-n">12</div><div><div class="ch-t">ぴーまん式ライティング</div><div class="ch-s">noteに適切な構成・ぴーまんの執筆方法</div></div></div>
-        <div class="ch"><div class="ch-n">13</div><div><div class="ch-t">note価値提供と価格設定</div><div class="ch-s">適正価格で他と差をつけろ</div></div></div>
-        <div class="ch"><div class="ch-n">14</div><div><div class="ch-t">カスタムAIでの業務の半自動化</div><div class="ch-s">GPTsなどで仕組みを回す方法</div></div></div>
+        <a class="ch ch-special" href="https://note.com/pman1212/n/n00086b53eff5" target="_blank"><div class="ch-n" style="background:var(--g-bright);">00</div><div><div class="ch-t">【第0章】継続した収益は、思考で始まり土台から生まれる</div><div class="ch-s">思考を高めて至高への道</div></div></a>
+        <a class="ch" href="https://note.com/pman1212/n/n1113f3f6cf56" target="_blank"><div class="ch-n">01</div><div><div class="ch-t">マインドセット</div><div class="ch-s">稼げる人と稼げない人の決定的な違い</div></div></a>
+        <a class="ch" href="https://note.com/pman1212/n/nf5f22c07178f" target="_blank"><div class="ch-n">02</div><div><div class="ch-t">情報収集力とインプットの習慣</div><div class="ch-s">ネタを枯らさない技術</div></div></a>
+        <a class="ch" href="https://note.com/pman1212/n/n72961847ec8a" target="_blank"><div class="ch-n">03</div><div><div class="ch-t">収益化の全体像</div><div class="ch-s">note × Threads で稼ぐ仕組みを理解する</div></div></a>
+        <a class="ch" href="https://note.com/pman1212/n/n6d06d2c0d713" target="_blank"><div class="ch-n">04</div><div><div class="ch-t">AIの基礎操作</div><div class="ch-s">ChatGPT・Claude・画像生成AIを使いこなす</div></div></a>
+        <a class="ch" href="https://note.com/pman1212/n/n9c527a4d7b28" target="_blank"><div class="ch-n">05</div><div><div class="ch-t">Threadsのブランディング</div><div class="ch-s">需要と供給・競合分析・ファン化・ポジション</div></div></a>
+        <a class="ch" href="https://note.com/pman1212/n/nf4ec1846452a" target="_blank"><div class="ch-n">06</div><div><div class="ch-t">ブランディングはセクシーにして</div><div class="ch-s">世界観の磨き方・唯一無二の存在感</div></div></a>
+        <a class="ch" href="https://note.com/pman1212/n/n3fceff8ecdde" target="_blank"><div class="ch-n">07</div><div><div class="ch-t">Threadsのマーケティング</div><div class="ch-s">集客・導線・商品化・仕組み化</div></div></a>
+        <a class="ch" href="https://note.com/pman1212/n/n58c32ed52f5b" target="_blank"><div class="ch-n">08</div><div><div class="ch-t">交流力・コミュニティ戦略</div><div class="ch-s">信頼と口コミを生む人間関係の築き方</div></div></a>
+        <a class="ch" href="https://note.com/pman1212/n/nb81105028cfe" target="_blank"><div class="ch-n">09</div><div><div class="ch-t">図解生成</div><div class="ch-s">ぴーまん式GPTsによる図解の理論と活用方法</div></div></a>
+        <div class="ch ch-soon"><div class="ch-n ch-n-soon">10</div><div><div class="ch-t">ぴーまん式プロンプト設計術【本質編】</div><div class="ch-s ch-s-soon">🔜 近日公開</div></div></div>
+        <div class="ch ch-soon"><div class="ch-n ch-n-soon">11</div><div><div class="ch-t">note攻略</div><div class="ch-s ch-s-soon">🔜 近日公開</div></div></div>
+        <div class="ch ch-soon"><div class="ch-n ch-n-soon">12</div><div><div class="ch-t">ぴーまん式ライティング</div><div class="ch-s ch-s-soon">🔜 近日公開</div></div></div>
+        <div class="ch ch-soon"><div class="ch-n ch-n-soon">13</div><div><div class="ch-t">note価値提供と価格設定</div><div class="ch-s ch-s-soon">🔜 近日公開</div></div></div>
+        <div class="ch ch-soon"><div class="ch-n ch-n-soon">14</div><div><div class="ch-t">カスタムAIでの業務の半自動化</div><div class="ch-s ch-s-soon">🔜 近日公開</div></div></div>
         <div class="ch secret"><div class="ch-n">15</div><div><div class="ch-t">🔒 シークレット</div><div class="ch-s" style="color:#a07800;">完成をお楽しみに...</div></div></div>
       </div>
     </div>
@@ -680,7 +816,7 @@ footer{
     </div>
 
     <div class="cta-grid">
-      <a class="cta-btn cta-note-btn" href="https://note.com/pimaan_threads" target="_blank">📝 noteを読む</a>
+      <a class="cta-btn cta-note-btn" href="https://note.com/pman1212" target="_blank">📝 noteを読む</a>
       <a class="cta-btn cta-line-btn" href="https://lin.ee/WMvu4HS" target="_blank">📲 LINE公式 — 無料相談</a>
       <p class="cta-note-sm">個別サポート・相談を気軽にどうぞ</p>
       <a class="cta-btn cta-chat-btn" href="https://line.me/ti/g2/olYPEgt7wtjyw24LMRDtfekhiS8G5UFSIQG54g?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank">💬 オープンチャットに参加</a>
@@ -708,7 +844,7 @@ footer{
   <span class="f-char">🫑</span>
   <div class="f-name">ぴーまん🫑</div>
   <div class="f-links">
-    <a class="f-link" href="https://note.com/pimaan_threads" target="_blank">note</a>
+    <a class="f-link" href="https://note.com/pman1212" target="_blank">note</a>
     <a class="f-link" href="https://lin.ee/WMvu4HS" target="_blank">LINE公式</a>
     <a class="f-link" href="https://www.threads.com/@pmen.1212" target="_blank">Threads</a>
     <a class="f-link" href="https://peaman-lp.vercel.app/" target="_blank">ぴーまんAI</a>
