@@ -32,11 +32,85 @@ body{
   background:var(--bg);
   color:var(--text);
   font-family:'Zen Maru Gothic','Noto Sans JP',sans-serif;
+  font-size:17px;
   overflow-x:hidden;
 }
+@media(max-width:767px){body{font-size:16px;}}
 
 /* ─────────────────── LAYOUT WRAPPER ─────────────────── */
 .page{max-width:1100px;margin:0 auto;}
+
+/* ─────────────────── ANIMATED BG ─────────────────── */
+@keyframes bgMove{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+@keyframes floatA{0%,100%{transform:translateY(0) rotate(-8deg);}50%{transform:translateY(-24px) rotate(8deg);}}
+@keyframes floatB{0%,100%{transform:translateY(0) rotate(5deg);}50%{transform:translateY(-18px) rotate(-5deg);}}
+@keyframes floatC{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-30px) rotate(3deg);}}
+@keyframes pulse2{0%,100%{opacity:0.07;}50%{opacity:0.14;}}
+
+/* ─────────────────── FLOATING PEPPERS ─────────────────── */
+.bg-pepper{
+  position:fixed;pointer-events:none;z-index:0;
+  font-size:3rem;opacity:0.06;user-select:none;
+}
+.bp1{top:5%;left:2%;animation:floatA 7s ease-in-out infinite;}
+.bp2{top:25%;right:3%;font-size:2rem;animation:floatB 9s ease-in-out infinite 1s;}
+.bp3{top:50%;left:1%;font-size:1.5rem;animation:floatC 6s ease-in-out infinite 2s;}
+.bp4{top:70%;right:2%;font-size:4rem;animation:floatA 11s ease-in-out infinite 0.5s;}
+.bp5{bottom:15%;left:3%;font-size:2.5rem;animation:floatB 8s ease-in-out infinite 3s;}
+.bp6{bottom:5%;right:4%;font-size:2rem;animation:floatC 10s ease-in-out infinite 1.5s;}
+
+/* ─────────────────── VOICE SECTION ─────────────────── */
+.voice-sec{background:linear-gradient(160deg,#0a0a0a 0%,#111 100%);}
+.voice-sec .sec-tag{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.15);color:rgba(255,255,255,0.7);}
+.voice-sec .sec-title{color:#fff;}
+.voice-sec .sec-title .em{color:var(--g-light);}
+.voice-sec .sec-desc{color:rgba(255,255,255,0.5);}
+.voice-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:1.25rem;
+}
+.voice-card{
+  background:#0f0f0f;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:20px;
+  padding:1.75rem;
+  position:relative;overflow:hidden;
+  transition:transform 0.2s,border-color 0.2s;
+}
+.voice-card:hover{transform:translateY(-3px);border-color:rgba(141,200,106,0.3);}
+.voice-card::before{
+  content:'❝';
+  position:absolute;top:-0.5rem;left:1rem;
+  font-size:5rem;color:rgba(141,200,106,0.08);
+  font-family:serif;line-height:1;pointer-events:none;
+}
+.voice-text{
+  font-size:0.9rem;line-height:2.1;
+  color:rgba(255,255,255,0.85);
+  margin-bottom:1.25rem;
+  position:relative;z-index:1;
+  white-space:pre-line;
+}
+.voice-text strong{color:var(--g-light);}
+.voice-footer{
+  display:flex;align-items:center;gap:0.75rem;
+  padding-top:1rem;
+  border-top:1px solid rgba(255,255,255,0.06);
+}
+.voice-ico{font-size:1.5rem;}
+.voice-meta{}
+.voice-name{font-size:0.78rem;font-weight:700;color:rgba(255,255,255,0.6);}
+.voice-date{font-size:0.68rem;color:rgba(255,255,255,0.3);margin-top:0.1rem;}
+.voice-reaction{
+  margin-left:auto;
+  display:flex;align-items:center;gap:0.3rem;
+  font-size:0.75rem;color:rgba(255,255,255,0.3);
+}
 
 /* ─────────────────── NAV ─────────────────── */
 nav{
@@ -71,7 +145,9 @@ nav{
 
 /* ─────────────────── HERO ─────────────────── */
 .hero{
-  background:linear-gradient(145deg,#c8e8a0 0%,#dff0c4 40%,#eef6e4 100%);
+  background:linear-gradient(270deg,#c8e8a0,#dff0c4,#b8e090,#eef6e4,#c8e8a0);
+  background-size:400% 400%;
+  animation:bgMove 12s ease infinite;
   padding:4rem 2rem 3rem;
   position:relative;overflow:hidden;
 }
@@ -211,7 +287,7 @@ nav{
   margin-bottom:0.4rem;
 }
 .sec-title .em{color:var(--g-mid);}
-.sec-desc{font-size:0.85rem;color:var(--muted);line-height:1.9;margin-bottom:2rem;}
+.sec-desc{font-size:0.95rem;color:var(--muted);line-height:1.9;margin-bottom:2rem;}
 
 /* ─────────────────── INTRO ─────────────────── */
 .intro-grid{
@@ -654,6 +730,14 @@ footer{
 </head>
 <body>
 
+<!-- 常時浮遊ぴーまん（全ページ固定） -->
+<span class="bg-pepper bp1">🫑</span>
+<span class="bg-pepper bp2">🫑</span>
+<span class="bg-pepper bp3">🌿</span>
+<span class="bg-pepper bp4">🫑</span>
+<span class="bg-pepper bp5">🌿</span>
+<span class="bg-pepper bp6">🫑</span>
+
 <!-- ======== NAV ======== -->
 <nav>
   <div class="nav-logo">🫑 ぴーまん</div>
@@ -883,6 +967,108 @@ footer{
     </div>
   </div>
 </section>
+
+<!-- ======== VOICE ======== -->
+<section class="sec voice-sec">
+  <div class="sec-inner">
+    <div class="sec-tag">💬 モニターの声</div>
+    <h2 class="sec-title">こんな<span class="em">声</span>をいただきました🫑</h2>
+    <p class="sec-desc">β版モニターさんからのリアルな感想です。</p>
+
+    <div class="voice-grid">
+
+      <div class="voice-card">
+        <div class="voice-text">え、ちょっと待って、、、
+
+これ<strong>「AI作りました」のレベルじゃなかった😳</strong>
+
+@pmen.1212 只者じゃないと思っていたけど
+<strong>無限∞無限∞🫑</strong>
+
+私、伝えたい事多いのに言語化苦手なの。
+いつもGPTとの戦い、、奮闘ですよ。
+
+<strong>このピーマンAIは、全部整理してくれる
+しかも、私の思考も入れてくれてて</strong>
+
+本物がお隣にいますか？の
+距離感で話してくれる。
+
+「今日もお疲れ様」「おやすみー🫑」まで
+言ってくれるの。<strong>優しさ寄り添い系！バリすごっ！！！</strong>
+
+なお、今のところ頷きばかりで
+戦いはしてません。</div>
+        <div class="voice-footer">
+          <span class="voice-ico">🫑</span>
+          <div class="voice-meta">
+            <div class="voice-name">モニターさん ①</div>
+            <div class="voice-date">β版モニター</div>
+          </div>
+          <div class="voice-reaction">❤️ 反応多数</div>
+        </div>
+      </div>
+
+      <div class="voice-card">
+        <div class="voice-text">私、感覚派なので想いを言葉にするのが上手くなくて。
+だからぴーまん🫑AI気になっていたので頼らせていただきました。
+
+<strong>もうね、ヤバい👀</strong>
+
+頭の中の言葉にできない感情を
+<strong>適切な言葉にして提案してくれるの。</strong>
+
+えっ？今、目の前にぴーまんさん🫑居ます？
+ってくらい。上手く感情も話せてないのに、
+そこまで汲み取ってくれるの？って。
+
+だから自分の言葉にできない感情や想いを
+残したまま文章が綴られていきました。
+
+なんていうのかな。<strong>もうね、ヤバい👀</strong></div>
+        <div class="voice-footer">
+          <span class="voice-ico">🫑</span>
+          <div class="voice-meta">
+            <div class="voice-name">モニターさん ②</div>
+            <div class="voice-date">β版モニター</div>
+          </div>
+          <div class="voice-reaction">❤️ 反応多数</div>
+        </div>
+      </div>
+
+      <div class="voice-card">
+        <div class="voice-text">え？もう残り２枠だけ......！？🤫
+
+<strong>月7桁の思考が詰まった🫑AI！</strong>
+ちょっと試してみたら......すごすぎ😳
+
+私仕様にチューニングされてたんです！
+だから、疑問に思ってるコト、
+何を、どうしたらいいか悩んでいるコト、
+モヤモヤした言葉のママ相談したら......
+
+<strong>今の私にぴったり合わせて
+まるッと解決しちゃいました♡</strong>
+
+もう、<strong>自分専用🫑さんがそこにいる感覚✨</strong>
+この安心感と効率化✨ぜひ味わってほしい...
+
+あ。モニターさんはびっくり🎁があるのは🤫</div>
+        <div class="voice-footer">
+          <span class="voice-ico">🫑</span>
+          <div class="voice-meta">
+            <div class="voice-name">モニターさん ③</div>
+            <div class="voice-date">β版モニター</div>
+          </div>
+          <div class="voice-reaction">❤️ 反応多数</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="ldiv" style="background:#111;color:rgba(141,200,106,0.3);">🌿 ・ 🍃 ・ 🌿 ・ 🍃 ・ 🌿</div>
 
 <div class="ldiv">🌿 ・ 🍃 ・ 🌿 ・ 🍃 ・ 🌿</div>
 
