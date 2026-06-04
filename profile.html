@@ -328,11 +328,13 @@ nav{
 .mini-card .mc-sub{font-size:0.72rem;color:var(--muted);margin-top:0.2rem;}
 
 /* ─────────────────── PILLARS ─────────────────── */
-.pillars-bg{background:var(--g-dark);}
-.pillars-bg .sec-tag{background:rgba(200,232,176,0.15);border-color:rgba(200,232,176,0.25);color:var(--g-pale);}
+.pillars-bg{
+  background:linear-gradient(135deg,#0d2a08 0%,#1e4a12 50%,#0a1f06 100%);
+}
+.pillars-bg .sec-tag{background:rgba(200,232,176,0.12);border-color:rgba(200,232,176,0.25);color:var(--g-pale);}
 .pillars-bg .sec-title{color:#fff;}
 .pillars-bg .sec-title .em{color:var(--g-light);}
-.pillars-bg .sec-desc{color:rgba(255,255,255,0.55);}
+.pillars-bg .sec-desc{color:rgba(255,255,255,0.65);}
 .pillars-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -341,30 +343,31 @@ nav{
 @media(max-width:900px){.pillars-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:580px){.pillars-grid{grid-template-columns:1fr;}}
 .pillar{
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(200,232,176,0.15);
+  background:rgba(8,24,4,0.88);
+  border:1px solid rgba(141,200,106,0.25);
   border-radius:20px;padding:1.75rem;
   transition:transform 0.2s,border-color 0.2s;
+  backdrop-filter:blur(8px);
 }
-.pillar:hover{transform:translateY(-4px);border-color:rgba(200,232,176,0.35);}
+.pillar:hover{transform:translateY(-4px);border-color:rgba(141,200,106,0.5);}
 .pi-head{display:flex;align-items:center;gap:0.75rem;margin-bottom:1.1rem;}
 .pi-icon{
   width:46px;height:46px;border-radius:14px;
   background:rgba(141,200,106,0.15);
-  border:1.5px solid rgba(141,200,106,0.25);
+  border:1.5px solid rgba(141,200,106,0.3);
   display:flex;align-items:center;justify-content:center;
   font-size:1.5rem;flex-shrink:0;
 }
-.pi-name{font-size:1.05rem;font-weight:900;color:#fff;}
+.pi-name{font-size:1.1rem;font-weight:900;color:#fff;}
 .pi-items{display:flex;flex-direction:column;gap:0.5rem;}
 .pi-item{
   display:flex;align-items:flex-start;gap:0.5rem;
-  font-size:0.8rem;color:rgba(255,255,255,0.65);line-height:1.5;
+  font-size:0.88rem;color:rgba(255,255,255,0.85);line-height:1.6;
   padding-bottom:0.45rem;
-  border-bottom:1px solid rgba(255,255,255,0.06);
+  border-bottom:1px solid rgba(141,200,106,0.1);
 }
 .pi-item:last-child{border-bottom:none;padding-bottom:0;}
-.pi-dot{width:6px;height:6px;border-radius:50%;background:var(--g-light);flex-shrink:0;margin-top:0.45rem;}
+.pi-dot{width:7px;height:7px;border-radius:50%;background:var(--g-light);flex-shrink:0;margin-top:0.45rem;}
 /* AI special */
 .ai-q{
   background:rgba(141,200,106,0.08);
@@ -385,7 +388,7 @@ nav{
 
 /* ─────────────────── AI SECTION ─────────────────── */
 .ai-sec-bg{
-  background:linear-gradient(160deg,#0d1f09 0%,#1a3a0f 50%,#0d1f09 100%);
+  background:linear-gradient(160deg,#060f03 0%,#0d2a08 50%,#060f03 100%);
 }
 .ai-sec-bg .sec-tag{background:rgba(141,200,106,0.12);border-color:rgba(141,200,106,0.25);color:var(--g-light);}
 .ai-sec-bg .sec-title{color:#fff;}
@@ -430,12 +433,13 @@ nav{
 .ai-features{display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.5rem;}
 .ai-feature{
   display:flex;align-items:flex-start;gap:0.75rem;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.07);
+  background:rgba(10,30,6,0.9);
+  border:1px solid rgba(141,200,106,0.2);
   border-radius:12px;padding:0.85rem 1rem;
+  backdrop-filter:blur(6px);
 }
 .af-ico{font-size:1.2rem;flex-shrink:0;}
-.af-text{font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.5;}
+.af-text{font-size:0.88rem;color:rgba(255,255,255,0.9);line-height:1.6;}
 .af-text strong{color:#fff;}
 
 .ai-cta{
@@ -669,7 +673,7 @@ nav{
 .pepper-bg::before{
   content:'';
   position:absolute;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Ctext x='5' y='75' font-size='60' opacity='0.09'%3E%F0%9F%AB%91%3C/text%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Ctext x='5' y='75' font-size='60' opacity='0.06'%3E%F0%9F%AB%91%3C/text%3E%3C/svg%3E");
   background-repeat:repeat;
   background-size:90px 90px;
   pointer-events:none;z-index:0;
