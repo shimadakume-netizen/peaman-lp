@@ -118,29 +118,46 @@ nav{
   background:rgba(238,246,228,0.92);
   backdrop-filter:blur(10px);
   border-bottom:2px solid var(--g-pale);
-  padding:0.75rem 2rem;
+  padding:0.6rem 1.25rem;
   display:flex;align-items:center;justify-content:space-between;
+  gap:0.5rem;
 }
-.nav-logo{font-size:1.1rem;font-weight:900;color:var(--g-dark);}
-.nav-links{display:flex;align-items:center;gap:0.6rem;}
+@media(max-width:767px){nav{padding:0.5rem 0.85rem;}}
+.nav-logo{
+  font-size:1.1rem;font-weight:900;color:var(--g-dark);
+  white-space:nowrap;
+  flex-shrink:0;
+}
+@media(max-width:767px){.nav-logo{font-size:0.95rem;}}
+.nav-links{
+  display:flex;align-items:center;gap:0.35rem;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+@media(max-width:767px){.nav-links{gap:0.25rem;}}
 .nav-link{
-  font-size:0.78rem;font-weight:700;
+  font-size:0.72rem;font-weight:700;
   color:var(--g-mid);
   text-decoration:none;
-  padding:0.35rem 0.85rem;
+  padding:0.3rem 0.65rem;
   border-radius:99px;
   border:1.5px solid transparent;
   transition:all 0.2s;
+  white-space:nowrap;
 }
+@media(max-width:767px){.nav-link{font-size:0.65rem;padding:0.25rem 0.5rem;}}
 .nav-link:hover{border-color:var(--g-pale);background:var(--white);}
 .nav-cta{
   background:var(--g-dark);color:#fff;
   border-radius:99px;
-  font-size:0.78rem;font-weight:900;
-  padding:0.4rem 1.1rem;
+  font-size:0.72rem;font-weight:900;
+  padding:0.35rem 0.95rem;
   text-decoration:none;
   transition:all 0.2s;
+  white-space:nowrap;
+  flex-shrink:0;
 }
+@media(max-width:767px){.nav-cta{font-size:0.65rem;padding:0.3rem 0.75rem;}}
 .nav-cta:hover{background:var(--g-mid);}
 
 /* ─────────────────── HERO ─────────────────── */
@@ -660,10 +677,11 @@ nav{
 
 /* ─────────────────── LEAF DIVIDER ─────────────────── */
 .ldiv{
-  text-align:center;padding:0.75rem 2rem;
-  font-size:1rem;color:var(--g-pale);
-  letter-spacing:0.5rem;
+  text-align:center;padding:0.35rem 1rem;
+  font-size:0.9rem;color:var(--g-pale);
+  letter-spacing:0.3rem;
 }
+@media(max-width:767px){.ldiv{padding:0.25rem 0.75rem;font-size:0.75rem;letter-spacing:0.2rem;}}
 
 /* ─────────────────── 🫑 PATTERN ─────────────────── */
 .pepper-bg{position:relative;overflow:hidden;}
