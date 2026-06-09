@@ -1335,12 +1335,20 @@ document.addEventListener('DOMContentLoaded', function() {
   const totalFrames    = 93;
   const animationHeight = window.innerHeight * 3;
 
-  let currentFrame     = 1;
+  // ── 全フレームをプリロード（早スクロール対応）──
+  const preloaded = [];
+  for (let i = 1; i <= totalFrames; i++) {
+    const img = new Image();
+    img.src = `frames/frame_${String(i).padStart(4, '0')}.jpg`;
+    preloaded.push(img);
+  }
+
+  let currentFrame      = 1;
   let animationComplete = false;
-  let jumping = false; // フェードアウト後のジャンプ中フラグ
+  let jumping           = false;
 
   window.addEventListener('scroll', function() {
-    if (jumping) return; // ジャンプ中はスクロールイベント無視
+    if (jumping) return;
 
     const scrolled = window.scrollY;
 
@@ -1351,30 +1359,31 @@ document.addEventListener('DOMContentLoaded', function() {
       scrollHint.classList.remove('hide');
     }
 
-    // アニメーション中：フレーム更新
+    // アニメーション中：プリロード済み画像でフレーム更新
     if (scrolled < animationHeight && !animationComplete) {
       const progress    = scrolled / animationHeight;
-      const frameNumber = Math.floor(progress * (totalFrames - 1)) + 1;
-      if (frameNumber !== currentFrame && frameNumber <= totalFrames) {
+      const frameNumber = Math.min(Math.floor(progress * (totalFrames - 1)) + 1, totalFrames);
+      if (frameNumber !== currentFrame) {
         currentFrame = frameNumber;
-        frameImg.src = `frames/frame_${String(currentFrame).padStart(4, '0')}.jpg`;
+        frameImg.src = preloaded[currentFrame - 1].src;
       }
     }
 
-    // アニメーション終了 → オーバーレイ表示中にトップへ戻す → フェードアウト
+    // アニメーション終了 → トップへ戻してからフェードアウト
     if (scrolled >= animationHeight && !animationComplete) {
       animationComplete = true;
-      jumping = true;
+      jumping           = true;
 
-      // ①オーバーレイが見えている間に即座にトップへ（カクつき非表示）
+      // ①オーバーレイを表示したままトップへ瞬間移動
       window.scrollTo({ top: 0, behavior: 'instant' });
 
-      // ②少し待ってからフェードアウト開始
-      setTimeout(function() {
-        frameAnimation.classList.add('hidden');
-        // ③フェード完了後にフラグ解除
-        setTimeout(function() { jumping = false; }, 820);
-      }, 80);
+      // ②ブラウザがスクロール位置を確実に反映してからフェード開始
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          frameAnimation.classList.add('hidden');
+          setTimeout(function() { jumping = false; }, 850);
+        });
+      });
     }
   });
 });
