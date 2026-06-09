@@ -809,7 +809,7 @@ nav{
   display:flex;align-items:center;justify-content:center;
   z-index:999;
   opacity:1;
-  transition:opacity 0.8s ease;
+  transition:opacity 1.2s ease;
 }
 .scroll-animation.hidden {
   opacity:0;pointer-events:none;
@@ -1369,19 +1369,24 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    // アニメーション終了 → トップへ戻してからフェードアウト
+    // アニメーション終了 → トップへ強制移動 → ヒーローを透かしながらフェードアウト
     if (scrolled >= animationHeight && !animationComplete) {
       animationComplete = true;
       jumping           = true;
 
-      // ①オーバーレイを表示したままトップへ瞬間移動
-      window.scrollTo({ top: 0, behavior: 'instant' });
+      // ①複数手段でスクロールを確実に0へ（ブラウザ差異対応）
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop            = 0;
+      window.scrollTo(0, 0);
 
-      // ②ブラウザがスクロール位置を確実に反映してからフェード開始
+      // ②2フレーム待ってスクロール確定後にフェード開始
+      //   → オーバーレイが消えながらヒーロー画面が浮かび上がる
       requestAnimationFrame(function() {
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop            = 0;
         requestAnimationFrame(function() {
-          frameAnimation.classList.add('hidden');
-          setTimeout(function() { jumping = false; }, 850);
+          frameAnimation.classList.add('hidden'); // 0.8s かけてフェード
+          setTimeout(function() { jumping = false; }, 900);
         });
       });
     }
