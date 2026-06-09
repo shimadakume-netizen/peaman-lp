@@ -1361,18 +1361,20 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
 
-    // アニメーション終了 → フェードアウト → モニターの声へジャンプ
+    // アニメーション終了 → オーバーレイ表示中にトップへ戻す → フェードアウト
     if (scrolled >= animationHeight && !animationComplete) {
       animationComplete = true;
       jumping = true;
-      frameAnimation.classList.add('hidden');
 
-      // フェード完了（0.8s）後にページ冒頭へ瞬間移動
+      // ①オーバーレイが見えている間に即座にトップへ（カクつき非表示）
+      window.scrollTo({ top: 0, behavior: 'instant' });
+
+      // ②少し待ってからフェードアウト開始
       setTimeout(function() {
-        window.scrollTo({ top: 0, behavior: 'instant' });
-        // jumping を少し遅らせて解除（scrollToのイベント処理後）
-        setTimeout(function() { jumping = false; }, 100);
-      }, 820);
+        frameAnimation.classList.add('hidden');
+        // ③フェード完了後にフラグ解除
+        setTimeout(function() { jumping = false; }, 820);
+      }, 80);
     }
   });
 });
