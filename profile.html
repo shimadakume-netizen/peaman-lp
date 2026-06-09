@@ -1370,17 +1370,9 @@ document.addEventListener('DOMContentLoaded', function() {
       // フェード完了（0.8s）後にページ冒頭へ瞬間移動
       setTimeout(function() {
         window.scrollTo({ top: 0, behavior: 'instant' });
-        jumping = false;
+        // jumping を少し遅らせて解除（scrollToのイベント処理後）
+        setTimeout(function() { jumping = false; }, 100);
       }, 820);
-    }
-
-    // ページ最上部に戻ったらアニメーションリセット
-    if (scrolled < 50 && animationComplete) {
-      animationComplete = false;
-      currentFrame = 1;
-      frameImg.src = 'frames/frame_0001.jpg';
-      frameAnimation.classList.remove('hidden');
-      scrollHint.classList.remove('hide');
     }
   });
 });
