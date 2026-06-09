@@ -802,7 +802,9 @@ nav{
 /* ─────────────────── SCROLL ANIMATION ─────────────────── */
 .scroll-animation {
   position:fixed;top:0;left:0;right:0;
-  width:100vw;height:100vh;
+  width:100vw;
+  height:100vh;
+  height:100svh;
   background:#000;
   display:flex;align-items:center;justify-content:center;
   z-index:999;
@@ -819,8 +821,28 @@ nav{
 }
 @media(max-width:767px){
   #frameImg {
-    width:100vw;height:100vh;
+    width:100vw;
+    height:100svh;
   }
+}
+/* スクロールヒント */
+.scroll-hint {
+  position:absolute;
+  bottom:2.2rem;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.35rem;
+  color:rgba(255,255,255,0.75);
+  font-size:0.8rem;font-weight:600;letter-spacing:0.08em;
+  pointer-events:none;
+  transition:opacity 0.5s ease;
+  animation:hint-float 1.6s ease-in-out infinite;
+}
+.scroll-hint.hide { opacity:0; }
+.scroll-hint-arrow { font-size:1.4rem; line-height:1; }
+@keyframes hint-float {
+  0%,100%{ transform:translateX(-50%) translateY(0); }
+  50%    { transform:translateX(-50%) translateY(7px); }
 }
 
 /* ─────────────────── FOOTER ─────────────────── */
@@ -841,6 +863,10 @@ footer{
 <!-- ======== SCROLL ANIMATION ======== -->
 <div class="scroll-animation" id="frameAnimation">
   <img id="frameImg" src="frames/frame_0001.jpg" alt="Animation">
+  <div class="scroll-hint" id="scrollHint">
+    <span>下にスクロール</span>
+    <span class="scroll-hint-arrow">↓</span>
+  </div>
 </div>
 
 <!-- 常時浮遊ぴーまん（全ページ固定） -->
@@ -1082,7 +1108,7 @@ footer{
 </section>
 
 <!-- ======== VOICE ======== -->
-<section class="sec voice-sec">
+<section class="sec voice-sec" id="voice">
   <div class="sec-inner">
     <div class="sec-tag">💬 モニターの声</div>
     <h2 class="sec-title">こんな<span class="em">声</span>をいただきました🫑</h2>
@@ -1304,45 +1330,61 @@ footer{
 // フレームアニメーション（スクロール連動）
 document.addEventListener('DOMContentLoaded', function() {
   const frameAnimation = document.getElementById('frameAnimation');
-  const frameImg = document.getElementById('frameImg');
-  const totalFrames = 93;
-  const animationHeight = window.innerHeight * 3; // スクロール必要な高さ
+  const frameImg       = document.getElementById('frameImg');
+  const scrollHint     = document.getElementById('scrollHint');
+  const totalFrames    = 93;
+  const animationHeight = window.innerHeight * 3;
 
-  let currentFrame = 1;
+  let currentFrame     = 1;
   let animationComplete = false;
+  let jumping = false; // フェードアウト後のジャンプ中フラグ
 
   window.addEventListener('scroll', function() {
+    if (jumping) return; // ジャンプ中はスクロールイベント無視
+
     const scrolled = window.scrollY;
 
-    // アニメーション中
-    if (scrolled < animationHeight && !animationComplete) {
-      // スクロール量からフレーム番号を計算
-      const progress = scrolled / animationHeight;
-      const frameNumber = Math.floor(progress * (totalFrames - 1)) + 1;
+    // スクロール開始でヒント非表示
+    if (scrolled > 20) {
+      scrollHint.classList.add('hide');
+    } else {
+      scrollHint.classList.remove('hide');
+    }
 
+    // アニメーション中：フレーム更新
+    if (scrolled < animationHeight && !animationComplete) {
+      const progress    = scrolled / animationHeight;
+      const frameNumber = Math.floor(progress * (totalFrames - 1)) + 1;
       if (frameNumber !== currentFrame && frameNumber <= totalFrames) {
         currentFrame = frameNumber;
         frameImg.src = `frames/frame_${String(currentFrame).padStart(4, '0')}.jpg`;
       }
     }
 
-    // アニメーション終了後
+    // アニメーション終了 → フェードアウト → モニターの声へジャンプ
     if (scrolled >= animationHeight && !animationComplete) {
       animationComplete = true;
+      jumping = true;
       frameAnimation.classList.add('hidden');
+
+      // フェード完了（0.8s）後にモニターの声セクションへ瞬間移動
+      setTimeout(function() {
+        const voiceSec = document.getElementById('voice');
+        if (voiceSec) {
+          voiceSec.scrollIntoView({ behavior: 'instant' });
+        }
+        jumping = false;
+      }, 820);
     }
 
-    // ページトップに戻ったらアニメーション再開
-    if (scrolled < animationHeight - 100 && animationComplete) {
+    // ページ最上部に戻ったらアニメーションリセット
+    if (scrolled < 50 && animationComplete) {
       animationComplete = false;
+      currentFrame = 1;
+      frameImg.src = 'frames/frame_0001.jpg';
       frameAnimation.classList.remove('hidden');
+      scrollHint.classList.remove('hide');
     }
-  });
-
-  // モバイル対応：タッチスクロール検出
-  let touchStartY = 0;
-  window.addEventListener('touchstart', function(e) {
-    touchStartY = e.touches[0].clientY;
   });
 });
 </script>
