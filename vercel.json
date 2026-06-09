@@ -1,6 +1,8 @@
 {
   "rewrites": [
     { "source": "/profile", "destination": "/profile.html" },
-    { "source": "/camp", "destination": "/camp.html" }
+    { "source": "/profile.html", "destination": "/profile.html" },
+    { "source": "/camp", "destination": "/camp.html" },
+    { "source": "/camp.html", "destination": "/camp.html" }
   ]
 }
