@@ -840,7 +840,7 @@ footer{
 
 <!-- ======== SCROLL ANIMATION ======== -->
 <div class="scroll-animation" id="frameAnimation">
-  <img id="frameImg" src="public/frames/frame_0001.jpg" alt="Animation">
+  <img id="frameImg" src="frames/frame_0001.jpg" alt="Animation">
 </div>
 
 <!-- 常時浮遊ぴーまん（全ページ固定） -->
@@ -1322,7 +1322,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (frameNumber !== currentFrame && frameNumber <= totalFrames) {
         currentFrame = frameNumber;
-        frameImg.src = `public/frames/frame_${String(currentFrame).padStart(4, '0')}.jpg`;
+        frameImg.src = `frames/frame_${String(currentFrame).padStart(4, '0')}.jpg`;
       }
     }
 
