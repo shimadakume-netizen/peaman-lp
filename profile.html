@@ -799,6 +799,30 @@ nav{
   letter-spacing:0.06em;
 }
 
+/* ─────────────────── SCROLL ANIMATION ─────────────────── */
+.scroll-animation {
+  position:fixed;top:0;left:0;right:0;
+  width:100vw;height:100vh;
+  background:#000;
+  display:flex;align-items:center;justify-content:center;
+  z-index:999;
+  opacity:1;
+  transition:opacity 0.8s ease;
+}
+.scroll-animation.hidden {
+  opacity:0;pointer-events:none;
+}
+#frameImg {
+  width:100%;height:100%;
+  object-fit:contain;
+  object-position:center;
+}
+@media(max-width:767px){
+  #frameImg {
+    width:100vw;height:100vh;
+  }
+}
+
 /* ─────────────────── FOOTER ─────────────────── */
 footer{
   background:var(--g-dark);color:rgba(255,255,255,0.7);
@@ -813,6 +837,11 @@ footer{
 </style>
 </head>
 <body>
+
+<!-- ======== SCROLL ANIMATION ======== -->
+<div class="scroll-animation" id="frameAnimation">
+  <img id="frameImg" src="public/frames/frame_0001.jpg" alt="Animation">
+</div>
 
 <!-- 常時浮遊ぴーまん（全ページ固定） -->
 <span class="bg-pepper bp1">🫑</span>
@@ -1270,6 +1299,53 @@ footer{
   </div>
   <div class="f-copy">© 2026 ぴーまん🫑 — 難しいを簡単に✨</div>
 </footer>
+
+<script>
+// フレームアニメーション（スクロール連動）
+document.addEventListener('DOMContentLoaded', function() {
+  const frameAnimation = document.getElementById('frameAnimation');
+  const frameImg = document.getElementById('frameImg');
+  const totalFrames = 93;
+  const animationHeight = window.innerHeight * 3; // スクロール必要な高さ
+
+  let currentFrame = 1;
+  let animationComplete = false;
+
+  window.addEventListener('scroll', function() {
+    const scrolled = window.scrollY;
+
+    // アニメーション中
+    if (scrolled < animationHeight && !animationComplete) {
+      // スクロール量からフレーム番号を計算
+      const progress = scrolled / animationHeight;
+      const frameNumber = Math.floor(progress * (totalFrames - 1)) + 1;
+
+      if (frameNumber !== currentFrame && frameNumber <= totalFrames) {
+        currentFrame = frameNumber;
+        frameImg.src = `public/frames/frame_${String(currentFrame).padStart(4, '0')}.jpg`;
+      }
+    }
+
+    // アニメーション終了後
+    if (scrolled >= animationHeight && !animationComplete) {
+      animationComplete = true;
+      frameAnimation.classList.add('hidden');
+    }
+
+    // ページトップに戻ったらアニメーション再開
+    if (scrolled < animationHeight - 100 && animationComplete) {
+      animationComplete = false;
+      frameAnimation.classList.remove('hidden');
+    }
+  });
+
+  // モバイル対応：タッチスクロール検出
+  let touchStartY = 0;
+  window.addEventListener('touchstart', function(e) {
+    touchStartY = e.touches[0].clientY;
+  });
+});
+</script>
 
 </body>
 </html>
